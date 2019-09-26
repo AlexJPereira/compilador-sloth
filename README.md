@@ -1,2 +1,2 @@
 # TrabalhoECOM06
-A documentar
+não commitar na branch master
