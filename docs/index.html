@@ -1,13 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>só um test</h1>
-    
-</body>
-</html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="./styles/sidenav.css"/>
+        <script src="./src/Scripts/openPage.js"></script>
+    </head>
+
+    <body>
+        <div class="sidenav">
+            <button class = "tablink" id="defaultOpen" onclick="openPage('PA',this)">Pagina A</button>
+            <button class = "tablink" onclick="openPage('PB', this)">Pagina B</button>
+            <button class = "tablink" onclick="openPage('PC', this)">Pagina C</button>
+        </div>
+
+        <div id="PA" class="tabcontent">
+            <h3>Pagina a</h3>
+            <p>só fazendo um test</p>
+        </div>
+
+        <div id="PB" class="tabcontent">
+            <h3>Pagina b</h3>
+            <p>só fazendo um test</p>
+        </div>
+
+        <div id="PC" class="tabcontent">
+                <h3>Pagina c</h3>
+                <p>só fazendo um test</p>
+        </div>
+        
+        <script>
+            document.getElementById("defaultOpen").click()
+        </script>
+    </body>
+</html> 
