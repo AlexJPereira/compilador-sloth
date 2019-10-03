@@ -1,7 +1,7 @@
 # Programa
 
-- Descrição:
+- Descrição: 
 - Expressão regular:
 - Exemplo:
 
-foto
+![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
