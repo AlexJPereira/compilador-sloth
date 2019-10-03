@@ -11,6 +11,8 @@
     * [Variáveis](Linguagem/var.md)
     * [Fluxo de Dados](Linguagem/fluxo.md)
 * [Criação do compilador](Compilador/README.md)
+    * [JavaCC](Compilador/javacc.md)
+    * [Java](Compilador/java.md)
 * [Autômatos](Automatos/README.md)
     * [Programa](Automatos/programa.md)
     * [Importação](Automatos/importacao.md)
