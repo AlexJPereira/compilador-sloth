@@ -1,3 +1,11 @@
-# Introduction
+# Introdução
+colocar fotos bonitinhas e tags
 
-tópico introdução, somente um teste
+## Sloth
+falar brevemente sobre o compilador, os objetivos do trabalho e da linguagem
+
+## Participantes
+colocar os participantes, a disciplina e a professora. avisar que é para correção do professor.
+
+## Licença
+colocar a licença
