@@ -4,4 +4,4 @@
 - Expressão regular:
 - Exemplo:
 
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+![automatoPrograma](./imagens/programa.png)
