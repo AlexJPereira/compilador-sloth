@@ -3,8 +3,8 @@
 </h1>
 
 <p align="center">
-    <strong><del>(Feio)</del> Flexível igual C</strong><br>
-    <strong><del>(Lento)</del> Confiável igual java</strong>
+    <strong><del>(Feio)</del> Confiável igual C</strong><br>
+    <strong><del>(Lento)</del> Flexível igual java</strong>
 </p>
 
 ![license](https://img.shields.io/github/license/wykke/TrabalhoECOM06)
