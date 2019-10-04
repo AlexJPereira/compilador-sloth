@@ -1,7 +1,7 @@
 # Programa
 
-- Descrição:
+- Descrição: 
 - Expressão regular:
 - Exemplo:
 
-foto
+![automatoPrograma](./imagens/programa.png)
