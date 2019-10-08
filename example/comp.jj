@@ -34,9 +34,21 @@ SKIP :
 { 
 	" "|"\n"|"\r"|"\r\n" 
 }
+
 TOKEN:
 {
-    <IDENTIFICADOR: ["a"-"z","A"-"Z"](["a"-"z","A"-"Z","0"-"9","_"])*> {System.out.print("IDENTIFICADOR -> "+image+"\r\n");}
+	<COMENTARIO: "#"(LETTER,DIGIT)*"#">
+	
+}
+TOKEN:
+{
+	<#LETTER: ["a"-"z","A"-"Z"]>
+	<#DIGIT: ["0" - "9"]>
+	
+}
+TOKEN:
+{
+    <IDENTIFICADOR: <LETTER>(<LETTER>|<DIGIT>|"_"])*> {System.out.print("IDENTIFICADOR -> "+image+"\r\n");}
     | <IGUAL: ("==")>{System.out.println("IGUAL -> "+image);}
 }
 
