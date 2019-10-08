@@ -35,21 +35,69 @@ SKIP :
 	" "|"\n"|"\r"|"\r\n" 
 }
 
+
 TOKEN:
 {
-	<COMENTARIO: "#"(LETTER,DIGIT)*"#">
+	<#LETTER: (["a"-"z","A"-"Z"])>|
+	<#DIGIT: (["0" - "9"])>|
+	<#CARACTERE: (<LETTER>|<DIGIT>)>
+}
+
+TOKEN:
+{
+	<INT = "int">|
+	<DOUBLE = "double">|
+	<CHAR = "char">|
+	<STRING = "string">|
+	<BOOLEAN = "bool">
+}
+
+TOKEN:
+{
+	<TRUE = "True">|
+	<FALSE = "False">
+}
+
+TOKEN:
+{
+	<PONTO = "."> |
+	<NEG = "-">
+}
+
+TOKEN:
+{
+	<ENDL = "\n">|
+	<EOL = ";">
+}
+
+TOKEN:
+{
+	<ABREVET = "[">|
+	<FECHAVET = "]">
+}
+
+TOKEN:
+{
+	<ADD = "+">|
+	<SUB = "-">|
+	<MULT = "*">|
+	<DIV = "/">|
+	<MOD = "//">|
+	<POW = "^">|
+	<PORCE = "%">|
+	<ABREPAR = "(">|
+	<FECHAPAR = ")">
+}
+
+TOKEN:
+{	
+	<FOR: "for">
 	
 }
 TOKEN:
 {
-	<#LETTER: ["a"-"z","A"-"Z"]>
-	<#DIGIT: ["0" - "9"]>
-	
-}
-TOKEN:
-{
-    <IDENTIFICADOR: <LETTER>(<LETTER>|<DIGIT>|"_"])*> {System.out.print("IDENTIFICADOR -> "+image+"\r\n");}
-    | <IGUAL: ("==")>{System.out.println("IGUAL -> "+image);}
+    <IDENTIFICADOR: <LETTER>(<LETTER>|<DIGIT>|"_")*> {System.out.print("IDENTIFICADOR -> "+image+"\r\n");}
+    |<IGUAL: ("==")>{System.out.println("IGUAL -> "+image);}|<COMENTARIO: "#"(<LETTER>|<DIGIT>)*"#">{System.out.print("COMENTARIO -> "+image+"\r\n");}
 }
 
 void Programa() :
@@ -59,7 +107,7 @@ void Programa() :
 }
 void Linhas():
 {}
-{
+{	
     (Igualdade())*
 }
 void Igualdade() :
@@ -78,3 +126,12 @@ void Igualdade() :
     }
 }
 
+void Comentario() :
+{
+    Token com;
+}
+{
+    com=<COMENTARIO> {
+        c.codigoList.add("Token: "+tokenImage[com.kind]+" // Palavra: "+com.toString());
+    }
+}
