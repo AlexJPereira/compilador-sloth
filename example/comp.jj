@@ -38,9 +38,9 @@ SKIP :
 
 TOKEN:
 {
-	<#LETTER: (["a"-"z","A"-"Z"])>|
-	<#DIGIT: (["0" - "9"])>|
-	<#CARACTERE: (<LETTER>|<DIGIT>)>
+	<#LETRA: (["a"-"z","A"-"Z"])>|
+	<#DIGITO: (["0" - "9"])>|
+	<#CARACTERE: (<LETRA>|<DIGITO>)>
 }
 
 TOKEN:
@@ -96,7 +96,8 @@ TOKEN:
 	<MAIOR: ">">|
 	<MENOR: "<">|
 	<MAIGUAL: "=>">|
-	<MEIGUAL: "=<">
+	<MEIGUAL: "=<">|
+	<IGUALDADE: "=">
 }
 
 TOKEN:
@@ -137,14 +138,29 @@ TOKEN:
 
 TOKEN:
 {
-    <IDENTIFICADOR: <LETTER>(<LETTER>|<DIGIT>|"_")*> {System.out.print("IDENTIFICADOR -> "+image+"\r\n");}
+    <IDENTIFICADOR: <LETRA>(<LETRA>|<DIGITO>|"_")*> {System.out.print("IDENTIFICADOR -> "+image+"\r\n");}
     |<IGUAL: ("==")>{System.out.println("IGUAL -> "+image);}|<COMENTARIO: "#"(<LETTER>|<DIGIT>)*"#">{System.out.print("COMENTARIO -> "+image+"\r\n");}
+	
+}
+
+TOKEN:
+{
+	<STRING: """<CARACTERE>*""">|
+	<INTEIRO: <NEG>?<DIGITO>+>|
+	<CARACTER: "'"<CARACTERE>"'">|
+	<PORCENTAGEM: (<REAL>|<INTEIRO>)<PORCE>>
+}
+
+TOKEN:
+{
+	<TIPOVARIAVEL: <INT>|<DOUBLE>|<CHAR>|<STRING>|<BOOLEAN>>|
+	
 }
 
 void Programa() :
 {}
 {
-	Linhas()<EOF>	
+	(((Importacao()|Comentario())*|Execucao())|Execucao())Comentario()*<EOF>
 }
 void Linhas():
 {}
@@ -175,4 +191,57 @@ void Comentario() :
     com=<COMENTARIO> {
         c.codigoList.add("Token: "+tokenImage[com.kind]+" // Palavra: "+com.toString());
     }
+}
+
+void Write(){
+	Token w, ap, e, fp; 
+}
+{
+	w=<WRITE> {
+        c.codigoList.add("Token: "+tokenImage[w.kind]+" // Palavra: "+w.toString());
+    }
+    ap=<ABREPAR> {
+        c.codigoList.add("Token: "+tokenImage[ap.kind]+" // Palavra: "+ap.toString());
+    }
+    e = <EXPRESSAO> {
+        c.codigoList.add("Token: "+tokenImage[e.kind]+" // Palavra: "+e.toString());
+    }
+	fp = <FECHAPAR>{
+        c.codigoList.add("Token: "+tokenImage[fp.kind]+" // Palavra: "+fp.toString());
+    }
+}
+
+void NomeVariavel(){
+	Token id, ac, e, fc;
+}
+{
+	id=<IDENTIFICADOR> {
+        c.codigoList.add("Token: "+tokenImage[id.kind]+" // Palavra: "+id.toString());
+    }
+    ac=<ABREVET> {
+        c.codigoList.add("Token: "+tokenImage[ac.kind]+" // Palavra: "+ac.toString());
+    }
+    e=<EXPRESSAO> {
+        c.codigoList.add("Token: "+tokenImage[e.kind]+" // Palavra: "+e.toString());
+    }
+	fc = <FECHAVET>{
+        c.codigoList.add("Token: "+tokenImage[fc.kind]+" // Palavra: "+fc.toString());
+    }
+
+}
+
+void Atribuicao(){
+	Token i, r, e; 
+}
+{
+	i = <IGUALDADE>{
+		 c.codigoList.add("Token: "+tokenImage[i.kind]+" // Palavra: "+i.toString());
+	}
+	r = <READ>{
+		 c.codigoList.add("Token: "+tokenImage[r.kind]+" // Palavra: "+r.toString());
+	}
+	e = <EXPRESSAO>{
+		 c.codigoList.add("Token: "+tokenImage[e.kind]+" // Palavra: "+e.toString());
+	}
+	
 }
