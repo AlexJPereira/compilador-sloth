@@ -90,10 +90,51 @@ TOKEN:
 }
 
 TOKEN:
-{	
-	<FOR: "for">
-	
+{
+	<IGUAL: "==">|
+	<DIF: "=!">|
+	<MAIOR: ">">|
+	<MENOR: "<">|
+	<MAIGUAL: "=>">|
+	<MEIGUAL: "=<">
 }
+
+TOKEN:
+{
+	<AND: "&&">|
+	<OR: "||">|
+	<NOT: "!">|
+	<XOR: "|+">
+}
+
+TOKEN:
+{
+	<IF: "when">|
+	<ELSE: "otherwise">
+}
+
+TOKEN:
+{	
+	<FOR: "for">|
+	<WHILE: "while">|
+	<FOREACH: "foreach">
+}
+
+TOKEN:
+{
+	<FIRST: "first">|
+	<LAST: "last">|
+	<BEGIN: "begin">|
+	<END: "end">
+}
+
+TOKEN:
+{
+	<IMPORT: "import">|
+	<GET: "get">|
+	<WRITE: "write">
+}
+
 TOKEN:
 {
     <IDENTIFICADOR: <LETTER>(<LETTER>|<DIGIT>|"_")*> {System.out.print("IDENTIFICADOR -> "+image+"\r\n");}
