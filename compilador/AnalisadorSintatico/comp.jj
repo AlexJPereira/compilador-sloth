@@ -245,3 +245,13 @@ void Atribuicao(){
 	}
 	
 }
+
+void Expressao():
+{}
+{
+	((<ABREPAR>(Expressao())+<FECHAPAR>)
+    | <NOT>Expressao()
+	| <NOMEDEVARIAVEL>
+	| <VALORDEVARIAVEL>)
+	[<OPERADOR>Expressao()]
+}
