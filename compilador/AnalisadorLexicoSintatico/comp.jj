@@ -1,8 +1,8 @@
-PARSER_BEGIN(comp)
+PARSER_BEGIN(CompiladorSloth)
 import java.util.ArrayList;
 import java.util.List;
 
-public class comp 
+public class CompiladorSloth
 {
     private static Codigo c = new Codigo();
     
@@ -10,7 +10,7 @@ public class comp
 	{
 		try
 		{
-			comp analizador = new comp( System.in ) ;
+			CompiladorSloth analizador = new CompiladorSloth( System.in ) ;
 			analizador.Programa();
 		}
 		catch(ParseException e)
@@ -28,7 +28,7 @@ class Codigo
 {
     public List<String> codigoList = new ArrayList<String>();
 }
-PARSER_END(comp)
+PARSER_END(CompiladorSloth)
 
 SKIP : 
 { 
