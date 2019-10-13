@@ -49,7 +49,7 @@ TOKEN:
 	<DOUBLE = "double">|
 	<CHAR = "char">|
 	<STRING = "string">|
-	<BOOLEAN = "bool">
+	<BOOLEAN = "boolean">
 }
 
 TOKEN:
