@@ -19,8 +19,10 @@ public class CompiladorSloth
 			System.out.println("Analizador: foram encontrados alguns erros na analise.");
 		}
 		finally{
+			System.out.println("\n--- Tokens Encontrados ---\n");
 			for(Token nome : cod.getTokenList()){
-            	System.out.println(nome.toString());
+            	System.out.println(
+					"Token: " + tokenImage[nome.kind] + " -> " + nome.toString());
         	}
 		}
 	}
@@ -123,6 +125,7 @@ TOKEN:
 TOKEN:
 {	
 	<FOR: "for">
+	|<SEPFOR: ":">
 	|<WHILE: "while">
 	|<FOREACH: "foreach">
 }
@@ -158,9 +161,10 @@ TOKEN:
 }
 
 void Programa():
-{}
+{} // (((Importacao()|<COMENT>)*Execucao())|Execucao())(<COMENT>)*<EOF>
+   // deixe por ultimo, use para ir testeando de um em um
 {
-	Execucao()Importacao()<EOF>
+	(Read())*<EOF>
 }
 
 void Importacao():
@@ -171,123 +175,145 @@ void Importacao():
 }
 
 void Execucao():
-{Token a,b,c;} //<FIRST>(<INTEIRO>)*<LAST>
+{Token a,b;} //<FIRST>(Linha())*<LAST>
 {
 	(a=<FIRST>){cod.add(a);}
-	(b=<INTEIRO>{cod.add(b);})*
-	(c=<LAST>){cod.add(c);}
+	(Linha())*
+	(b=<LAST>){cod.add(b);}
 }
 
 void Linha():
-{}
+{} //((Write()|ManVar())<EOL>)|FluxoDados()
 {
 	<INTEIRO>
 }
 
 void Write():
-{}
+{} //<WRITE><ABREPAR>Expressao()<FECHAPAR>
 {
 	<INTEIRO>
 }
 
 void ManVar():
-{}
+{} //(TipoVar()NomeVar()[Atribuicao()])|(NomeVar()Atribuicao())
+   // [algo] significa que pode ter ou nao
 {
 	<INTEIRO>
 }
 
 void TipoVar():
-{}
+{Token a=null;} // <TIPOBOOLEAN>|<TIPOCHAR>|<TIPODOUBLE>|<TIPOINT>|<TIPOSTRING>
 {
-	<INTEIRO>
+	(a=<TIPOBOOLEAN>|a=<TIPOCHAR>|a=<TIPODOUBLE>|a=<TIPOINT>|a=<TIPOSTRING>)
+	{cod.add(a);}
 }
 
 void NomeVar():
-{}
+{} // <NOMEVAR>[<ABREVET>Expressao()<FECHAVET>]
 {
 	<INTEIRO>
 }
 
 void Atribuicao():
-{}
+{} // <IGUALDADE>(Read()|Expressao())
 {
 	<INTEIRO>
 }
 
 void Read():
-{}
+{Token a,b,c;} // <GET><ABREPAR><FECHAPAR>
 {
-	<INTEIRO>
+	(a=<GET>) {cod.add(a);}
+	(b=<ABREPAR>) {cod.add(b);}
+	(c=<FECHAPAR>) {cod.add(c);}
 }
 
 void Expressao():
-{}
+{} /*
+((<ABREPAR>(Expressao())+<FECHAPAR>)
+| <NOT>Expressao()
+| NomeVar()
+| ValorVar())
+[LOOKAHEAD(2) Operador()Expressao()]
+
+LOOKAHEAD serve para nao dar warning,
+porque ele pode ou nao terminar em Operador()Expressao()
+podendo entrar em conflito com outro automato que comece em Operador(),
+*/
 {
 	<INTEIRO>
 }
 
 void Operador():
-{}
+{} // OpArit()|OpRelac()
 {
 	<INTEIRO>
 }
 
 void OpArit():
-{}
+{} // <ADD>|<SUB>|<MOD>|<DIV>|<POW>|<MULT>
+   // Talvez ele de um warning com o <DIV> e <MULT>
 {
 	<INTEIRO>
 }
 
 void OpRelac():
-{}
+{} // <AND>|<OR>|<XOR>|<IGUAL>|<DIF>|<MAIGUAL>|<MEIGUAL>|<MAIOR>|<MENOR>
+   // Talvez ele de um warning com o <MAIGUAL> e <MAIOR> e do menor
 {
 	<INTEIRO>
 }
 
 void ValorVar():
-{}
+{} // <INTEIRO>|<REAL>|<CARACTER>|Booleano()|<PORCENTAGEM>|<STRING>
+   // nao confundir <CARACTER> com <CARACTERE> haha
 {
 	<INTEIRO>
 }
 
 void Booleano():
-{}
+{} // <TRUE>|<FALSE>
 {
 	<INTEIRO>
 }
 
 void FluxoDados():
-{}
+{} // While()|For()|Foreach()|If()
 {
 	<INTEIRO>
 }
 
 void While():
-{}
+{} // <WHILE><ABREPAR>Expressao()<FECHAPAR>Bloco()
 {
 	<INTEIRO>
 }
 
 void For():
-{}
+{}/*
+<FOR><ABREPAR>NomeVar()<IGUALDADE>
+(ValorVar()|NomeVar())<SEPFOR>
+(ValorVar()|NomeVar())<SEPFOR>
+(ValorVar()|NomeVar())<FECHAPAR>Bloco()
+*/
 {
 	<INTEIRO>
 }
 
 void Foreach():
-{}
+{} // <FOREACH><ABREPAR>NomeVar()<SEPFOR>NomeVar()<FECHAPAR>Bloco()
 {
 	<INTEIRO>
 }
 
 void If():
-{}
+{} // <IF><ABREPAR>Expressao()<FECHAPAR>Bloco()[<ELSE>Bloco()]
 {
 	<INTEIRO>
 }
 
 void Bloco():
-{}
+{} //<BEGIN>(Linha()|<COMENT>)<END>
 {
 	<INTEIRO>
 }

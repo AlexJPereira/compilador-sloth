@@ -87,37 +87,39 @@ public interface CompiladorSlothConstants {
   /** RegularExpression Id. */
   int FOR = 43;
   /** RegularExpression Id. */
-  int WHILE = 44;
+  int SEPFOR = 44;
   /** RegularExpression Id. */
-  int FOREACH = 45;
+  int WHILE = 45;
   /** RegularExpression Id. */
-  int FIRST = 46;
+  int FOREACH = 46;
   /** RegularExpression Id. */
-  int LAST = 47;
+  int FIRST = 47;
   /** RegularExpression Id. */
-  int BEGIN = 48;
+  int LAST = 48;
   /** RegularExpression Id. */
-  int END = 49;
+  int BEGIN = 49;
   /** RegularExpression Id. */
-  int IMPORT = 50;
+  int END = 50;
   /** RegularExpression Id. */
-  int GET = 51;
+  int IMPORT = 51;
   /** RegularExpression Id. */
-  int WRITE = 52;
+  int GET = 52;
   /** RegularExpression Id. */
-  int COMENT = 53;
+  int WRITE = 53;
   /** RegularExpression Id. */
-  int STRING = 54;
+  int COMENT = 54;
   /** RegularExpression Id. */
-  int INTEIRO = 55;
+  int STRING = 55;
   /** RegularExpression Id. */
-  int CARACTER = 56;
+  int INTEIRO = 56;
   /** RegularExpression Id. */
-  int REAL = 57;
+  int CARACTER = 57;
   /** RegularExpression Id. */
-  int PORCENTAGEM = 58;
+  int REAL = 58;
   /** RegularExpression Id. */
-  int NOMEVAR = 59;
+  int PORCENTAGEM = 59;
+  /** RegularExpression Id. */
+  int NOMEVAR = 60;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -168,6 +170,7 @@ public interface CompiladorSlothConstants {
     "\"when\"",
     "\"otherwise\"",
     "\"for\"",
+    "\":\"",
     "\"while\"",
     "\"foreach\"",
     "\"first\"",
