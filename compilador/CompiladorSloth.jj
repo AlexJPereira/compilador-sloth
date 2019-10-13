@@ -153,16 +153,6 @@ void Test():
 	<PORCENTAGEM>
 }
 
-void Programa() :
-{}
-{
-	(((Importacao()|Comentario())*|Execucao())|Execucao())(Comentario())*<EOF>
-}
-void Linhas():
-{}
-{	
-    (Igualdade())*
-}
 
 void Expressao():
 {}
