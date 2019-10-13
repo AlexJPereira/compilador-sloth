@@ -147,7 +147,10 @@ TOKEN:
 void Test():
 {}
 {
-	
+	<STRING>
+	<INTEIRO>
+	<CARACTER>
+	<PORCENTAGEM>
 }
 
 void Programa() :
