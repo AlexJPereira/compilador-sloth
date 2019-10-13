@@ -60,13 +60,7 @@ TOKEN:
 
 TOKEN:
 {
-	<PONTO: ".">
-	|<NEG: "-">
-}
-
-TOKEN:
-{
-	<ENDL: "\n">
+	<ENDL: "\\n">
 	|<EOL: ";">
 }
 
@@ -87,6 +81,7 @@ TOKEN:
 	|<PORCE: "%">
 	|<ABREPAR: "(">
 	|<FECHAPAR: ")">
+	|<PONTO: ".">
 }
 
 TOKEN:
@@ -141,6 +136,7 @@ TOKEN:
 	<STRING: "\""(<CARACTERE>)*"\"">
 	|<INTEIRO: (<DIGITO>)+>
 	|<CARACTER: "'"<CARACTERE>"'">
+	|<REAL: <INTEIRO><PONTO><INTEIRO>>
 	|<PORCENTAGEM: (<REAL>|<INTEIRO>)<PORCE>>
 }
 
@@ -151,15 +147,4 @@ void Test():
 	<INTEIRO>
 	<CARACTER>
 	<PORCENTAGEM>
-}
-
-
-void Expressao():
-{}
-{
-	((<ABREPAR>(Expressao())+<FECHAPAR>)
-    | <NOT>Expressao()
-	| <NOMEDEVARIAVEL>
-	| <VALORDEVARIAVEL>)
-	[<OPERADOR>Expressao()]
 }
