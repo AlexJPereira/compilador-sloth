@@ -144,11 +144,6 @@ TOKEN:
 	<PORCENTAGEM: (<REAL>|<INTEIRO>)<PORCE>>
 }
 
-TOKEN:
-{
-	<TIPOVARIAVEL: <INT>|<DOUBLE>|<CHAR>|<STRING>|<BOOLEAN>>|
-	
-}
 
 void Programa() :
 {}
