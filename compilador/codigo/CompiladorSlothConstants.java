@@ -45,9 +45,9 @@ public interface CompiladorSlothConstants {
   /** RegularExpression Id. */
   int MULT = 22;
   /** RegularExpression Id. */
-  int DIV = 23;
+  int MOD = 23;
   /** RegularExpression Id. */
-  int MOD = 24;
+  int DIV = 24;
   /** RegularExpression Id. */
   int POW = 25;
   /** RegularExpression Id. */
@@ -114,6 +114,10 @@ public interface CompiladorSlothConstants {
   int REAL = 56;
   /** RegularExpression Id. */
   int PORCENTAGEM = 57;
+  /** RegularExpression Id. */
+  int NOMEVAR = 58;
+  /** RegularExpression Id. */
+  int OPARIT = 59;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -143,8 +147,8 @@ public interface CompiladorSlothConstants {
     "\"+\"",
     "\"-\"",
     "\"*\"",
-    "\"/\"",
     "\"//\"",
+    "\"/\"",
     "\"^\"",
     "\"%\"",
     "\"(\"",
@@ -178,6 +182,8 @@ public interface CompiladorSlothConstants {
     "<CARACTER>",
     "<REAL>",
     "<PORCENTAGEM>",
+    "<NOMEVAR>",
+    "<OPARIT>",
   };
 
 }

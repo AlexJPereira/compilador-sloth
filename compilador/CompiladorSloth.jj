@@ -11,7 +11,7 @@ public class CompiladorSloth
 		try
 		{
 			CompiladorSloth analizador = new CompiladorSloth(System.in) ;
-			analizador.Test();
+			analizador.Programa();
 		}
 		catch(ParseException e)
 		{
@@ -76,8 +76,8 @@ TOKEN:
 	<ADD: "+">
 	|<SUB: "-">
 	|<MULT: "*">
-	|<DIV: "/">
 	|<MOD: "//">
+	|<DIV: "/">
 	|<POW: "^">
 	|<PORCE: "%">
 	|<ABREPAR: "(">
@@ -141,8 +141,13 @@ TOKEN:
 	|<PORCENTAGEM: (<REAL>|<INTEIRO>)<PORCE>>
 }
 
-void Test():
+TOKEN:
+{
+	<NOMEVAR: <LETRA>(<CARACTERE>)*>
+}
+
+void Programa():
 {}
 {
-	(<STRING>)*<EOF>
+	<EOF>
 }
