@@ -12,11 +12,16 @@ public class CompiladorSloth implements CompiladorSlothConstants {
                 {
                         CompiladorSloth analizador = new CompiladorSloth(System.in) ;
                         analizador.Test();
+                        System.out.println("asd");
                 }
                 catch(ParseException e)
                 {
                         System.out.println(e.getMessage());
                         System.out.println("Analizador: foram encontrados alguns erros na analise.");
+                }
+                catch(Exception e)
+                {
+                        System.out.println("erro");
                 }
                 for(String nome : c.codigoList){
             System.out.println(nome);
@@ -24,10 +29,20 @@ public class CompiladorSloth implements CompiladorSlothConstants {
         }
 
   static final public void Test() throws ParseException {
-    jj_consume_token(STRING);
-    jj_consume_token(INTEIRO);
-    jj_consume_token(CARACTER);
-    jj_consume_token(PORCENTAGEM);
+    label_1:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case STRING:{
+        ;
+        break;
+        }
+      default:
+        jj_la1[0] = jj_gen;
+        break label_1;
+      }
+      jj_consume_token(STRING);
+    }
+    jj_consume_token(0);
 }
 
   static private boolean jj_initialized_once = false;
@@ -40,7 +55,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
   static public Token jj_nt;
   static private int jj_ntk;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[0];
+  static final private int[] jj_la1 = new int[1];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static {
@@ -48,10 +63,10 @@ public class CompiladorSloth implements CompiladorSlothConstants {
 	   jj_la1_init_1();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {};
+	   jj_la1_0 = new int[] {0x0,};
 	}
 	private static void jj_la1_init_1() {
-	   jj_la1_1 = new int[] {};
+	   jj_la1_1 = new int[] {0x200000,};
 	}
 
   /** Constructor with InputStream. */
@@ -72,6 +87,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
+	 for (int i = 0; i < 1; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -85,7 +101,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 0; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 1; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -102,6 +118,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
+	 for (int i = 0; i < 1; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -119,6 +136,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
+	 for (int i = 0; i < 1; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -134,6 +152,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
+	 for (int i = 0; i < 1; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -142,6 +161,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
+	 for (int i = 0; i < 1; i++) jj_la1[i] = -1;
   }
 
   static private Token jj_consume_token(int kind) throws ParseException {
@@ -192,12 +212,12 @@ public class CompiladorSloth implements CompiladorSlothConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
 	 jj_expentries.clear();
-	 boolean[] la1tokens = new boolean[57];
+	 boolean[] la1tokens = new boolean[58];
 	 if (jj_kind >= 0) {
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
 	 }
-	 for (int i = 0; i < 0; i++) {
+	 for (int i = 0; i < 1; i++) {
 	   if (jj_la1[i] == jj_gen) {
 		 for (int j = 0; j < 32; j++) {
 		   if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -209,7 +229,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
 		 }
 	   }
 	 }
-	 for (int i = 0; i < 57; i++) {
+	 for (int i = 0; i < 58; i++) {
 	   if (la1tokens[i]) {
 		 jj_expentry = new int[1];
 		 jj_expentry[0] = i;

@@ -41,6 +41,7 @@ TOKEN:
 	<#LETRA: (["a"-"z","A"-"Z"])>
 	|<#DIGITO: (["0" - "9"])>
 	|<#CARACTERE: (<LETRA>|<DIGITO>)>
+	|<#ASC: (["\0"-"!","#"-"&","("-"~"])>
 }
 
 TOKEN:
@@ -133,9 +134,9 @@ TOKEN:
 
 TOKEN:
 {
-	<STRING: "\""(<CARACTERE>)*"\"">
+	<STRING: "\""(<ASC>)*"\"">
 	|<INTEIRO: (<DIGITO>)+>
-	|<CARACTER: "'"<CARACTERE>"'">
+	|<CARACTER: "'"<ASC>"'">
 	|<REAL: <INTEIRO><PONTO><INTEIRO>>
 	|<PORCENTAGEM: (<REAL>|<INTEIRO>)<PORCE>>
 }
@@ -143,8 +144,5 @@ TOKEN:
 void Test():
 {}
 {
-	<STRING>
-	<INTEIRO>
-	<CARACTER>
-	<PORCENTAGEM>
+	(<STRING>)*<EOF>
 }
