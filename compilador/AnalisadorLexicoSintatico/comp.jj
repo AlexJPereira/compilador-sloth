@@ -6,11 +6,11 @@ public class CompiladorSloth
 {
     private static Codigo c = new Codigo();
     
-	public static void main( String[] args )throws ParseException
+	public static void main(String[] args) throws ParseException
 	{
 		try
 		{
-			CompiladorSloth analizador = new CompiladorSloth( System.in ) ;
+			CompiladorSloth analizador = new CompiladorSloth(System.in) ;
 			analizador.Programa();
 		}
 		catch(ParseException e)
@@ -134,13 +134,6 @@ TOKEN:
 	<IMPORT: "import">|
 	<GET: "get">|
 	<WRITE: "write">
-}
-
-TOKEN:
-{
-    <IDENTIFICADOR: <LETRA>(<LETRA>|<DIGITO>|"_")*> {System.out.print("IDENTIFICADOR -> "+image+"\r\n");}
-    |<IGUAL: ("==")>{System.out.println("IGUAL -> "+image);}|<COMENTARIO: "#"(<LETTER>|<DIGIT>)*"#">{System.out.print("COMENTARIO -> "+image+"\r\n");}
-	
 }
 
 TOKEN:
