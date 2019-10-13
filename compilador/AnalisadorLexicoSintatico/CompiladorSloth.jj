@@ -11,7 +11,7 @@ public class CompiladorSloth
 		try
 		{
 			CompiladorSloth analizador = new CompiladorSloth(System.in) ;
-			analizador.Programa();
+			analizador.Test();
 		}
 		catch(ParseException e)
 		{
@@ -38,112 +38,117 @@ SKIP :
 
 TOKEN:
 {
-	<#LETRA: (["a"-"z","A"-"Z"])>|
-	<#DIGITO: (["0" - "9"])>|
-	<#CARACTERE: (<LETRA>|<DIGITO>)>
+	<#LETRA: (["a"-"z","A"-"Z"])>
+	|<#DIGITO: (["0" - "9"])>
+	|<#CARACTERE: (<LETRA>|<DIGITO>)>
 }
 
 TOKEN:
 {
-	<TIPOINT = "int">|
-	<TIPODOUBLE = "double">|
-	<TIPOCHAR = "char">|
-	<TIPOSTRING = "string">|
-	<TIPOBOOLEAN = "boolean">
+	<TIPOINT = "int">
+	|<TIPODOUBLE = "double">
+	|<TIPOCHAR = "char">
+	|<TIPOSTRING = "string">
+	|<TIPOBOOLEAN = "boolean">
 }
 
 TOKEN:
 {
-	<TRUE = "true">|
-	<FALSE = "false">
+	<TRUE = "true">
+	|<FALSE = "false">
 }
 
 TOKEN:
 {
-	<PONTO = "."> |
-	<NEG = "-">
+	<PONTO = ".">
+	|<NEG = "-">
 }
 
 TOKEN:
 {
-	<ENDL = "\n">|
-	<EOL = ";">
+	<ENDL = "\n">
+	|<EOL = ";">
 }
 
 TOKEN:
 {
-	<ABREVET = "[">|
-	<FECHAVET = "]">
+	<ABREVET = "[">
+	|<FECHAVET = "]">
 }
 
 TOKEN:
 {
-	<ADD = "+">|
-	<SUB = "-">|
-	<MULT = "*">|
-	<DIV = "/">|
-	<MOD = "//">|
-	<POW = "^">|
-	<PORCE = "%">|
-	<ABREPAR = "(">|
-	<FECHAPAR = ")">
+	<ADD = "+">
+	|<SUB = "-">
+	|<MULT = "*">
+	|<DIV = "/">
+	|<MOD = "//">
+	|<POW = "^">
+	|<PORCE = "%">
+	|<ABREPAR = "(">
+	|<FECHAPAR = ")">
 }
 
 TOKEN:
 {
-	<IGUAL: "==">|
-	<DIF: "=!">|
-	<MAIOR: ">">|
-	<MENOR: "<">|
-	<MAIGUAL: "=>">|
-	<MEIGUAL: "=<">|
-	<IGUALDADE: "=">
+	<IGUAL: "==">
+	|<DIF: "=!">
+	|<MAIOR: ">">
+	|<MENOR: "<">
+	|<MAIGUAL: "=>">
+	|<MEIGUAL: "=<">
+	|<IGUALDADE: "=">
 }
 
 TOKEN:
 {
-	<AND: "&&">|
-	<OR: "||">|
-	<NOT: "!">|
-	<XOR: "|+">
+	<AND: "&&">
+	|<OR: "||">
+	|<NOT: "!">
+	|<XOR: "|+">
 }
 
 TOKEN:
 {
-	<IF: "when">|
-	<ELSE: "otherwise">
+	<IF: "when">
+	|<ELSE: "otherwise">
 }
 
 TOKEN:
 {	
-	<FOR: "for">|
-	<WHILE: "while">|
-	<FOREACH: "foreach">
+	<FOR: "for">
+	|<WHILE: "while">
+	|<FOREACH: "foreach">
 }
 
 TOKEN:
 {
-	<FIRST: "first">|
-	<LAST: "last">|
-	<BEGIN: "begin">|
-	<END: "end">
+	<FIRST: "first">
+	|<LAST: "last">
+	|<BEGIN: "begin">
+	|<END: "end">
 }
 
 TOKEN:
 {
-	<IMPORT: "import">|
-	<GET: "get">|
-	<WRITE: "write">
+	<IMPORT: "import">
+	|<GET: "get">
+	|<WRITE: "write">
 }
 
 TOKEN:
 {
-	<STRING: "\""(<CARACTERE>)*"\"">|
-	<INTEIRO: <NEG>?<DIGITO>+>|
-	<CARACTER: "'"<CARACTERE>"'">|
-	<PORCENTAGEM: (<REAL>|<INTEIRO>)<PORCE>>
+	<STRING: "\""(<CARACTERE>)*"\"">
+	|<INTEIRO: <DIGITO>+>
+	|<CARACTER: "'"<CARACTERE>"'">
+	|<PORCENTAGEM: (<REAL>|<INTEIRO>)<PORCE>>
 }
 
+void Test():
+{}
+{
+	
+}
 
 void Programa() :
 {}
