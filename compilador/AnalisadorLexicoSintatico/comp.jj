@@ -45,11 +45,11 @@ TOKEN:
 
 TOKEN:
 {
-	<INT = "int">|
-	<DOUBLE = "double">|
-	<CHAR = "char">|
-	<STRING = "string">|
-	<BOOLEAN = "boolean">
+	<TIPOINT = "int">|
+	<TIPODOUBLE = "double">|
+	<TIPOCHAR = "char">|
+	<TIPOSTRING = "string">|
+	<TIPOBOOLEAN = "boolean">
 }
 
 TOKEN:
