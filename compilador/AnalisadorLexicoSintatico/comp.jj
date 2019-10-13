@@ -54,8 +54,8 @@ TOKEN:
 
 TOKEN:
 {
-	<TRUE = "True">|
-	<FALSE = "False">
+	<TRUE = "true">|
+	<FALSE = "false">
 }
 
 TOKEN:
