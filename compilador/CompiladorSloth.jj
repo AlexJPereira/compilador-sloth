@@ -4,7 +4,7 @@ import java.util.List;
 
 public class CompiladorSloth
 {
-    private static Codigo c = new Codigo();
+    private static Codigo cod = new Codigo();
     
 	public static void main(String[] args) throws ParseException
 	{
@@ -18,19 +18,29 @@ public class CompiladorSloth
 			System.out.println(e.getMessage());
 			System.out.println("Analizador: foram encontrados alguns erros na analise.");
 		}
-		for(String nome : c.codigoList){
-            System.out.println(nome);
-        }
+		finally{
+			for(Token nome : cod.getTokenList()){
+            	System.out.println(nome.toString());
+        	}
+		}
 	}
 }
 
 class Codigo
 {
-    public List<String> codigoList = new ArrayList<String>();
+    private List<Token> tokenList = new ArrayList<Token>();
+
+	public void add(Token t){
+		tokenList.add(t);
+	}
+
+	public List<Token> getTokenList(){
+		return tokenList;
+	}
 }
 PARSER_END(CompiladorSloth)
 
-SKIP : 
+SKIP:
 { 
 	" "|"\n"|"\r"|"\r\n" 
 }
@@ -41,7 +51,7 @@ TOKEN:
 	<#LETRA: (["a"-"z","A"-"Z"])>
 	|<#DIGITO: (["0" - "9"])>
 	|<#CARACTERE: (<LETRA>|<DIGITO>)>
-	|<#ASC: (["\0"-"!","#"-"&","("-"~"])>
+	|<#ASC: (["\0"-"!","$"-"&","("-"~"])> //tabela asc sem " ' #
 }
 
 TOKEN:
@@ -130,6 +140,7 @@ TOKEN:
 	<IMPORT: "import">
 	|<GET: "get">
 	|<WRITE: "write">
+	|<COMENT: "#"(<ASC>)*"#">
 }
 
 TOKEN:
@@ -149,5 +160,134 @@ TOKEN:
 void Programa():
 {}
 {
-	<EOF>
+	Execucao()Importacao()<EOF>
+}
+
+void Importacao():
+{Token a,b;} //<IMPORT><STRING>
+{
+	(a=<IMPORT>){cod.add(a);}
+	(b=<STRING>){cod.add(b);}
+}
+
+void Execucao():
+{Token a,b,c;} //<FIRST>(<INTEIRO>)*<LAST>
+{
+	(a=<FIRST>){cod.add(a);}
+	(b=<INTEIRO>{cod.add(b);})*
+	(c=<LAST>){cod.add(c);}
+}
+
+void Linha():
+{}
+{
+	<INTEIRO>
+}
+
+void Write():
+{}
+{
+	<INTEIRO>
+}
+
+void ManVar():
+{}
+{
+	<INTEIRO>
+}
+
+void TipoVar():
+{}
+{
+	<INTEIRO>
+}
+
+void NomeVar():
+{}
+{
+	<INTEIRO>
+}
+
+void Atribuicao():
+{}
+{
+	<INTEIRO>
+}
+
+void Read():
+{}
+{
+	<INTEIRO>
+}
+
+void Expressao():
+{}
+{
+	<INTEIRO>
+}
+
+void Operador():
+{}
+{
+	<INTEIRO>
+}
+
+void OpArit():
+{}
+{
+	<INTEIRO>
+}
+
+void OpRelac():
+{}
+{
+	<INTEIRO>
+}
+
+void ValorVar():
+{}
+{
+	<INTEIRO>
+}
+
+void Booleano():
+{}
+{
+	<INTEIRO>
+}
+
+void FluxoDados():
+{}
+{
+	<INTEIRO>
+}
+
+void While():
+{}
+{
+	<INTEIRO>
+}
+
+void For():
+{}
+{
+	<INTEIRO>
+}
+
+void Foreach():
+{}
+{
+	<INTEIRO>
+}
+
+void If():
+{}
+{
+	<INTEIRO>
+}
+
+void Bloco():
+{}
+{
+	<INTEIRO>
 }

@@ -4,28 +4,135 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CompiladorSloth implements CompiladorSlothConstants {
-    private static Codigo c = new Codigo();
+    private static Codigo cod = new Codigo();
 
         public static void main(String[] args) throws ParseException
         {
                 try
                 {
                         CompiladorSloth analizador = new CompiladorSloth(System.in) ;
-                        analizador.Test();
+                        analizador.Programa();
                 }
                 catch(ParseException e)
                 {
                         System.out.println(e.getMessage());
                         System.out.println("Analizador: foram encontrados alguns erros na analise.");
                 }
-                for(String nome : c.codigoList){
-            System.out.println(nome);
-        }
+                finally{
+                        for(Token nome : cod.getTokenList()){
+                System.out.println(nome.toString());
+                }
+                }
         }
 
-  static final public void Test() throws ParseException {
-    jj_consume_token(OPARIT);
+  static final public void Programa() throws ParseException {
+    Execucao();
+    Importacao();
     jj_consume_token(0);
+}
+
+  static final public void Importacao() throws ParseException {Token a,b;
+    a = jj_consume_token(IMPORT);
+cod.add(a);
+    b = jj_consume_token(STRING);
+cod.add(b);
+}
+
+  static final public void Execucao() throws ParseException {Token a,b,c;
+    a = jj_consume_token(FIRST);
+cod.add(a);
+    label_1:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case INTEIRO:{
+        ;
+        break;
+        }
+      default:
+        jj_la1[0] = jj_gen;
+        break label_1;
+      }
+      b = jj_consume_token(INTEIRO);
+cod.add(b);
+    }
+    c = jj_consume_token(LAST);
+cod.add(c);
+}
+
+  static final public void Linha() throws ParseException {
+    jj_consume_token(INTEIRO);
+}
+
+  static final public void Write() throws ParseException {
+    jj_consume_token(INTEIRO);
+}
+
+  static final public void ManVar() throws ParseException {
+    jj_consume_token(INTEIRO);
+}
+
+  static final public void TipoVar() throws ParseException {
+    jj_consume_token(INTEIRO);
+}
+
+  static final public void NomeVar() throws ParseException {
+    jj_consume_token(INTEIRO);
+}
+
+  static final public void Atribuicao() throws ParseException {
+    jj_consume_token(INTEIRO);
+}
+
+  static final public void Read() throws ParseException {
+    jj_consume_token(INTEIRO);
+}
+
+  static final public void Expressao() throws ParseException {
+    jj_consume_token(INTEIRO);
+}
+
+  static final public void Operador() throws ParseException {
+    jj_consume_token(INTEIRO);
+}
+
+  static final public void OpArit() throws ParseException {
+    jj_consume_token(INTEIRO);
+}
+
+  static final public void OpRelac() throws ParseException {
+    jj_consume_token(INTEIRO);
+}
+
+  static final public void ValorVar() throws ParseException {
+    jj_consume_token(INTEIRO);
+}
+
+  static final public void Booleano() throws ParseException {
+    jj_consume_token(INTEIRO);
+}
+
+  static final public void FluxoDados() throws ParseException {
+    jj_consume_token(INTEIRO);
+}
+
+  static final public void While() throws ParseException {
+    jj_consume_token(INTEIRO);
+}
+
+  static final public void For() throws ParseException {
+    jj_consume_token(INTEIRO);
+}
+
+  static final public void Foreach() throws ParseException {
+    jj_consume_token(INTEIRO);
+}
+
+  static final public void If() throws ParseException {
+    jj_consume_token(INTEIRO);
+}
+
+  static final public void Bloco() throws ParseException {
+    jj_consume_token(INTEIRO);
 }
 
   static private boolean jj_initialized_once = false;
@@ -38,7 +145,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
   static public Token jj_nt;
   static private int jj_ntk;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[0];
+  static final private int[] jj_la1 = new int[1];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static {
@@ -46,10 +153,10 @@ public class CompiladorSloth implements CompiladorSlothConstants {
 	   jj_la1_init_1();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {};
+	   jj_la1_0 = new int[] {0x0,};
 	}
 	private static void jj_la1_init_1() {
-	   jj_la1_1 = new int[] {};
+	   jj_la1_1 = new int[] {0x800000,};
 	}
 
   /** Constructor with InputStream. */
@@ -70,6 +177,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
+	 for (int i = 0; i < 1; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -83,7 +191,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 0; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 1; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -100,6 +208,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
+	 for (int i = 0; i < 1; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -117,6 +226,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
+	 for (int i = 0; i < 1; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -132,6 +242,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
+	 for (int i = 0; i < 1; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -140,6 +251,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
+	 for (int i = 0; i < 1; i++) jj_la1[i] = -1;
   }
 
   static private Token jj_consume_token(int kind) throws ParseException {
@@ -195,7 +307,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
 	 }
-	 for (int i = 0; i < 0; i++) {
+	 for (int i = 0; i < 1; i++) {
 	   if (jj_la1[i] == jj_gen) {
 		 for (int j = 0; j < 32; j++) {
 		   if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -241,5 +353,13 @@ public class CompiladorSloth implements CompiladorSlothConstants {
 
 class Codigo
 {
-    public List<String> codigoList = new ArrayList<String>();
+    private List<Token> tokenList = new ArrayList<Token>();
+
+        public void add(Token t){
+                tokenList.add(t);
+        }
+
+        public List<Token> getTokenList(){
+                return tokenList;
+        }
 }

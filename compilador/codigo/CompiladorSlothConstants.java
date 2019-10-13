@@ -105,19 +105,19 @@ public interface CompiladorSlothConstants {
   /** RegularExpression Id. */
   int WRITE = 52;
   /** RegularExpression Id. */
-  int STRING = 53;
+  int COMENT = 53;
   /** RegularExpression Id. */
-  int INTEIRO = 54;
+  int STRING = 54;
   /** RegularExpression Id. */
-  int CARACTER = 55;
+  int INTEIRO = 55;
   /** RegularExpression Id. */
-  int REAL = 56;
+  int CARACTER = 56;
   /** RegularExpression Id. */
-  int PORCENTAGEM = 57;
+  int REAL = 57;
   /** RegularExpression Id. */
-  int NOMEVAR = 58;
+  int PORCENTAGEM = 58;
   /** RegularExpression Id. */
-  int OPARIT = 59;
+  int NOMEVAR = 59;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -177,13 +177,13 @@ public interface CompiladorSlothConstants {
     "\"import\"",
     "\"get\"",
     "\"write\"",
+    "<COMENT>",
     "<STRING>",
     "<INTEIRO>",
     "<CARACTER>",
     "<REAL>",
     "<PORCENTAGEM>",
     "<NOMEVAR>",
-    "<OPARIT>",
   };
 
 }
