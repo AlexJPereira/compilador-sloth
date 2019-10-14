@@ -1,0 +1,29 @@
+#programa de testes
+feito por alex, leo e caike#
+
+import "bits/stdc++.h"
+import "iostream.h"
+
+first 
+    #variaveis#
+    int asd = 3;
+    char oi = 4;
+
+    #coisas doidas#
+    while(asd=!2)begin
+        when(oi=>3) begin
+            foreach(haha:ola)begin
+                for(lll=2:2:asd) begin
+                    write("Tathy da 10!");
+                    write("We deserve!"); 
+                    write("We never asked you anything"); 
+                end
+            end
+        end
+        otherwise begin
+            aaaa=2+2;
+        end
+    end
+last
+
+#test#

@@ -161,11 +161,14 @@ TOKEN:
 }
 
 void Programa():
-{} // (((Importacao()|<COMENT>)*Execucao())|Execucao())(<COMENT>)*<EOF>
-   // deixe por ultimo, use para ir testeando de um em um
+{Token a,b;} // (((Importacao()|<COMENT>)*Execucao())|Execucao())(<COMENT>)*<EOF>
 {
-	(Read())*<EOF>
+	(Importacao()|(a=<COMENT>){cod.add(a);})*
+	Execucao()
+	((b=<COMENT>){cod.add(b);})*
+	<EOF>
 }
+
 
 void Importacao():
 {Token a,b;} //<IMPORT><STRING>
@@ -175,30 +178,33 @@ void Importacao():
 }
 
 void Execucao():
-{Token a,b;} //<FIRST>(Linha())*<LAST>
+{Token a,b,c;} //<FIRST>(Linha())*<LAST>
 {
 	(a=<FIRST>){cod.add(a);}
-	(Linha())*
-	(b=<LAST>){cod.add(b);}
+	(Linha()|(b=<COMENT>){cod.add(b);})*
+	(c=<LAST>){cod.add(c);}
 }
 
 void Linha():
-{} //((Write()|ManVar())<EOL>)|FluxoDados()
+{Token a;} //((Write()|ManVar())<EOL>)|FluxoDados()
 {
-	<INTEIRO>
+	((Write()|ManVar())(a=<EOL>){cod.add(a);})
+	|FluxoDados()
 }
 
 void Write():
-{} //<WRITE><ABREPAR>Expressao()<FECHAPAR>
+{Token a,b,c;} //<WRITE><ABREPAR>Expressao()<FECHAPAR>
 {
-	<INTEIRO>
+	(a=<WRITE>){cod.add(a);}
+	(b=<ABREPAR>){cod.add(b);}
+	Expressao()
+	(c=<FECHAPAR>){cod.add(c);}		
 }
 
 void ManVar():
 {} //(TipoVar()NomeVar()[Atribuicao()])|(NomeVar()Atribuicao())
-   // [algo] significa que pode ter ou nao
 {
-	<INTEIRO>
+	(TipoVar()NomeVar()[Atribuicao()])|(NomeVar()Atribuicao())
 }
 
 void TipoVar():
@@ -209,15 +215,18 @@ void TipoVar():
 }
 
 void NomeVar():
-{} // <NOMEVAR>[<ABREVET>Expressao()<FECHAVET>]
+{Token a,b,c;} // <NOMEVAR>[<ABREVET>Expressao()<FECHAVET>]
 {
-	<INTEIRO>
+	(a=<NOMEVAR>){cod.add(a);}
+	[(b=<ABREVET>){cod.add(b);}
+	Expressao()
+	(c=<FECHAVET>){cod.add(c);}]
 }
 
 void Atribuicao():
-{} // <IGUALDADE>(Read()|Expressao())
+{Token a;} // <IGUALDADE>(Read()|Expressao())
 {
-	<INTEIRO>
+	(a=<IGUALDADE>){cod.add(a);}(Read()|Expressao())
 }
 
 void Read():
@@ -229,91 +238,137 @@ void Read():
 }
 
 void Expressao():
-{} /*
+{Token a,b,c;} /*
 ((<ABREPAR>(Expressao())+<FECHAPAR>)
 | <NOT>Expressao()
 | NomeVar()
 | ValorVar())
 [LOOKAHEAD(2) Operador()Expressao()]
-
-LOOKAHEAD serve para nao dar warning,
-porque ele pode ou nao terminar em Operador()Expressao()
-podendo entrar em conflito com outro automato que comece em Operador(),
 */
 {
-	<INTEIRO>
+	(((a=<ABREPAR>){cod.add(a);}(Expressao())+(b=<FECHAPAR>){cod.add(b);})
+	| (c=<NOT>){cod.add(c);}Expressao()
+	| NomeVar()
+	| ValorVar())
+	[LOOKAHEAD(2) Operador()Expressao()]
 }
 
 void Operador():
 {} // OpArit()|OpRelac()
 {
-	<INTEIRO>
+	OpArit()|OpRelac()
 }
 
 void OpArit():
-{} // <ADD>|<SUB>|<MOD>|<DIV>|<POW>|<MULT>
-   // Talvez ele de um warning com o <DIV> e <MULT>
+{Token a,b,c,d,e,f;} // <ADD>|<SUB>|<MOD>|<DIV>|<POW>|<MULT>
 {
-	<INTEIRO>
+	(a = <ADD>){cod.add(a);}|
+	(b = <SUB>){cod.add(b);}|
+	(c = <MOD>){cod.add(c);}|
+	(d = <DIV>){cod.add(d);}|
+	(e = <POW>){cod.add(e);}|
+	(f = <MULT>){cod.add(f);}
+
 }
 
 void OpRelac():
-{} // <AND>|<OR>|<XOR>|<IGUAL>|<DIF>|<MAIGUAL>|<MEIGUAL>|<MAIOR>|<MENOR>
+{Token a,b,c,d,e,f,g,h,i;} // <AND>|<OR>|<XOR>|<IGUAL>|<DIF>|<MAIGUAL>|<MEIGUAL>|<MAIOR>|<MENOR>
    // Talvez ele de um warning com o <MAIGUAL> e <MAIOR> e do menor
 {
-	<INTEIRO>
+	(a=<AND>){cod.add(a);}
+	|(b=<OR>){cod.add(b);}
+	|(c=<XOR>){cod.add(c);}
+	|(d=<IGUAL>){cod.add(d);}
+	|(e=<DIF>){cod.add(e);}
+	|(f=<MAIGUAL>){cod.add(f);}
+	|(g=<MEIGUAL>){cod.add(g);}
+	|(h=<MAIOR>){cod.add(h);}
+	|(i=<MENOR>){cod.add(i);}
+	
 }
 
 void ValorVar():
-{} // <INTEIRO>|<REAL>|<CARACTER>|Booleano()|<PORCENTAGEM>|<STRING>
-   // nao confundir <CARACTER> com <CARACTERE> haha
+{Token a,b,c,d,e;} // <INTEIRO>|<REAL>|<CARACTER>|Booleano()|<PORCENTAGEM>|<STRING>
 {
-	<INTEIRO>
+	(a=<INTEIRO>){cod.add(a);}
+	|(b=<REAL>){cod.add(b);}
+	|(c=<CARACTER>){cod.add(c);}
+	|Booleano()
+	|(d=<PORCENTAGEM>){cod.add(d);}
+	|(e = <STRING>){cod.add(e);}
 }
 
 void Booleano():
-{} // <TRUE>|<FALSE>
+{Token a,b;} // <TRUE>|<FALSE>
 {
-	<INTEIRO>
+	(a = <TRUE>){cod.add(a);}|
+	(b = <FALSE>){cod.add(b);}
 }
 
 void FluxoDados():
 {} // While()|For()|Foreach()|If()
 {
-	<INTEIRO>
+	While()|For()|Foreach()|If()
 }
 
 void While():
-{} // <WHILE><ABREPAR>Expressao()<FECHAPAR>Bloco()
+{Token a,b,c;} // <WHILE><ABREPAR>Expressao()<FECHAPAR>Bloco()
 {
-	<INTEIRO>
+	(a=<WHILE>){cod.add(a);}
+	(b=<ABREPAR>){cod.add(b);}
+	Expressao()
+	(c=<FECHAPAR>){cod.add(c);}
+	Bloco()
 }
 
 void For():
-{}/*
+{Token a,b,c,d,e;}/*
 <FOR><ABREPAR>NomeVar()<IGUALDADE>
 (ValorVar()|NomeVar())<SEPFOR>
 (ValorVar()|NomeVar())<SEPFOR>
 (ValorVar()|NomeVar())<FECHAPAR>Bloco()
 */
 {
-	<INTEIRO>
+	(a=<FOR>){cod.add(a);}
+	(b=<ABREPAR>){cod.add(b);}
+	NomeVar()
+	(c=<IGUALDADE>){cod.add(c);}
+	(ValorVar()|NomeVar())
+	(d=<SEPFOR>){cod.add(d);}
+	(ValorVar()|NomeVar())
+	(d=<SEPFOR>){cod.add(d);}
+	(ValorVar()|NomeVar())
+	(e = <FECHAPAR>){cod.add(e);}
+	Bloco()
 }
 
 void Foreach():
-{} // <FOREACH><ABREPAR>NomeVar()<SEPFOR>NomeVar()<FECHAPAR>Bloco()
+{Token a,b,c,d;} // <FOREACH><ABREPAR>NomeVar()<SEPFOR>NomeVar()<FECHAPAR>Bloco()
 {
-	<INTEIRO>
+	(a=<FOREACH>){cod.add(a);}
+	(b=<ABREPAR>){cod.add(b);}
+	NomeVar()
+	(c=<SEPFOR>){cod.add(c);}
+	NomeVar()
+	(d=<FECHAPAR>){cod.add(d);}
+	Bloco()
 }
 
 void If():
-{} // <IF><ABREPAR>Expressao()<FECHAPAR>Bloco()[<ELSE>Bloco()]
+{Token a,b,c,d;} // <IF><ABREPAR>Expressao()<FECHAPAR>Bloco()[<ELSE>Bloco()]
 {
-	<INTEIRO>
+	(a=<IF>){cod.add(a);}
+	(b=<ABREPAR>){cod.add(b);}
+	Expressao()
+	(c = <FECHAPAR>){cod.add(c);}
+	Bloco()
+	[(d = <ELSE>){cod.add(d);}Bloco()]
 }
 
 void Bloco():
-{} //<BEGIN>(Linha()|<COMENT>)<END>
+{Token a,b,c;} //<BEGIN>(Linha()|<COMENT>)*<END>
 {
-	<INTEIRO>
+	(a=<BEGIN>){cod.add(a);}
+	(Linha()|(b=<COMENT>){cod.add(b);})*
+	(c=<END>){cod.add(c);}
 }
