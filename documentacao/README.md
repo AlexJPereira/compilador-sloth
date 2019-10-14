@@ -4,7 +4,7 @@
 
 <p align="center">
     <strong><del>(Feio)</del> Confiável igual C</strong><br>
-    <strong><del>(Lento)</del> Flexível igual java</strong>
+    <strong><del>(Lento)</del> Flexível igual Java</strong>
 </p>
 
 ![license](https://img.shields.io/github/license/wykke/TrabalhoECOM06)
