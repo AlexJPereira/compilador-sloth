@@ -1,6 +1,4 @@
 PARSER_BEGIN(CompiladorSloth)
-import java.util.ArrayList;
-import java.util.List;
 
 public class CompiladorSloth
 {
@@ -25,19 +23,6 @@ public class CompiladorSloth
 					"Token: " + tokenImage[nome.kind] + " -> " + nome.toString());
         	}
 		}
-	}
-}
-
-class Codigo
-{
-    private List<Token> tokenList = new ArrayList<Token>();
-
-	public void add(Token t){
-		tokenList.add(t);
-	}
-
-	public List<Token> getTokenList(){
-		return tokenList;
 	}
 }
 PARSER_END(CompiladorSloth)
