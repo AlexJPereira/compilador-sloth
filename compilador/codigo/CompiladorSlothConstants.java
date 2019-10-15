@@ -27,105 +27,99 @@ public interface CompiladorSlothConstants {
   /** RegularExpression Id. */
   int TIPOBOOLEAN = 13;
   /** RegularExpression Id. */
-  int TIPOVOID = 14;
+  int TRUE = 14;
   /** RegularExpression Id. */
-  int RETORNO = 15;
+  int FALSE = 15;
   /** RegularExpression Id. */
-  int TRUE = 16;
+  int ENDL = 16;
   /** RegularExpression Id. */
-  int FALSE = 17;
+  int EOL = 17;
   /** RegularExpression Id. */
-  int ENDL = 18;
+  int ABREVET = 18;
   /** RegularExpression Id. */
-  int EOL = 19;
+  int FECHAVET = 19;
   /** RegularExpression Id. */
-  int ABREVET = 20;
+  int ADD = 20;
   /** RegularExpression Id. */
-  int FECHAVET = 21;
+  int SUB = 21;
   /** RegularExpression Id. */
-  int ADD = 22;
+  int MULT = 22;
   /** RegularExpression Id. */
-  int SUB = 23;
+  int MOD = 23;
   /** RegularExpression Id. */
-  int MULT = 24;
+  int DIV = 24;
   /** RegularExpression Id. */
-  int MOD = 25;
+  int POW = 25;
   /** RegularExpression Id. */
-  int DIV = 26;
+  int PORCE = 26;
   /** RegularExpression Id. */
-  int POW = 27;
+  int ABREPAR = 27;
   /** RegularExpression Id. */
-  int PORCE = 28;
+  int FECHAPAR = 28;
   /** RegularExpression Id. */
-  int ABREPAR = 29;
+  int PONTO = 29;
   /** RegularExpression Id. */
-  int FECHAPAR = 30;
+  int IGUAL = 30;
   /** RegularExpression Id. */
-  int PONTO = 31;
+  int DIF = 31;
   /** RegularExpression Id. */
-  int IGUAL = 32;
+  int MAIOR = 32;
   /** RegularExpression Id. */
-  int DIF = 33;
+  int MENOR = 33;
   /** RegularExpression Id. */
-  int MAIOR = 34;
+  int MAIGUAL = 34;
   /** RegularExpression Id. */
-  int MENOR = 35;
+  int MEIGUAL = 35;
   /** RegularExpression Id. */
-  int MAIGUAL = 36;
+  int IGUALDADE = 36;
   /** RegularExpression Id. */
-  int MEIGUAL = 37;
+  int AND = 37;
   /** RegularExpression Id. */
-  int IGUALDADE = 38;
+  int OR = 38;
   /** RegularExpression Id. */
-  int AND = 39;
+  int NOT = 39;
   /** RegularExpression Id. */
-  int OR = 40;
+  int XOR = 40;
   /** RegularExpression Id. */
-  int NOT = 41;
+  int IF = 41;
   /** RegularExpression Id. */
-  int XOR = 42;
+  int ELSE = 42;
   /** RegularExpression Id. */
-  int IF = 43;
+  int FOR = 43;
   /** RegularExpression Id. */
-  int ELSE = 44;
+  int SEPFOR = 44;
   /** RegularExpression Id. */
-  int FOR = 45;
+  int WHILE = 45;
   /** RegularExpression Id. */
-  int SEPFOR = 46;
+  int FOREACH = 46;
   /** RegularExpression Id. */
-  int WHILE = 47;
+  int FIRST = 47;
   /** RegularExpression Id. */
-  int FOREACH = 48;
+  int LAST = 48;
   /** RegularExpression Id. */
-  int FIRST = 49;
+  int BEGIN = 49;
   /** RegularExpression Id. */
-  int LAST = 50;
+  int END = 50;
   /** RegularExpression Id. */
-  int BEGIN = 51;
+  int IMPORT = 51;
   /** RegularExpression Id. */
-  int END = 52;
+  int GET = 52;
   /** RegularExpression Id. */
-  int IMPORT = 53;
+  int WRITE = 53;
   /** RegularExpression Id. */
-  int GET = 54;
+  int COMENT = 54;
   /** RegularExpression Id. */
-  int WRITE = 55;
+  int STRING = 55;
   /** RegularExpression Id. */
-  int COMENT = 56;
+  int INTEIRO = 56;
   /** RegularExpression Id. */
-  int SEPFUN = 57;
+  int CARACTER = 57;
   /** RegularExpression Id. */
-  int NOMEVAR = 58;
+  int REAL = 58;
   /** RegularExpression Id. */
-  int STRING = 59;
+  int PORCENTAGEM = 59;
   /** RegularExpression Id. */
-  int INTEIRO = 60;
-  /** RegularExpression Id. */
-  int CARACTER = 61;
-  /** RegularExpression Id. */
-  int REAL = 62;
-  /** RegularExpression Id. */
-  int PORCENTAGEM = 63;
+  int NOMEVAR = 60;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -146,8 +140,6 @@ public interface CompiladorSlothConstants {
     "\"char\"",
     "\"string\"",
     "\"boolean\"",
-    "\"void\"",
-    "\"return\"",
     "\"true\"",
     "\"false\"",
     "\"\\\\n\"",
@@ -189,13 +181,12 @@ public interface CompiladorSlothConstants {
     "\"get\"",
     "\"write\"",
     "<COMENT>",
-    "\",\"",
-    "<NOMEVAR>",
     "<STRING>",
     "<INTEIRO>",
     "<CARACTER>",
     "<REAL>",
     "<PORCENTAGEM>",
+    "<NOMEVAR>",
   };
 
 }

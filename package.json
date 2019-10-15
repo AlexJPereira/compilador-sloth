@@ -8,9 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "buildBook-dev": "gitbook build ./documentacao ./docs",
-    "buildJar": "jar cfm ./compilador/bin/sloth.jar ./compilador/codigo/MANIFEST.MF ./compilador/codigo/*.class",
-    "runJar": "java -jar ./compilador/bin/sloth.jar",
+    "buildBook-dev": "gitbook build ./documentacao ./docs"
   },
   "repository": {
     "type": "git",
