@@ -23,6 +23,7 @@ public class CompiladorSloth
 					"Token: " + tokenImage[nome.kind] + " -> " + nome.toString());
         	}
 		}
+		System.out.println("\n--- Compilado sem erros ---");
 	}
 }
 PARSER_END(CompiladorSloth)
@@ -49,6 +50,7 @@ TOKEN:
 	|<TIPOSTRING: "string">
 	|<TIPOBOOLEAN: "boolean">
 	|<TIPOVOID: "void">
+	|<RETORNO: "return">
 }
 
 TOKEN:
@@ -130,6 +132,7 @@ TOKEN:
 	|<GET: "get">
 	|<WRITE: "write">
 	|<COMENT: "#"(<ASC>)*"#">
+	|<SEPFUN: ",">
 }
 
 TOKEN:
@@ -149,12 +152,54 @@ TOKEN:
 void Programa():
 {Token a,b;} // (((Importacao()|<COMENT>)*Execucao())|Execucao())(<COMENT>)*<EOF>
 {
-	(Importacao()|(a=<COMENT>){cod.add(a);})*
+	(Importacao()|(a=<COMENT>){cod.add(a);}|Funcao())*
 	Execucao()
 	((b=<COMENT>){cod.add(b);})*
 	<EOF>
 }
 
+void Funcao():
+{Token a,b;} // (<TIPOVOID>|TipoVar())NomeVar()<ABREPAR>[FuncPar()]<FECHAPAR>Bloco()
+{
+	((a=<TIPOVOID>){cod.add(a);}|TipoVar())
+	NomeVar()
+	(a=<ABREPAR>){cod.add(a);}
+	[FuncPar()]
+	(b=<FECHAPAR>){cod.add(b);}
+	Bloco()
+}
+
+void FuncPar():
+{Token a;} // TipoVar()NomeVar()[<SEPFUN>FuncPar()]
+{
+	TipoVar()NomeVar()
+	[(a=<SEPFUN>){cod.add(a);}
+	FuncPar()]
+}
+
+void Retorno():
+{Token a;} // <RETORNO>Expressao()
+{
+	(a=<RETORNO>){cod.add(a);}
+	Expressao()
+}
+
+void ChamaFuncao():
+{Token a,b;} // NomeVar()<ABREPAR>[ChamaFuncPar()]<FECHAPAR>
+{
+	NomeVar()
+	(a=<ABREPAR>){cod.add(a);}
+	[ChamaFuncPar()]
+	(b=<FECHAPAR>){cod.add(b);}
+}
+
+void ChamaFuncPar():
+{Token a;} // (NomeVar()|ValorVar())[<SEPFUN>FuncPar()]
+{
+	(NomeVar()|ValorVar())
+	[(a=<SEPFUN>){cod.add(a);}
+	FuncPar()]
+}
 
 void Importacao():
 {Token a,b;} //<IMPORT><STRING>
@@ -174,7 +219,7 @@ void Execucao():
 void Linha():
 {Token a;} //((Write()|ManVar())<EOL>)|FluxoDados()
 {
-	((Write()|ManVar())(a=<EOL>){cod.add(a);})
+	((Write()|ManVar()|Retorno())(a=<EOL>){cod.add(a);})
 	|FluxoDados()
 }
 
@@ -188,9 +233,11 @@ void Write():
 }
 
 void ManVar():
-{} //(TipoVar()NomeVar()[Atribuicao()])|(NomeVar()Atribuicao())
+{} //(TipoVar()NomeVar()[Atribuicao()])|(NomeVar()Atribuicao())|(ChamaFuncao())
 {
-	(TipoVar()NomeVar()[Atribuicao()])|(NomeVar()Atribuicao())
+	(TipoVar()NomeVar()[Atribuicao()])
+	|(LOOKAHEAD(3) (NomeVar()Atribuicao())
+	|(ChamaFuncao()))
 }
 
 void TipoVar():
@@ -201,12 +248,12 @@ void TipoVar():
 }
 
 void NomeVar():
-{Token a,b,c;} // <NOMEVAR>[<ABREVET>Expressao()<FECHAVET>]
+{Token a,b,c;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
 {
 	(a=<NOMEVAR>){cod.add(a);}
-	[(b=<ABREVET>){cod.add(b);}
+	[((b=<ABREVET>){cod.add(b);}
 	Expressao()
-	(c=<FECHAVET>){cod.add(c);}]
+	(c=<FECHAVET>){cod.add(c);})]
 }
 
 void Atribuicao():
@@ -227,15 +274,17 @@ void Expressao():
 {Token a,b,c;} /*
 ((<ABREPAR>(Expressao())+<FECHAPAR>)
 | <NOT>Expressao()
-| NomeVar()
-| ValorVar())
+| ValorVar()
+| ChamaFuncao()
+| NomeVar())
 [LOOKAHEAD(2) Operador()Expressao()]
 */
 {
 	(((a=<ABREPAR>){cod.add(a);}(Expressao())+(b=<FECHAPAR>){cod.add(b);})
 	| (c=<NOT>){cod.add(c);}Expressao()
-	| NomeVar()
-	| ValorVar())
+	| ValorVar()
+	| ( LOOKAHEAD(3) ChamaFuncao()
+	| NomeVar()))
 	[LOOKAHEAD(2) Operador()Expressao()]
 }
 
