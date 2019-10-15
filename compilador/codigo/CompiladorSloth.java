@@ -6,8 +6,7 @@ import java.util.List;
 public class CompiladorSloth implements CompiladorSlothConstants {
     private static Codigo cod = new Codigo();
 
-        public static void main(String[] args) throws ParseException
-        {
+    public static void main(String[] args) throws ParseException{
                 try
                 {
                         CompiladorSloth analizador = new CompiladorSloth(System.in) ;
@@ -25,7 +24,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
                                         "Token: " + tokenImage[nome.kind] + " -> " + nome.toString());
                 }
                 }
-        }
+    }
 
   static final public void Programa() throws ParseException {Token a,b;
     label_1:
