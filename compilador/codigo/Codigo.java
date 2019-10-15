@@ -52,7 +52,7 @@ public class Codigo
 	public void verifyVariable(){
 		for(Token elem:tokenList){
 			try{
-				if(tokenImage[elem.kind] == "<NOMEVAR>" && !(variableList.contains(elem))){
+				if(tokenImage[elem.kind] == "<NOMEVAR>" && !(variableList.contains(elem){
 					throw new Exception(); 
 				}
 			}
