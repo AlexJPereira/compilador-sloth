@@ -13,6 +13,17 @@ public class Codigo
 		return tokenList;
 	}
 
+	public void startVirtualToken(){
+		Token a = new Token(999);
+		a.image = "<INICIODAEXP>";
+		tokenList.add(a);
+	}
+
+	public void finishVirtualToken(){
+		Token a = new Token(998);
+		a.image = "<FIMDAEXP>";
+		tokenList.add(a);
+	}
 }
 /*
 - expressoes com string so podem fazer soma
