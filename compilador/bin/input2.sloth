@@ -4,14 +4,21 @@ void funcao1() begin
     write("funcao1");
 end
 
-int funcao2(int a) begin
-    return a+2*4;
+int funcao2(int a, int b, double c) begin
+    return a+b*c;
 end
 
 first
     funcao1();
-    funcao2(2);
-    int a;
-    int b;
-    int abc = 2+3*(a+b)/funcao2(a);
+    int a=1, b=2; 
+    double c = 15.75%;
+    int abc = 2+3*(a+b)/funcao2(a,b,c);
+
+    for(int i=0 : 3 : 1) begin
+        int d = 2;
+        while(d<7) begin
+            write("d =" + d);
+            d = d + 1;
+        end
+    end
 last
