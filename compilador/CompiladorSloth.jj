@@ -137,16 +137,16 @@ TOKEN:
 
 TOKEN:
 {
+	<NOMEVAR: <LETRA>(<CARACTERE>)*>
+}
+
+TOKEN:
+{
 	<STRING: "\""(<ASC>)*"\"">
 	|<INTEIRO: (<DIGITO>)+>
 	|<CARACTER: "'"<ASC>"'">
 	|<REAL: <INTEIRO><PONTO><INTEIRO>>
 	|<PORCENTAGEM: (<REAL>|<INTEIRO>)<PORCE>>
-}
-
-TOKEN:
-{
-	<NOMEVAR: <LETRA>(<CARACTERE>)*>
 }
 
 void Programa():
@@ -376,6 +376,7 @@ void For():
 {
 	(a=<FOR>){cod.add(a);}
 	(b=<ABREPAR>){cod.add(b);}
+	[TipoVar()]
 	NomeVar()
 	(c=<IGUALDADE>){cod.add(c);}
 	(ValorVar()|NomeVar())

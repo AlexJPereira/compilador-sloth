@@ -23,5 +23,7 @@ parametros e o mesmo e se os parametros sao do mesmo tipo
 - verificar se tem string recebendo nao string
 - verificar os casts corretos
 - verificar se nao tem 2 funcoes main
+- for,while e foreach nao pode ser de string
+- checar os tipos do foreach
 
 */
