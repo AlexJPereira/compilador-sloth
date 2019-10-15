@@ -10,9 +10,8 @@ end
 
 first
     funcao1();
-    int a=1; 
-    int b=2; 
-    double c=3;
+    int a=1, b=2; 
+    double c = 15.75%;
     int abc = 2+3*(a+b)/funcao2(a,b,c);
 
     int i;

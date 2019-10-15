@@ -235,7 +235,7 @@ void Write():
 void ManVar():
 {} //(TipoVar()NomeVar()[Atribuicao()])|(NomeVar()Atribuicao())|(ChamaFuncao())
 {
-	(TipoVar()ChamaFuncPar()[Atribuicao()])
+	(TipoVar()ManVarSeq())
 	| ( LOOKAHEAD(3) (NomeVar()Atribuicao())
 	| ChamaFuncao())
 
@@ -244,10 +244,10 @@ void ManVar():
 void ManVarSeq():
 {Token a;}
 {
-	TipoVar()NomeVar()
+	NomeVar()
 	[Atribuicao()]
 	[(a=<SEPFUN>){cod.add(a);}
-	ChamaFuncPar()]
+	ManVarSeq()]
 }
 
 void TipoVar():
