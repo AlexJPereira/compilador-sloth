@@ -1,0 +1,17 @@
+import "algo"
+
+void funcao1() begin
+    write("funcao1");
+end
+
+int funcao2(int a) begin
+    return a+2*4;
+end
+
+first
+    funcao1();
+    funcao2(2);
+    int a;
+    int b;
+    int abc = 2+3*(a+b)/funcao2(a);
+last
