@@ -48,6 +48,7 @@ TOKEN:
 	|<TIPOCHAR: "char">
 	|<TIPOSTRING: "string">
 	|<TIPOBOOLEAN: "boolean">
+	|<TIPOVOID: "void">
 }
 
 TOKEN:
