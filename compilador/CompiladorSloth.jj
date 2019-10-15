@@ -172,7 +172,7 @@ void Funcao():
 void FuncPar():
 {Token a;} // TipoVar()NomeVar()[<SEPFUN>FuncPar()]
 {
-	TipoVar()NomeVar()
+	TipoVar()DeclaraVar()
 	[(a=<SEPFUN>){cod.add(a);}
 	FuncPar()]
 }
@@ -244,7 +244,7 @@ void ManVar():
 void ManVarSeq():
 {Token a;}
 {
-	NomeVar()
+	DeclaraVar()
 	[Atribuicao()]
 	[(a=<SEPFUN>){cod.add(a);}
 	ManVarSeq()]
@@ -257,10 +257,22 @@ void TipoVar():
 	{cod.add(a);}
 }
 
+void DeclaraVar():
+{Token a,b,c;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
+{
+	(a=<NOMEVAR>){cod.add(a);
+	cod.addDVarList(a.image);}
+	[((b=<ABREVET>){cod.add(b);}
+	Expressao()
+	(c=<FECHAVET>){cod.add(c);})]
+}
+
+
 void NomeVar():
 {Token a,b,c;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
 {
-	(a=<NOMEVAR>){cod.add(a);}
+	(a=<NOMEVAR>){cod.verifyVarList(a.image);
+	cod.add(a);}
 	[((b=<ABREVET>){cod.add(b);}
 	Expressao()
 	(c=<FECHAVET>){cod.add(c);})]

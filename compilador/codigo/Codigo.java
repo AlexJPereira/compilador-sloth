@@ -4,9 +4,14 @@ import java.util.List;
 public class Codigo
 {
     private List<Token> tokenList = new ArrayList<Token>();
+	private List<String> dVariableList = new ArrayList<String>();
 
 	public void add(Token t){
 		tokenList.add(t);
+	}
+	
+	public void addDVarList(String t){
+		dVariableList.add(t);
 	}
 
 	public List<Token> getTokenList(){
@@ -23,6 +28,17 @@ public class Codigo
 		Token a = new Token(998);
 		a.image = "<FIMDAEXP>";
 		tokenList.add(a);
+	}
+	
+	public void verifyVarList(String a){
+		try{
+			if(!dVariableList.contains(a)){
+				throw new Exception();
+			}
+		}
+		catch(Exception e){
+				System.out.println("Variavel nao declarada "+ a +"!\n");
+		}
 	}
 }
 /*
