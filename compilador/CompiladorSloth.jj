@@ -10,6 +10,7 @@ public class CompiladorSloth
 		{
 			CompiladorSloth analizador = new CompiladorSloth(System.in) ;
 			analizador.Programa();
+			System.out.println("\n--- Compilado sem erros ---");
 		}
 		catch(ParseException e)
 		{
@@ -23,7 +24,6 @@ public class CompiladorSloth
 					"Token: " + tokenImage[nome.kind] + " -> " + nome.toString());
         	}
 		}
-		System.out.println("\n--- Compilado sem erros ---");
 	}
 }
 PARSER_END(CompiladorSloth)
@@ -198,7 +198,7 @@ void ChamaFuncPar():
 {
 	(NomeVar()|ValorVar())
 	[(a=<SEPFUN>){cod.add(a);}
-	FuncPar()]
+	ChamaFuncPar()]
 }
 
 void Importacao():
@@ -235,9 +235,19 @@ void Write():
 void ManVar():
 {} //(TipoVar()NomeVar()[Atribuicao()])|(NomeVar()Atribuicao())|(ChamaFuncao())
 {
-	(TipoVar()NomeVar()[Atribuicao()])
-	|(LOOKAHEAD(3) (NomeVar()Atribuicao())
-	|(ChamaFuncao()))
+	(TipoVar()ChamaFuncPar()[Atribuicao()])
+	| ( LOOKAHEAD(3) (NomeVar()Atribuicao())
+	| ChamaFuncao())
+
+}
+
+void ManVarSeq():
+{Token a;}
+{
+	TipoVar()NomeVar()
+	[Atribuicao()]
+	[(a=<SEPFUN>){cod.add(a);}
+	ChamaFuncPar()]
 }
 
 void TipoVar():
