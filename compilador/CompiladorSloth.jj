@@ -23,6 +23,8 @@ public class CompiladorSloth
             	System.out.println(
 					"Token: " + tokenImage[nome.kind] + " -> " + nome.toString());
         	}
+			
+			cod.testaMetodo(tokenImage);
 		}
 	}
 }
@@ -211,7 +213,8 @@ void Importacao():
 void Execucao():
 {Token a,b,c;} //<FIRST>(Linha())*<LAST>
 {
-	(a=<FIRST>){cod.add(a);}
+	(a=<FIRST>){cod.add(a);
+	cod.verificaFirst();}
 	(Linha()|(b=<COMENT>){cod.add(b);})*
 	(c=<LAST>){cod.add(c);}
 }

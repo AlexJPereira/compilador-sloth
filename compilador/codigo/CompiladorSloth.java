@@ -22,6 +22,8 @@ public class CompiladorSloth implements CompiladorSlothConstants {
                 System.out.println(
                                         "Token: " + tokenImage[nome.kind] + " -> " + nome.toString());
                 }
+
+                        cod.testaMetodo(tokenImage);
                 }
         }
 
@@ -218,6 +220,7 @@ cod.add(b);
   static final public void Execucao() throws ParseException {Token a,b,c;
     a = jj_consume_token(FIRST);
 cod.add(a);
+        cod.verificaFirst();
     label_3:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -999,15 +1002,6 @@ cod.add(c);
     finally { jj_save(2, xla); }
   }
 
-  static private boolean jj_3R_6()
- {
-    if (jj_scan_token(NOMEVAR)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_11()) jj_scanpos = xsp;
-    return false;
-  }
-
   static private boolean jj_3R_52()
  {
     if (jj_scan_token(FALSE)) return true;
@@ -1325,12 +1319,6 @@ cod.add(c);
     return false;
   }
 
-  static private boolean jj_3R_28()
- {
-    if (jj_3R_25()) return true;
-    return false;
-  }
-
   static private boolean jj_3R_10()
  {
     Token xsp;
@@ -1345,6 +1333,12 @@ cod.add(c);
     }
     }
     }
+    return false;
+  }
+
+  static private boolean jj_3R_28()
+ {
+    if (jj_3R_25()) return true;
     return false;
   }
 
@@ -1404,6 +1398,15 @@ cod.add(c);
  {
     if (jj_scan_token(ABREVET)) return true;
     if (jj_3R_10()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_6()
+ {
+    if (jj_scan_token(NOMEVAR)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_11()) jj_scanpos = xsp;
     return false;
   }
 

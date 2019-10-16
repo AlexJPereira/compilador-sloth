@@ -13,7 +13,8 @@ first
     int a=1, b=2; 
     double c = 15.75%;
     int abc = 2+3*(a+b)/funcao2(a,b,c);
-    resultado = 145;
+    string resultado;
+    resultado = ("Amor")/2;
     for(int i=0 : 3 : 1) begin
         int d = 2;
         while(d<7) begin
@@ -22,3 +23,4 @@ first
         end
     end
 last
+
