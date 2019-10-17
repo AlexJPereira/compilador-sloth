@@ -8,14 +8,15 @@ public class CompiladorSloth
 	{
 		try
 		{
+			System.out.println("\n--->  ECOM06WORK  <---\n");
 			CompiladorSloth analizador = new CompiladorSloth(System.in) ;
 			analizador.Programa();
 			System.out.println("\n--- Compilado sem erros ---");
 		}
 		catch(ParseException e)
 		{
+			System.out.println("Analyzer: errors were found!");
 			System.out.println(e.getMessage());
-			System.out.println("Analizador: foram encontrados alguns erros na analise.");
 		}
 		finally{
 			System.out.println("\n--- Tokens Encontrados ---\n");
@@ -161,10 +162,10 @@ void Programa():
 }
 
 void Funcao():
-{Token a,b;} // (<TIPOVOID>|TipoVar())NomeVar()<ABREPAR>[FuncPar()]<FECHAPAR>Bloco()
+{Token a=null,b;} // (<TIPOVOID>|TipoVar())NomeVar()<ABREPAR>[FuncPar()]<FECHAPAR>Bloco()
 {
-	((a=<TIPOVOID>){cod.add(a);}|TipoVar())
-	NomeVar()
+	((a=<TIPOVOID>){cod.add(a);}|a=TipoVar())
+	DeclaraVar(a)
 	(a=<ABREPAR>){cod.add(a);}
 	[FuncPar()]
 	(b=<FECHAPAR>){cod.add(b);}
@@ -172,9 +173,9 @@ void Funcao():
 }
 
 void FuncPar():
-{Token a;} // TipoVar()NomeVar()[<SEPFUN>FuncPar()]
+{Token a, b;} // TipoVar()NomeVar()[<SEPFUN>FuncPar()]
 {
-	TipoVar()DeclaraVar()
+	b=TipoVar()DeclaraVar(b)
 	[(a=<SEPFUN>){cod.add(a);}
 	FuncPar()]
 }
@@ -236,35 +237,40 @@ void Write():
 }
 
 void ManVar():
-{} //(TipoVar()NomeVar()[Atribuicao()])|(NomeVar()Atribuicao())|(ChamaFuncao())
+{Token a;} //(TipoVar()NomeVar()[Atribuicao()])|(NomeVar()Atribuicao())|(ChamaFuncao())
 {
-	(TipoVar()ManVarSeq())
+	(a=TipoVar()ManVarSeq(a))
 	| ( LOOKAHEAD(3) (NomeVar()Atribuicao())
 	| ChamaFuncao())
 
 }
 
-void ManVarSeq():
+void ManVarSeq(Token b):
 {Token a;}
 {
-	DeclaraVar()
+	DeclaraVar(b)
 	[Atribuicao()]
 	[(a=<SEPFUN>){cod.add(a);}
-	ManVarSeq()]
+	ManVarSeq(b)]
 }
 
-void TipoVar():
+Token TipoVar():
 {Token a=null;} // <TIPOBOOLEAN>|<TIPOCHAR>|<TIPODOUBLE>|<TIPOINT>|<TIPOSTRING>
 {
 	(a=<TIPOBOOLEAN>|a=<TIPOCHAR>|a=<TIPODOUBLE>|a=<TIPOINT>|a=<TIPOSTRING>)
-	{cod.add(a);}
+	{
+		cod.add(a);
+		return a;
+	}
 }
 
-void DeclaraVar():
+void DeclaraVar(Token d):
 {Token a,b,c;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
 {
-	(a=<NOMEVAR>){cod.add(a);
-	cod.addDVarList(a.image);}
+	(a=<NOMEVAR>){
+		cod.add(a);
+		cod.addDVarList(a.image, d.image);
+	}
 	[((b=<ABREVET>){cod.add(b);}
 	Expressao()
 	(c=<FECHAVET>){cod.add(c);})]
@@ -274,7 +280,7 @@ void DeclaraVar():
 void NomeVar():
 {Token a,b,c;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
 {
-	(a=<NOMEVAR>){cod.verifyVarList(a.image);
+	(a=<NOMEVAR>){cod.verifyVarList(a);
 	cod.add(a);}
 	[((b=<ABREVET>){cod.add(b);}
 	Expressao()
@@ -382,7 +388,7 @@ void While():
 }
 
 void For():
-{Token a,b,c,d,e;}/*
+{Token a,b,c,d,e,f;}/*
 <FOR><ABREPAR>NomeVar()<IGUALDADE>
 (ValorVar()|NomeVar())<SEPFOR>
 (ValorVar()|NomeVar())<SEPFOR>
@@ -391,8 +397,7 @@ void For():
 {
 	(a=<FOR>){cod.add(a);}
 	(b=<ABREPAR>){cod.add(b);}
-	[TipoVar()]
-	NomeVar()
+	((f=TipoVar()DeclaraVar(f))|NomeVar())
 	(c=<IGUALDADE>){cod.add(c);}
 	(ValorVar()|NomeVar())
 	(d=<SEPFOR>){cod.add(d);}

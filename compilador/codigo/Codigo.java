@@ -1,20 +1,36 @@
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Stack;
 
 public class Codigo
 {
     private List<Token> tokenList = new ArrayList<Token>();
-	private List<String> dVariableList = new ArrayList<String>();
+	private List<Variable> dVariableList = new ArrayList<Variable>();
+	private Stack<Integer> numLocalVar = new Stack<Integer>();
 	private boolean mainDefinition = false;
+	private boolean localVar = false;
+
+	public void openBloco(){
+		localVar = true;
+		numLocalVar.push(0);
+	}
+
+	public void closeBloco(){
+		for(int i=numLocalVar.pop(); i>0; i--){
+			dVariableList.remove(dVariableList.size() - 1);
+		}
+		if(numLocalVar.empty) localVar = false;
+	}
 
 	public void add(Token t){
 		tokenList.add(t);
 	}
 	
-	public void addDVarList(String t){
-		dVariableList.add(t);
+	public void addDVarList(String id, String type){
+		if(localVar) numLocalVar.push(numLocalVar.pop()+1);
+		Variable var = new Variable(id, type);
+		dVariableList.add(var);
 	}
 
 	public List<Token> getTokenList(){
@@ -32,16 +48,34 @@ public class Codigo
 		a.image = "<FIMDAEXP>";
 		tokenList.add(a);
 	}
+
+	public void _printVar(){
+		for(Variable var : dVariableList){
+			System.out.println(var.getId()+" "+var.getType());
+		}
+	}
 	
-	public void verifyVarList(String a){
-		try{
-			if(!dVariableList.contains(a)){
-				throw new Exception();
+	public void verifyVarList(Token t) throws ParseException{
+		boolean encontrou = false;
+		String a = t.image;
+
+		//try{
+			for(Variable var : dVariableList){
+				if(var.getId().equals(a)){
+					encontrou = true;
+					break;
+				}
 			}
-		}
-		catch(Exception e){
-				System.out.println("Variavel nao declarada "+ a +"!\n");
-		}
+			if(!encontrou){
+				//_printVar();
+				String msg = "Variable " + t.image + " at line " +
+					t.beginLine + ", column " + t.beginColumn + " was not declared.";
+				throw new ParseException(msg);
+			}
+		//}
+		//catch(Exception e){
+		//		System.out.println("Variavel nao declarada "+ a +"!\n");
+		//}
 	}
 	
 	public void testaMetodo(String[] aux){
@@ -61,11 +95,8 @@ public class Codigo
 					do{
 						aux1 = aux[tokenList.get(i-k).kind];
 						aux2 = aux[tokenList.get(i+j).kind];
-						 
 						if(aux1 == "\")\"") k+=1;
 						if(aux2 == "\"(\"") j+=1;
-						System.out.println(aux1);
-						System.out.println(aux2);
 					}while(aux1 == "\")\"" || aux2 == "\"(\"");
 					
 					if(aux1 == "<STRING>" || aux2 == "<STRING>") throw new Exception();
@@ -90,9 +121,27 @@ public class Codigo
 		
 	}
 }
+
+class Variable{
+	private String id;
+	private String type;
+
+	public Variable(String id, String type){
+		this.id = id; 
+		this.type= type; 
+	}
+	
+	public String getId(){
+		return id;
+	}
+	
+	public String getType(){
+		return type; 
+	}
+}
+
 /*
 - expressoes com string so podem fazer soma
-- verificar se variavel ja foi declarada
 - verificar se a funcao ja foi declarada e se o numero de 
 parametros e o mesmo e se os parametros sao do mesmo tipo
 - fazer os imports 
