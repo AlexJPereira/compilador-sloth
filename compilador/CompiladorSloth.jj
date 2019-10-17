@@ -2,7 +2,7 @@ PARSER_BEGIN(CompiladorSloth)
 
 public class CompiladorSloth
 {
-    private static Codigo cod = new Codigo();
+    private static Codigo cod = new Codigo(tokenImage);
     
 	public static void main(String[] args) throws ParseException
 	{
@@ -183,13 +183,14 @@ void Retorno():
 	[Expressao()]
 }
 
-void ChamaFuncao():
-{Token a,b;} // NomeVar()<ABREPAR>[ChamaFuncPar()]<FECHAPAR>
+Token ChamaFuncao():
+{Token a,b,exp;} // NomeVar()<ABREPAR>[ChamaFuncPar()]<FECHAPAR>
 {
-	NomeVar()
+	(exp=NomeVar())
 	(a=<ABREPAR>){cod.add(a);}
 	[ChamaFuncPar()]
-	(b=<FECHAPAR>){cod.add(b);}
+	(b=<FECHAPAR>){cod.add(b);
+	return exp;}
 }
 
 void ChamaFuncPar():
@@ -279,12 +280,12 @@ void DeclaraVar(Token d):
 Token NomeVar():
 {Token a,b,c;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
 {
-	(a=<NOMEVAR>){cod.verifyVarList(a);
+	((a=<NOMEVAR>){cod.verifyVarList(a);
 	cod.add(a);}
 	[((b=<ABREVET>){cod.add(b);
 	cod.openExpressao(9);}
 	Expressao()
-	(c=<FECHAVET>){cod.add(c);})]
+	(c=<FECHAVET>){cod.add(c);})])
 	{return a;}
 }
 
@@ -303,7 +304,7 @@ void Read():
 }
 
 void Expressao():
-{Token a,b,c;} /*
+{Token a,b,c,exp;} /*
 ((<ABREPAR>(Expressao())+<FECHAPAR>)
 | <NOT>Expressao()
 | ValorVar()
@@ -314,9 +315,9 @@ void Expressao():
 {
 	(((a=<ABREPAR>){cod.add(a);}(Expressao())+(b=<FECHAPAR>){cod.add(b);})
 	| (c=<NOT>){cod.add(c);}Expressao()
-	| ValorVar()
-	| ( LOOKAHEAD(3) ChamaFuncao()
-	| NomeVar()))
+	| (exp=ValorVar()){cod.checkVarExpressao(exp);}
+	| ( LOOKAHEAD(3) (exp=ChamaFuncao()){cod.checkVarExpressao(exp);}
+	| (exp=NomeVar())){cod.checkVarExpressao(exp);})
 	[LOOKAHEAD(2) Operador()Expressao()]
 }
 
@@ -354,22 +355,24 @@ void OpRelac():
 	
 }
 
-void ValorVar():
-{Token a,b,c,d,e;} // <INTEIRO>|<REAL>|<CARACTER>|Booleano()|<PORCENTAGEM>|<STRING>
+Token ValorVar():
+{Token a;} // <INTEIRO>|<REAL>|<CARACTER>|Booleano()|<PORCENTAGEM>|<STRING>
 {
-	(a=<INTEIRO>){cod.add(a);}
-	|(b=<REAL>){cod.add(b);}
-	|(c=<CARACTER>){cod.add(c);}
-	|Booleano()
-	|(d=<PORCENTAGEM>){cod.add(d);}
-	|(e = <STRING>){cod.add(e);}
+	((a=<INTEIRO>){cod.add(a);}
+	|(a=<REAL>){cod.add(a);}
+	|(a=<CARACTER>){cod.add(a);}
+	|(a=Booleano())
+	|(a=<PORCENTAGEM>){cod.add(a);}
+	|(a=<STRING>){cod.add(a);})
+	{return a;}
 }
 
-void Booleano():
-{Token a,b;} // <TRUE>|<FALSE>
+Token Booleano():
+{Token a;} // <TRUE>|<FALSE>
 {
-	(a = <TRUE>){cod.add(a);}|
-	(b = <FALSE>){cod.add(b);}
+	((a = <TRUE>){cod.add(a);}|
+	(a = <FALSE>){cod.add(a);})
+	{return a;}
 }
 
 void FluxoDados():

@@ -3,9 +3,10 @@ int test() begin
     return b;
 end
 
-first 
-    int asd = 5;
+first
+    int a = 2;
+    double b = 3;
+    int asd = a+b;
     char ola = 3;
-    string a = test();
     return;
 last

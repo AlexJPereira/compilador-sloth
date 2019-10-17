@@ -12,6 +12,11 @@ public class Codigo
 	private boolean localVar = false;
 	private int expectedReturn = 0;
 	private int scope = 0;
+	private String[] tokenImage;
+
+	public Codigo(String[] ti){
+		this.tokenImage = ti;
+	}
 
 	public void openBloco(){
 		localVar = true;
@@ -37,24 +42,104 @@ public class Codigo
 		expectedReturn = kind;
 	}
 
-	public void checkVarExpressao(Token var){
-		return;
+	public void checkVarExpressao(Token var) throws ParseException{
+		boolean canContinue = false;
+		int id = 0;
+
+		if(var.kind==58) {
+			id = getVarType(var);
+		}
+		else {
+			id = getValueType(var);
+		}
+
+
+		switch (id){
+			case 9:
+				canContinue = checkVarExpressaoInt();
+				break;
+			case 10:
+				canContinue = checkVarExpressaoDouble();
+				break;
+			case 11:
+				canContinue = checkVarExpressaoChar();
+				break;
+			case 12:
+				canContinue = checkVarExpressaoString();
+				break;
+			case 13:
+				canContinue = checkVarExpressaoBoolean();
+				break;
+			case 14:
+				canContinue = checkVarExpressaoVoid();
+				break;
+		}
+		if(!canContinue){
+			throw new ParseException("esperava "+tokenImage[expectedReturn]+" recebeu "+tokenImage[id]);
+		}
 	}
 
 	public boolean checkVarExpressaoInt(){
-		switch(expectedReturn){
-			case 1:
-				return true;
-			default:
-				return false;
-		}
+		//				 int   dou   char  str    bool   void
+		boolean ret[] = {true, true, true, false, false, false};
+		return ret[expectedReturn-9];
+	}
+
+	public boolean checkVarExpressaoDouble(){
+		//				 int    dou   char   str    bool   void
+		boolean ret[] = {false, true, false, false, false, false};
+		return ret[expectedReturn-9];
+	}
+
+	public boolean checkVarExpressaoChar(){
+		//				 int   dou   char  str    bool   void
+		boolean ret[] = {true, true, true, false, false, false};
+		return ret[expectedReturn-9];
+	}
+
+	public boolean checkVarExpressaoString(){
+		//				 int    dou    char   str   bool   void
+		boolean ret[] = {false, false, false, true, false, false};
+		return ret[expectedReturn-9];
+	}
+
+	public boolean checkVarExpressaoBoolean(){
+		//				 int    dou    char   str    bool  void
+		boolean ret[] = {false, false, false, false, true, false};
+		return ret[expectedReturn-9];
+	}
+
+	public boolean checkVarExpressaoVoid(){
+		//				 int    dou    char   str    bool   void
+		boolean ret[] = {false, false, false, false, false, false};
+		return ret[expectedReturn-9];
 	}
 
 	public int getVarType(Token t){
 		for(Variable var : dVariableList){
-			if(var.getId().equals(t)){
+			if(var.getId().equals(t.image)){
 				return var.getType();
 			}
+		}
+		return 0;
+	}
+
+	public int getValueType(Token t){
+		switch(t.kind){
+			case 16:
+				return 13;
+			case 17:
+				return 13;
+			case 59:
+				return 12;
+			case 60:
+				return 9;
+			case 61:
+				return 11;
+			case 62:
+				return 10;
+			case 63:
+				return 10;
 		}
 		return 0;
 	}
