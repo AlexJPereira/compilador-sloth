@@ -10,6 +10,7 @@ public class Codigo
 	private Stack<Integer> numLocalVar = new Stack<Integer>();
 	private boolean mainDefinition = false;
 	private boolean localVar = false;
+	private int expectedReturn = 0;
 
 	public void openBloco(){
 		localVar = true;
@@ -21,6 +22,14 @@ public class Codigo
 			dVariableList.remove(dVariableList.size() - 1);
 		}
 		if(numLocalVar.empty()) localVar = false;
+	}
+
+	public void openExpressao(Token type){
+		expectedReturn = type.kind;
+	}
+
+	public void checkVarExpressao(Token var){
+		
 	}
 
 	public void add(Token t){
@@ -35,18 +44,6 @@ public class Codigo
 
 	public List<Token> getTokenList(){
 		return tokenList;
-	}
-
-	public void startVirtualToken(){
-		Token a = new Token(999);
-		a.image = "<INICIODAEXP>";
-		tokenList.add(a);
-	}
-
-	public void finishVirtualToken(){
-		Token a = new Token(998);
-		a.image = "<FIMDAEXP>";
-		tokenList.add(a);
 	}
 
 	public void _printVar(){
