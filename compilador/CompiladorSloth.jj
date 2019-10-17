@@ -159,7 +159,7 @@ void Programa():
 void Funcao():
 {Token a=null,b;} // (<TIPOVOID>|TipoVar())NomeVar()<ABREPAR>[FuncPar()]<FECHAPAR>Bloco()
 {
-	((a=<TIPOVOID>){cod.add(a);}|a=TipoVar())
+	((a=<TIPOVOID>){cod.add(a);}|a=TipoVar()){cod.setScope(a.kind);}
 	DeclaraVar(a)
 	(a=<ABREPAR>){cod.add(a);cod.openBloco();}
 	[FuncPar()]
@@ -179,7 +179,8 @@ void Retorno():
 {Token a;} // <RETORNO>Expressao()
 {
 	(a=<RETORNO>){cod.add(a);}
-	Expressao()
+	[Expressao()]
+	{cod.pp();}
 }
 
 void ChamaFuncao():
@@ -210,7 +211,8 @@ void Execucao():
 {Token a,b,c;} //<FIRST>(Linha())*<LAST>
 {
 	(a=<FIRST>){cod.add(a);
-	cod.verificaFirst();}
+	cod.verificaFirst();
+	cod.setScope(14);}
 	(Linha()|(b=<COMENT>){cod.add(b);})*
 	(c=<LAST>){cod.add(c);}
 }

@@ -11,6 +11,7 @@ public class Codigo
 	private boolean mainDefinition = false;
 	private boolean localVar = false;
 	private int expectedReturn = 0;
+	private int scope = 0;
 
 	public void openBloco(){
 		localVar = true;
@@ -22,6 +23,14 @@ public class Codigo
 			dVariableList.remove(dVariableList.size() - 1);
 		}
 		if(numLocalVar.empty()) localVar = false;
+	}
+
+	public void setScope(int kind){
+		scope = kind;
+	}
+
+	public void pp(){
+		System.out.println(scope);
 	}
 
 	public void openExpressao(Token type){
