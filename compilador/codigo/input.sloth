@@ -1,8 +1,0 @@
-int test() begin
-    int b = 3;
-    return b;
-end
-
-first
-    write(1+2+3+4*2);
-last
