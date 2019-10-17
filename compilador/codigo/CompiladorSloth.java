@@ -147,6 +147,7 @@ cod.add(a);
   static final public void Retorno() throws ParseException {Token a;
     a = jj_consume_token(RETORNO);
 cod.add(a);
+        cod.openExpressao(cod.getScope());
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case TRUE:
     case FALSE:
@@ -165,7 +166,6 @@ cod.add(a);
       jj_la1[6] = jj_gen;
       ;
     }
-cod.pp();
 }
 
   static final public void ChamaFuncao() throws ParseException {Token a,b;
@@ -348,12 +348,13 @@ cod.add(a);
 cod.add(a);
     b = jj_consume_token(ABREPAR);
 cod.add(b);
+        cod.openExpressao(12);
     Expressao();
     c = jj_consume_token(FECHAPAR);
 cod.add(c);
 }
 
-  static final public void ManVar() throws ParseException {Token a;
+  static final public void ManVar() throws ParseException {Token a,b;
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case TIPOINT:
     case TIPODOUBLE:
@@ -366,8 +367,8 @@ cod.add(c);
       }
     case NOMEVAR:{
       if (jj_2_1(3)) {
-        NomeVar();
-        Atribuicao();
+        b = NomeVar();
+        Atribuicao(cod.getVarType(b));
       } else {
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case NOMEVAR:{
@@ -393,7 +394,7 @@ cod.add(c);
     DeclaraVar(b);
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case IGUALDADE:{
-      Atribuicao();
+      Atribuicao(b.kind);
       break;
       }
     default:
@@ -448,11 +449,12 @@ cod.add(a);
   static final public void DeclaraVar(Token d) throws ParseException {Token a,b,c;
     a = jj_consume_token(NOMEVAR);
 cod.add(a);
-                cod.addDVarList(a.image, d.image);
+                cod.addDVarList(a.image, d.kind);
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case ABREVET:{
       b = jj_consume_token(ABREVET);
 cod.add(b);
+        cod.openExpressao(9);
       Expressao();
       c = jj_consume_token(FECHAVET);
 cod.add(c);
@@ -464,7 +466,7 @@ cod.add(c);
     }
 }
 
-  static final public void NomeVar() throws ParseException {Token a,b,c;
+  static final public Token NomeVar() throws ParseException {Token a,b,c;
     a = jj_consume_token(NOMEVAR);
 cod.verifyVarList(a);
         cod.add(a);
@@ -472,6 +474,7 @@ cod.verifyVarList(a);
     case ABREVET:{
       b = jj_consume_token(ABREVET);
 cod.add(b);
+        cod.openExpressao(9);
       Expressao();
       c = jj_consume_token(FECHAVET);
 cod.add(c);
@@ -481,11 +484,13 @@ cod.add(c);
       jj_la1[20] = jj_gen;
       ;
     }
+{if ("" != null) return a;}
+    throw new Error("Missing return statement in function");
 }
 
-  static final public void Atribuicao() throws ParseException {Token a;
+  static final public void Atribuicao(int kind) throws ParseException {Token a;
     a = jj_consume_token(IGUALDADE);
-cod.add(a);
+cod.add(a);cod.openExpressao(kind);
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case GET:{
       Read();
@@ -810,6 +815,7 @@ cod.closeBloco();
 cod.add(a);
     b = jj_consume_token(ABREPAR);
 cod.add(b);
+        cod.openExpressao(13);
     Expressao();
     c = jj_consume_token(FECHAPAR);
 cod.add(c);
@@ -930,6 +936,7 @@ cod.add(d);
 cod.add(a);
     b = jj_consume_token(ABREPAR);
 cod.add(b);
+        cod.openExpressao(13);
     Expressao();
     c = jj_consume_token(FECHAPAR);
 cod.add(c);
@@ -1028,29 +1035,6 @@ cod.add(c);
     finally { jj_save(2, xla); }
   }
 
-  static private boolean jj_3R_52()
- {
-    if (jj_scan_token(FALSE)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_51()
- {
-    if (jj_scan_token(TRUE)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_50()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_51()) {
-    jj_scanpos = xsp;
-    if (jj_3R_52()) return true;
-    }
-    return false;
-  }
-
   static private boolean jj_3R_49()
  {
     if (jj_scan_token(STRING)) return true;
@@ -1116,6 +1100,12 @@ cod.add(c);
     return false;
   }
 
+  static private boolean jj_3R_13()
+ {
+    if (jj_3R_10()) return true;
+    return false;
+  }
+
   static private boolean jj_3R_42()
  {
     if (jj_scan_token(MAIOR)) return true;
@@ -1149,6 +1139,12 @@ cod.add(c);
   static private boolean jj_3R_37()
  {
     if (jj_scan_token(XOR)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_12()
+ {
+    if (jj_3R_21()) return true;
     return false;
   }
 
@@ -1268,12 +1264,6 @@ cod.add(c);
     return false;
   }
 
-  static private boolean jj_3R_13()
- {
-    if (jj_3R_10()) return true;
-    return false;
-  }
-
   static private boolean jj_3R_15()
  {
     if (jj_3R_23()) return true;
@@ -1288,12 +1278,6 @@ cod.add(c);
     jj_scanpos = xsp;
     if (jj_3R_16()) return true;
     }
-    return false;
-  }
-
-  static private boolean jj_3R_12()
- {
-    if (jj_3R_21()) return true;
     return false;
   }
 
@@ -1380,17 +1364,6 @@ cod.add(c);
     return false;
   }
 
-  static private boolean jj_3R_22()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_27()) {
-    jj_scanpos = xsp;
-    if (jj_3R_28()) return true;
-    }
-    return false;
-  }
-
   static private boolean jj_3R_7()
  {
     if (jj_scan_token(IGUALDADE)) return true;
@@ -1403,9 +1376,27 @@ cod.add(c);
     return false;
   }
 
+  static private boolean jj_3R_22()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_27()) {
+    jj_scanpos = xsp;
+    if (jj_3R_28()) return true;
+    }
+    return false;
+  }
+
   static private boolean jj_3R_14()
  {
     if (jj_3R_22()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_11()
+ {
+    if (jj_scan_token(ABREVET)) return true;
+    if (jj_3R_10()) return true;
     return false;
   }
 
@@ -1420,19 +1411,35 @@ cod.add(c);
     return false;
   }
 
-  static private boolean jj_3R_11()
- {
-    if (jj_scan_token(ABREVET)) return true;
-    if (jj_3R_10()) return true;
-    return false;
-  }
-
   static private boolean jj_3R_6()
  {
     if (jj_scan_token(NOMEVAR)) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_11()) jj_scanpos = xsp;
+    return false;
+  }
+
+  static private boolean jj_3R_52()
+ {
+    if (jj_scan_token(FALSE)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_51()
+ {
+    if (jj_scan_token(TRUE)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_50()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_51()) {
+    jj_scanpos = xsp;
+    if (jj_3R_52()) return true;
+    }
     return false;
   }
 

@@ -29,23 +29,41 @@ public class Codigo
 		scope = kind;
 	}
 
-	public void pp(){
-		System.out.println(scope);
+	public int getScope(){
+		return scope;
 	}
 
-	public void openExpressao(Token type){
-		expectedReturn = type.kind;
+	public void openExpressao(int kind){
+		expectedReturn = kind;
 	}
 
 	public void checkVarExpressao(Token var){
-		
+		return;
+	}
+
+	public boolean checkVarExpressaoInt(){
+		switch(expectedReturn){
+			case 1:
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	public int getVarType(Token t){
+		for(Variable var : dVariableList){
+			if(var.getId().equals(t)){
+				return var.getType();
+			}
+		}
+		return 0;
 	}
 
 	public void add(Token t){
 		tokenList.add(t);
 	}
 	
-	public void addDVarList(String id, String type){
+	public void addDVarList(String id, int type){
 		if(localVar) numLocalVar.push(numLocalVar.pop()+1);
 		Variable var = new Variable(id, type);
 		dVariableList.add(var);
@@ -138,9 +156,9 @@ public class Codigo
 
 class Variable{
 	private String id;
-	private String type;
+	private int type;
 
-	public Variable(String id, String type){
+	public Variable(String id, int type){
 		this.id = id; 
 		this.type= type; 
 	}
@@ -149,7 +167,7 @@ class Variable{
 		return id;
 	}
 	
-	public String getType(){
+	public int getType(){
 		return type; 
 	}
 }

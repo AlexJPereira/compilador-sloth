@@ -178,9 +178,9 @@ void FuncPar():
 void Retorno():
 {Token a;} // <RETORNO>Expressao()
 {
-	(a=<RETORNO>){cod.add(a);}
+	(a=<RETORNO>){cod.add(a);
+	cod.openExpressao(cod.getScope());}
 	[Expressao()]
-	{cod.pp();}
 }
 
 void ChamaFuncao():
@@ -228,16 +228,17 @@ void Write():
 {Token a,b,c;} //<WRITE><ABREPAR>Expressao()<FECHAPAR>
 {
 	(a=<WRITE>){cod.add(a);}
-	(b=<ABREPAR>){cod.add(b);}
+	(b=<ABREPAR>){cod.add(b);
+	cod.openExpressao(12);}
 	Expressao()
 	(c=<FECHAPAR>){cod.add(c);}		
 }
 
 void ManVar():
-{Token a;} //(TipoVar()NomeVar()[Atribuicao()])|(NomeVar()Atribuicao())|(ChamaFuncao())
+{Token a,b;} //(TipoVar()NomeVar()[Atribuicao()])|(NomeVar()Atribuicao())|(ChamaFuncao())
 {
 	(a=TipoVar()ManVarSeq(a))
-	| ( LOOKAHEAD(3) (NomeVar()Atribuicao())
+	| ( LOOKAHEAD(3) (b=NomeVar()Atribuicao(cod.getVarType(b)))
 	| ChamaFuncao())
 
 }
@@ -246,7 +247,7 @@ void ManVarSeq(Token b):
 {Token a;}
 {
 	DeclaraVar(b)
-	[Atribuicao()]
+	[Atribuicao(b.kind)]
 	[(a=<SEPFUN>){cod.add(a);}
 	ManVarSeq(b)]
 }
@@ -266,28 +267,31 @@ void DeclaraVar(Token d):
 {
 	(a=<NOMEVAR>){
 		cod.add(a);
-		cod.addDVarList(a.image, d.image);
+		cod.addDVarList(a.image, d.kind);
 	}
-	[((b=<ABREVET>){cod.add(b);}
+	[((b=<ABREVET>){cod.add(b);
+	cod.openExpressao(9);}
 	Expressao()
 	(c=<FECHAVET>){cod.add(c);})]
 }
 
 
-void NomeVar():
+Token NomeVar():
 {Token a,b,c;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
 {
 	(a=<NOMEVAR>){cod.verifyVarList(a);
 	cod.add(a);}
-	[((b=<ABREVET>){cod.add(b);}
+	[((b=<ABREVET>){cod.add(b);
+	cod.openExpressao(9);}
 	Expressao()
 	(c=<FECHAVET>){cod.add(c);})]
+	{return a;}
 }
 
-void Atribuicao():
+void Atribuicao(int kind):
 {Token a;} // <IGUALDADE>(Read()|Expressao())
 {
-	(a=<IGUALDADE>){cod.add(a);}(Read()|Expressao())
+	(a=<IGUALDADE>){cod.add(a);cod.openExpressao(kind);}(Read()|Expressao())
 }
 
 void Read():
@@ -380,7 +384,8 @@ void While():
 {Token a,b,c;} // <WHILE><ABREPAR>Expressao()<FECHAPAR>Bloco()
 {
 	(a=<WHILE>){cod.add(a);}
-	(b=<ABREPAR>){cod.add(b);}
+	(b=<ABREPAR>){cod.add(b);
+	cod.openExpressao(13);}
 	Expressao()
 	(c=<FECHAPAR>){cod.add(c);}
 	Bloco()
@@ -423,7 +428,8 @@ void If():
 {Token a,b,c,d;} // <IF><ABREPAR>Expressao()<FECHAPAR>Bloco()[<ELSE>Bloco()]
 {
 	(a=<IF>){cod.add(a);}
-	(b=<ABREPAR>){cod.add(b);}
+	(b=<ABREPAR>){cod.add(b);
+	cod.openExpressao(13);}
 	Expressao()
 	(c = <FECHAPAR>){cod.add(c);}
 	Bloco()
