@@ -18,12 +18,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
                         System.out.println(e.getMessage());
                 }
                 finally{
-                        System.out.println("\n--- Tokens Encontrados ---\n");
-                        for(Token nome : cod.getTokenList()){
-                System.out.println(
-                                        "Token: " + tokenImage[nome.kind] + " -> " + nome.toString());
-                }
-
+                        //cod.printTokens(tokenImage);
                         cod.testaMetodo(tokenImage);
                 }
         }
@@ -112,7 +107,7 @@ cod.add(a);
     }
     DeclaraVar(a);
     a = jj_consume_token(ABREPAR);
-cod.add(a);
+cod.add(a);cod.openBloco();
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case TIPOINT:
     case TIPODOUBLE:
@@ -129,6 +124,7 @@ cod.add(a);
     b = jj_consume_token(FECHAPAR);
 cod.add(b);
     Bloco();
+cod.closeBloco();
 }
 
   static final public void FuncPar() throws ParseException {Token a, b;
@@ -763,6 +759,7 @@ cod.add(b);
 }
 
   static final public void FluxoDados() throws ParseException {
+cod.openBloco();
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case WHILE:{
       While();
@@ -785,6 +782,7 @@ cod.add(b);
       jj_consume_token(-1);
       throw new ParseException();
     }
+cod.closeBloco();
 }
 
   static final public void While() throws ParseException {Token a,b,c;
@@ -1008,6 +1006,12 @@ cod.add(c);
     try { return (!jj_3_3()); }
     catch(LookaheadSuccess ls) { return true; }
     finally { jj_save(2, xla); }
+  }
+
+  static private boolean jj_3R_52()
+ {
+    if (jj_scan_token(FALSE)) return true;
+    return false;
   }
 
   static private boolean jj_3R_51()
@@ -1409,12 +1413,6 @@ cod.add(c);
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_11()) jj_scanpos = xsp;
-    return false;
-  }
-
-  static private boolean jj_3R_52()
- {
-    if (jj_scan_token(FALSE)) return true;
     return false;
   }
 

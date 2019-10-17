@@ -20,7 +20,7 @@ public class Codigo
 		for(int i=numLocalVar.pop(); i>0; i--){
 			dVariableList.remove(dVariableList.size() - 1);
 		}
-		if(numLocalVar.empty) localVar = false;
+		if(numLocalVar.empty()) localVar = false;
 	}
 
 	public void add(Token t){
@@ -119,6 +119,14 @@ public class Codigo
 			System.out.println("Programa principal definido 2x!");
 		}
 		
+	}
+
+	public void printTokens(String[] tokenImage){
+		System.out.println("\n--- Tokens Encontrados ---\n");
+		for(Token nome : tokenList){
+            System.out.println(
+				"Token: " + tokenImage[nome.kind] + " -> " + nome.toString());
+        }
 	}
 }
 

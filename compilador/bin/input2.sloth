@@ -10,15 +10,16 @@ end
 
 first
     funcao1();
-    int a=1, b=2; 
+    int a=3, b=2;
     string c = "3.2";
     int abc = 2+3*(c+b)/funcao2(a,b,c);
     for(int i=0 : 3 : 1) begin
-        int d = 2;
+        int d = 3;
         while(d<7) begin
             write("d =" + d);
-            d = d + 1;
+            d = a + 1;
         end
+        a = a + i;
     end
 last
 

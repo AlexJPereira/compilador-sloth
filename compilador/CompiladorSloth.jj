@@ -19,12 +19,7 @@ public class CompiladorSloth
 			System.out.println(e.getMessage());
 		}
 		finally{
-			System.out.println("\n--- Tokens Encontrados ---\n");
-			for(Token nome : cod.getTokenList()){
-            	System.out.println(
-					"Token: " + tokenImage[nome.kind] + " -> " + nome.toString());
-        	}
-			
+			//cod.printTokens(tokenImage);
 			cod.testaMetodo(tokenImage);
 		}
 	}
@@ -166,10 +161,10 @@ void Funcao():
 {
 	((a=<TIPOVOID>){cod.add(a);}|a=TipoVar())
 	DeclaraVar(a)
-	(a=<ABREPAR>){cod.add(a);}
+	(a=<ABREPAR>){cod.add(a);cod.openBloco();}
 	[FuncPar()]
 	(b=<FECHAPAR>){cod.add(b);}
-	Bloco()
+	Bloco(){cod.closeBloco();}
 }
 
 void FuncPar():
@@ -374,7 +369,9 @@ void Booleano():
 void FluxoDados():
 {} // While()|For()|Foreach()|If()
 {
-	While()|For()|Foreach()|If()
+	{cod.openBloco();}
+	(While()|For()|Foreach()|If())
+	{cod.closeBloco();}
 }
 
 void While():
