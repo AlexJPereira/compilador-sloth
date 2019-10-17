@@ -2,27 +2,25 @@ PARSER_BEGIN(CompiladorSloth)
 
 public class CompiladorSloth
 {
-    private static Codigo cod = new Codigo();
+    private static Codigo cod = new Codigo(tokenImage);
     
 	public static void main(String[] args) throws ParseException
 	{
 		try
 		{
+			System.out.println("\n--->  Sloth Compiler  <---\n");
 			CompiladorSloth analizador = new CompiladorSloth(System.in) ;
 			analizador.Programa();
 			System.out.println("\n--- Compilado sem erros ---");
 		}
 		catch(ParseException e)
 		{
+			System.out.println("Analyzer: errors were found!");
 			System.out.println(e.getMessage());
-			System.out.println("Analizador: foram encontrados alguns erros na analise.");
 		}
 		finally{
-			System.out.println("\n--- Tokens Encontrados ---\n");
-			for(Token nome : cod.getTokenList()){
-            	System.out.println(
-					"Token: " + tokenImage[nome.kind] + " -> " + nome.toString());
-        	}
+			cod.printTokens(tokenImage);
+			//cod.testaMetodo(tokenImage);
 		}
 	}
 }
@@ -159,20 +157,20 @@ void Programa():
 }
 
 void Funcao():
-{Token a,b;} // (<TIPOVOID>|TipoVar())NomeVar()<ABREPAR>[FuncPar()]<FECHAPAR>Bloco()
+{Token a=null,b;} // (<TIPOVOID>|TipoVar())NomeVar()<ABREPAR>[FuncPar()]<FECHAPAR>Bloco()
 {
-	((a=<TIPOVOID>){cod.add(a);}|TipoVar())
-	NomeVar()
-	(a=<ABREPAR>){cod.add(a);}
+	((a=<TIPOVOID>){cod.add(a);}|a=TipoVar()){cod.setScope(a.kind);}
+	DeclaraVar(a)
+	(a=<ABREPAR>){cod.add(a);cod.openBloco();}
 	[FuncPar()]
 	(b=<FECHAPAR>){cod.add(b);}
-	Bloco()
+	Bloco(){cod.closeBloco();}
 }
 
 void FuncPar():
-{Token a;} // TipoVar()NomeVar()[<SEPFUN>FuncPar()]
+{Token a, b;} // TipoVar()NomeVar()[<SEPFUN>FuncPar()]
 {
-	TipoVar()NomeVar()
+	b=TipoVar()DeclaraVar(b)
 	[(a=<SEPFUN>){cod.add(a);}
 	FuncPar()]
 }
@@ -180,17 +178,19 @@ void FuncPar():
 void Retorno():
 {Token a;} // <RETORNO>Expressao()
 {
-	(a=<RETORNO>){cod.add(a);}
-	Expressao()
+	(a=<RETORNO>){cod.add(a);
+	cod.openExpressao(cod.getScope());}
+	[Expressao()]
 }
 
-void ChamaFuncao():
-{Token a,b;} // NomeVar()<ABREPAR>[ChamaFuncPar()]<FECHAPAR>
+Token ChamaFuncao():
+{Token a,b,exp;} // NomeVar()<ABREPAR>[ChamaFuncPar()]<FECHAPAR>
 {
-	NomeVar()
+	(exp=NomeVar())
 	(a=<ABREPAR>){cod.add(a);}
 	[ChamaFuncPar()]
-	(b=<FECHAPAR>){cod.add(b);}
+	(b=<FECHAPAR>){cod.add(b);
+	return exp;}
 }
 
 void ChamaFuncPar():
@@ -211,7 +211,9 @@ void Importacao():
 void Execucao():
 {Token a,b,c;} //<FIRST>(Linha())*<LAST>
 {
-	(a=<FIRST>){cod.add(a);}
+	(a=<FIRST>){cod.add(a);
+	cod.verificaFirst();
+	cod.setScope(14);}
 	(Linha()|(b=<COMENT>){cod.add(b);})*
 	(c=<LAST>){cod.add(c);}
 }
@@ -227,49 +229,70 @@ void Write():
 {Token a,b,c;} //<WRITE><ABREPAR>Expressao()<FECHAPAR>
 {
 	(a=<WRITE>){cod.add(a);}
-	(b=<ABREPAR>){cod.add(b);}
+	(b=<ABREPAR>){cod.add(b);
+	cod.openExpressao(12);}
 	Expressao()
 	(c=<FECHAPAR>){cod.add(c);}		
 }
 
 void ManVar():
-{} //(TipoVar()NomeVar()[Atribuicao()])|(NomeVar()Atribuicao())|(ChamaFuncao())
+{Token a,b;} //(TipoVar()NomeVar()[Atribuicao()])|(NomeVar()Atribuicao())|(ChamaFuncao())
 {
-	(TipoVar()ManVarSeq())
-	| ( LOOKAHEAD(3) (NomeVar()Atribuicao())
+	(a=TipoVar()ManVarSeq(a))
+	| ( LOOKAHEAD(3) (b=NomeVar()Atribuicao(cod.getVarType(b)))
 	| ChamaFuncao())
 
 }
 
-void ManVarSeq():
+void ManVarSeq(Token b):
 {Token a;}
 {
-	NomeVar()
-	[Atribuicao()]
+	DeclaraVar(b)
+	[Atribuicao(b.kind)]
 	[(a=<SEPFUN>){cod.add(a);}
-	ManVarSeq()]
+	ManVarSeq(b)]
 }
 
-void TipoVar():
+Token TipoVar():
 {Token a=null;} // <TIPOBOOLEAN>|<TIPOCHAR>|<TIPODOUBLE>|<TIPOINT>|<TIPOSTRING>
 {
 	(a=<TIPOBOOLEAN>|a=<TIPOCHAR>|a=<TIPODOUBLE>|a=<TIPOINT>|a=<TIPOSTRING>)
-	{cod.add(a);}
+	{
+		cod.add(a);
+		return a;
+	}
 }
 
-void NomeVar():
+void DeclaraVar(Token d):
 {Token a,b,c;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
 {
-	(a=<NOMEVAR>){cod.add(a);}
-	[((b=<ABREVET>){cod.add(b);}
+	(a=<NOMEVAR>){
+		cod.add(a);
+		cod.addDVarList(a.image, d.kind);
+	}
+	[((b=<ABREVET>){cod.add(b);
+	cod.openExpressao(9);}
 	Expressao()
 	(c=<FECHAVET>){cod.add(c);})]
 }
 
-void Atribuicao():
+
+Token NomeVar():
+{Token a,b,c;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
+{
+	((a=<NOMEVAR>){cod.verifyVarList(a);
+	cod.add(a);}
+	[((b=<ABREVET>){cod.add(b);
+	cod.openExpressao(9);}
+	Expressao()
+	(c=<FECHAVET>){cod.add(c);})])
+	{return a;}
+}
+
+void Atribuicao(int kind):
 {Token a;} // <IGUALDADE>(Read()|Expressao())
 {
-	(a=<IGUALDADE>){cod.add(a);}(Read()|Expressao())
+	(a=<IGUALDADE>){cod.add(a);cod.openExpressao(kind);}(Read()|Expressao())
 }
 
 void Read():
@@ -281,7 +304,7 @@ void Read():
 }
 
 void Expressao():
-{Token a,b,c;} /*
+{Token a,b,c,exp;} /*
 ((<ABREPAR>(Expressao())+<FECHAPAR>)
 | <NOT>Expressao()
 | ValorVar()
@@ -292,82 +315,88 @@ void Expressao():
 {
 	(((a=<ABREPAR>){cod.add(a);}(Expressao())+(b=<FECHAPAR>){cod.add(b);})
 	| (c=<NOT>){cod.add(c);}Expressao()
-	| ValorVar()
-	| ( LOOKAHEAD(3) ChamaFuncao()
-	| NomeVar()))
+	| (exp=ValorVar()){cod.checkVarExpressao(exp);}
+	| ( LOOKAHEAD(3) (exp=ChamaFuncao()){cod.checkVarExpressao(exp);}
+	| (exp=NomeVar())){cod.checkVarExpressao(exp);})
 	[LOOKAHEAD(2) Operador()Expressao()]
 }
 
 void Operador():
-{} // OpArit()|OpRelac()
+{Token a=null;} // OpArit()|OpRelac()
 {
-	OpArit()|OpRelac()
+	((a=OpArit())|(a=OpRelac()))
+	{cod.checkOpExpressao(a);}
 }
 
-void OpArit():
-{Token a,b,c,d,e,f;} // <ADD>|<SUB>|<MOD>|<DIV>|<POW>|<MULT>
+Token OpArit():
+{Token a;} // <ADD>|<SUB>|<MOD>|<DIV>|<POW>|<MULT>
 {
-	(a = <ADD>){cod.add(a);}|
-	(b = <SUB>){cod.add(b);}|
-	(c = <MOD>){cod.add(c);}|
-	(d = <DIV>){cod.add(d);}|
-	(e = <POW>){cod.add(e);}|
-	(f = <MULT>){cod.add(f);}
-
+	((a = <ADD>){cod.add(a);}|
+	(a = <SUB>){cod.add(a);}|
+	(a = <MOD>){cod.add(a);}|
+	(a = <DIV>){cod.add(a);}|
+	(a = <POW>){cod.add(a);}|
+	(a = <MULT>){cod.add(a);})
+	{return a;}
 }
 
-void OpRelac():
-{Token a,b,c,d,e,f,g,h,i;} // <AND>|<OR>|<XOR>|<IGUAL>|<DIF>|<MAIGUAL>|<MEIGUAL>|<MAIOR>|<MENOR>
-   // Talvez ele de um warning com o <MAIGUAL> e <MAIOR> e do menor
+Token OpRelac():
+{Token a;} // <AND>|<OR>|<XOR>|<IGUAL>|<DIF>|<MAIGUAL>|<MEIGUAL>|<MAIOR>|<MENOR>
 {
-	(a=<AND>){cod.add(a);}
-	|(b=<OR>){cod.add(b);}
-	|(c=<XOR>){cod.add(c);}
-	|(d=<IGUAL>){cod.add(d);}
-	|(e=<DIF>){cod.add(e);}
-	|(f=<MAIGUAL>){cod.add(f);}
-	|(g=<MEIGUAL>){cod.add(g);}
-	|(h=<MAIOR>){cod.add(h);}
-	|(i=<MENOR>){cod.add(i);}
+	((a=<AND>){cod.add(a);}
+	|(a=<OR>){cod.add(a);}
+	|(a=<XOR>){cod.add(a);}
+	|(a=<IGUAL>){cod.add(a);}
+	|(a=<DIF>){cod.add(a);}
+	|(a=<MAIGUAL>){cod.add(a);}
+	|(a=<MEIGUAL>){cod.add(a);}
+	|(a=<MAIOR>){cod.add(a);}
+	|(a=<MENOR>){cod.add(a);})
+	{return a;}
 	
 }
 
-void ValorVar():
-{Token a,b,c,d,e;} // <INTEIRO>|<REAL>|<CARACTER>|Booleano()|<PORCENTAGEM>|<STRING>
+Token ValorVar():
+{Token a;} // <INTEIRO>|<REAL>|<CARACTER>|Booleano()|<PORCENTAGEM>|<STRING>
 {
-	(a=<INTEIRO>){cod.add(a);}
-	|(b=<REAL>){cod.add(b);}
-	|(c=<CARACTER>){cod.add(c);}
-	|Booleano()
-	|(d=<PORCENTAGEM>){cod.add(d);}
-	|(e = <STRING>){cod.add(e);}
+	((a=<INTEIRO>){cod.add(a);}
+	|(a=<REAL>){cod.add(a);}
+	|(a=<CARACTER>){cod.add(a);}
+	|(a=Booleano())
+	|(a=<PORCENTAGEM>){cod.add(a);}
+	|(a=<STRING>){cod.add(a);})
+	{return a;}
 }
 
-void Booleano():
-{Token a,b;} // <TRUE>|<FALSE>
+Token Booleano():
+{Token a;} // <TRUE>|<FALSE>
 {
-	(a = <TRUE>){cod.add(a);}|
-	(b = <FALSE>){cod.add(b);}
+	((a = <TRUE>){cod.add(a);}|
+	(a = <FALSE>){cod.add(a);})
+	{return a;}
 }
 
 void FluxoDados():
 {} // While()|For()|Foreach()|If()
 {
-	While()|For()|Foreach()|If()
+	{cod.openBloco();}
+	(While()|For()|Foreach()|If())
+	{cod.closeBloco();}
 }
 
 void While():
 {Token a,b,c;} // <WHILE><ABREPAR>Expressao()<FECHAPAR>Bloco()
 {
 	(a=<WHILE>){cod.add(a);}
-	(b=<ABREPAR>){cod.add(b);}
+	(b=<ABREPAR>){cod.add(b);
+	cod.openExpressao(13);}
 	Expressao()
 	(c=<FECHAPAR>){cod.add(c);}
 	Bloco()
 }
 
 void For():
-{Token a,b,c,d,e;}/*
+{Token a,b,c,d,e,f;}/*
 <FOR><ABREPAR>NomeVar()<IGUALDADE>
 (ValorVar()|NomeVar())<SEPFOR>
 (ValorVar()|NomeVar())<SEPFOR>
@@ -376,8 +405,7 @@ void For():
 {
 	(a=<FOR>){cod.add(a);}
 	(b=<ABREPAR>){cod.add(b);}
-	[TipoVar()]
-	NomeVar()
+	((f=TipoVar()DeclaraVar(f))|NomeVar())
 	(c=<IGUALDADE>){cod.add(c);}
 	(ValorVar()|NomeVar())
 	(d=<SEPFOR>){cod.add(d);}
@@ -404,7 +432,8 @@ void If():
 {Token a,b,c,d;} // <IF><ABREPAR>Expressao()<FECHAPAR>Bloco()[<ELSE>Bloco()]
 {
 	(a=<IF>){cod.add(a);}
-	(b=<ABREPAR>){cod.add(b);}
+	(b=<ABREPAR>){cod.add(b);
+	cod.openExpressao(13);}
 	Expressao()
 	(c = <FECHAPAR>){cod.add(c);}
 	Bloco()

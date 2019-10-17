@@ -1,8 +1,8 @@
-public class app{
+import java.util.Stack;
+
+public class testes{
     public static void main(String[] args){
-        String test = "oi";
-        for(char letra : test){
-            System.out.println(letra);
-        }
+        String a = "1"+2*3;
+        System.out.println(a);
     }
 }
