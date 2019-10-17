@@ -4,7 +4,5 @@ int test() begin
 end
 
 first
-    string a = 1+2+3+4;
-    string b = "oi"+true+2+3.0/5
-    return;
+    write(1+2+3+4*2);
 last
