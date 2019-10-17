@@ -4,9 +4,7 @@ int test() begin
 end
 
 first
-    int a = 2;
-    double b = 3;
-    int asd = a+b;
-    char ola = 3;
+    string a = 1+2+3+4;
+    string b = "oi"+true+2+3.0/5
     return;
 last

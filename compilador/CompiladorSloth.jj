@@ -8,7 +8,7 @@ public class CompiladorSloth
 	{
 		try
 		{
-			System.out.println("\n--->  ECOM06WORK  <---\n");
+			System.out.println("\n--->  Sloth Compiler  <---\n");
 			CompiladorSloth analizador = new CompiladorSloth(System.in) ;
 			analizador.Programa();
 			System.out.println("\n--- Compilado sem erros ---");
@@ -322,36 +322,37 @@ void Expressao():
 }
 
 void Operador():
-{} // OpArit()|OpRelac()
+{Token a=null;} // OpArit()|OpRelac()
 {
-	OpArit()|OpRelac()
+	((a=OpArit())|(a=OpRelac()))
+	{cod.checkOpExpressao(a);}
 }
 
-void OpArit():
-{Token a,b,c,d,e,f;} // <ADD>|<SUB>|<MOD>|<DIV>|<POW>|<MULT>
+Token OpArit():
+{Token a;} // <ADD>|<SUB>|<MOD>|<DIV>|<POW>|<MULT>
 {
-	(a = <ADD>){cod.add(a);}|
-	(b = <SUB>){cod.add(b);}|
-	(c = <MOD>){cod.add(c);}|
-	(d = <DIV>){cod.add(d);}|
-	(e = <POW>){cod.add(e);}|
-	(f = <MULT>){cod.add(f);}
-
+	((a = <ADD>){cod.add(a);}|
+	(a = <SUB>){cod.add(a);}|
+	(a = <MOD>){cod.add(a);}|
+	(a = <DIV>){cod.add(a);}|
+	(a = <POW>){cod.add(a);}|
+	(a = <MULT>){cod.add(a);})
+	{return a;}
 }
 
-void OpRelac():
-{Token a,b,c,d,e,f,g,h,i;} // <AND>|<OR>|<XOR>|<IGUAL>|<DIF>|<MAIGUAL>|<MEIGUAL>|<MAIOR>|<MENOR>
-   // Talvez ele de um warning com o <MAIGUAL> e <MAIOR> e do menor
+Token OpRelac():
+{Token a;} // <AND>|<OR>|<XOR>|<IGUAL>|<DIF>|<MAIGUAL>|<MEIGUAL>|<MAIOR>|<MENOR>
 {
-	(a=<AND>){cod.add(a);}
-	|(b=<OR>){cod.add(b);}
-	|(c=<XOR>){cod.add(c);}
-	|(d=<IGUAL>){cod.add(d);}
-	|(e=<DIF>){cod.add(e);}
-	|(f=<MAIGUAL>){cod.add(f);}
-	|(g=<MEIGUAL>){cod.add(g);}
-	|(h=<MAIOR>){cod.add(h);}
-	|(i=<MENOR>){cod.add(i);}
+	((a=<AND>){cod.add(a);}
+	|(a=<OR>){cod.add(a);}
+	|(a=<XOR>){cod.add(a);}
+	|(a=<IGUAL>){cod.add(a);}
+	|(a=<DIF>){cod.add(a);}
+	|(a=<MAIGUAL>){cod.add(a);}
+	|(a=<MEIGUAL>){cod.add(a);}
+	|(a=<MAIOR>){cod.add(a);}
+	|(a=<MENOR>){cod.add(a);})
+	{return a;}
 	
 }
 

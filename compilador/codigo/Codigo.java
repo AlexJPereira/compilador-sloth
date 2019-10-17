@@ -5,6 +5,7 @@ import java.util.Stack;
 
 public class Codigo
 {
+	private String[] tokenImage;
     private List<Token> tokenList = new ArrayList<Token>();
 	private List<Variable> dVariableList = new ArrayList<Variable>();
 	private Stack<Integer> numLocalVar = new Stack<Integer>();
@@ -12,7 +13,6 @@ public class Codigo
 	private boolean localVar = false;
 	private int expectedReturn = 0;
 	private int scope = 0;
-	private String[] tokenImage;
 
 	public Codigo(String[] ti){
 		this.tokenImage = ti;
@@ -53,7 +53,6 @@ public class Codigo
 			id = getValueType(var);
 		}
 
-
 		switch (id){
 			case 9:
 				canContinue = checkVarExpressaoInt();
@@ -75,25 +74,27 @@ public class Codigo
 				break;
 		}
 		if(!canContinue){
-			throw new ParseException("esperava "+tokenImage[expectedReturn]+" recebeu "+tokenImage[id]);
+			String msg = "Expected "+tokenImage[expectedReturn]+" from "+ var.image + " at line " +
+					var.beginLine + ", column " + var.beginColumn+", wich is "+tokenImage[id];
+			throw new ParseException(msg);
 		}
 	}
 
 	public boolean checkVarExpressaoInt(){
-		//				 int   dou   char  str    bool   void
-		boolean ret[] = {true, true, true, false, false, false};
+		//				 int   dou   char  str   bool   void
+		boolean ret[] = {true, true, true, true, false, false};
 		return ret[expectedReturn-9];
 	}
 
 	public boolean checkVarExpressaoDouble(){
-		//				 int    dou   char   str    bool   void
-		boolean ret[] = {false, true, false, false, false, false};
+		//				 int    dou   char   str   bool   void
+		boolean ret[] = {false, true, false, true, false, false};
 		return ret[expectedReturn-9];
 	}
 
 	public boolean checkVarExpressaoChar(){
-		//				 int   dou   char  str    bool   void
-		boolean ret[] = {true, true, true, false, false, false};
+		//				 int   dou   char  str   bool   void
+		boolean ret[] = {true, true, true, true, false, false};
 		return ret[expectedReturn-9];
 	}
 
@@ -104,8 +105,8 @@ public class Codigo
 	}
 
 	public boolean checkVarExpressaoBoolean(){
-		//				 int    dou    char   str    bool  void
-		boolean ret[] = {false, false, false, false, true, false};
+		//				 int    dou    char   str   bool  void
+		boolean ret[] = {false, false, false, true, true, false};
 		return ret[expectedReturn-9];
 	}
 
@@ -113,6 +114,14 @@ public class Codigo
 		//				 int    dou    char   str    bool   void
 		boolean ret[] = {false, false, false, false, false, false};
 		return ret[expectedReturn-9];
+	}
+
+	public void checkOpExpressao(Token op) throws ParseException{
+		if(expectedReturn==12 && op.kind!=22){
+			String msg = "Expected + from "+ op.image + " at line " +
+					op.beginLine + ", column " + op.beginColumn+".";
+			throw new ParseException(msg);
+		}
 	}
 
 	public int getVarType(Token t){
@@ -185,37 +194,6 @@ public class Codigo
 		//catch(Exception e){
 		//		System.out.println("Variavel nao declarada "+ a +"!\n");
 		//}
-	}
-	
-	public void testaMetodo(String[] aux){
-		for(int i = 0; i < tokenList.size(); i++){
-			Token elem = tokenList.get(i);
-			String aux1 = new String();
-			String aux2 = new String();
-			try{
-				if(aux[elem.kind] == "\"-\""|
-				aux[elem.kind] == "\"*\""|
-				aux[elem.kind] == "\"//\""|
-				aux[elem.kind] == "\"/\""|
-				aux[elem.kind] == "\"^\""|
-				aux[elem.kind] == "\"%\""){
-					int k = 1;
-					int j = 1;
-					do{
-						aux1 = aux[tokenList.get(i-k).kind];
-						aux2 = aux[tokenList.get(i+j).kind];
-						if(aux1 == "\")\"") k+=1;
-						if(aux2 == "\"(\"") j+=1;
-					}while(aux1 == "\")\"" || aux2 == "\"(\"");
-					
-					if(aux1 == "<STRING>" || aux2 == "<STRING>") throw new Exception();
-				}
-			}
-			catch(Exception e){
-				System.out.println("Operacao invalida com String = " +
-				aux1 + aux[elem.kind] + aux2+"\n");
-			}
-		}
 	}
 	
 	public void verificaFirst(){

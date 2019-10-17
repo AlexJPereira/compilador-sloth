@@ -7,7 +7,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
         {
                 try
                 {
-                        System.out.println("\n--->  ECOM06WORK  <---\n");
+                        System.out.println("\n--->  Sloth Compiler  <---\n");
                         CompiladorSloth analizador = new CompiladorSloth(System.in) ;
                         analizador.Programa();
                         System.out.println("\n--- Compilado sem erros ---");
@@ -607,7 +607,7 @@ cod.checkVarExpressao(exp);
     }
 }
 
-  static final public void Operador() throws ParseException {
+  static final public void Operador() throws ParseException {Token a=null;
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case ADD:
     case SUB:
@@ -615,7 +615,7 @@ cod.checkVarExpressao(exp);
     case MOD:
     case DIV:
     case POW:{
-      OpArit();
+      a = OpArit();
       break;
       }
     case IGUAL:
@@ -627,7 +627,7 @@ cod.checkVarExpressao(exp);
     case AND:
     case OR:
     case XOR:{
-      OpRelac();
+      a = OpRelac();
       break;
       }
     default:
@@ -635,9 +635,10 @@ cod.checkVarExpressao(exp);
       jj_consume_token(-1);
       throw new ParseException();
     }
+cod.checkOpExpressao(a);
 }
 
-  static final public void OpArit() throws ParseException {Token a,b,c,d,e,f;
+  static final public Token OpArit() throws ParseException {Token a;
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case ADD:{
       a = jj_consume_token(ADD);
@@ -645,28 +646,28 @@ cod.add(a);
       break;
       }
     case SUB:{
-      b = jj_consume_token(SUB);
-cod.add(b);
+      a = jj_consume_token(SUB);
+cod.add(a);
       break;
       }
     case MOD:{
-      c = jj_consume_token(MOD);
-cod.add(c);
+      a = jj_consume_token(MOD);
+cod.add(a);
       break;
       }
     case DIV:{
-      d = jj_consume_token(DIV);
-cod.add(d);
+      a = jj_consume_token(DIV);
+cod.add(a);
       break;
       }
     case POW:{
-      e = jj_consume_token(POW);
-cod.add(e);
+      a = jj_consume_token(POW);
+cod.add(a);
       break;
       }
     case MULT:{
-      f = jj_consume_token(MULT);
-cod.add(f);
+      a = jj_consume_token(MULT);
+cod.add(a);
       break;
       }
     default:
@@ -674,9 +675,11 @@ cod.add(f);
       jj_consume_token(-1);
       throw new ParseException();
     }
+{if ("" != null) return a;}
+    throw new Error("Missing return statement in function");
 }
 
-  static final public void OpRelac() throws ParseException {Token a,b,c,d,e,f,g,h,i;
+  static final public Token OpRelac() throws ParseException {Token a;
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case AND:{
       a = jj_consume_token(AND);
@@ -684,43 +687,43 @@ cod.add(a);
       break;
       }
     case OR:{
-      b = jj_consume_token(OR);
-cod.add(b);
+      a = jj_consume_token(OR);
+cod.add(a);
       break;
       }
     case XOR:{
-      c = jj_consume_token(XOR);
-cod.add(c);
+      a = jj_consume_token(XOR);
+cod.add(a);
       break;
       }
     case IGUAL:{
-      d = jj_consume_token(IGUAL);
-cod.add(d);
+      a = jj_consume_token(IGUAL);
+cod.add(a);
       break;
       }
     case DIF:{
-      e = jj_consume_token(DIF);
-cod.add(e);
+      a = jj_consume_token(DIF);
+cod.add(a);
       break;
       }
     case MAIGUAL:{
-      f = jj_consume_token(MAIGUAL);
-cod.add(f);
+      a = jj_consume_token(MAIGUAL);
+cod.add(a);
       break;
       }
     case MEIGUAL:{
-      g = jj_consume_token(MEIGUAL);
-cod.add(g);
+      a = jj_consume_token(MEIGUAL);
+cod.add(a);
       break;
       }
     case MAIOR:{
-      h = jj_consume_token(MAIOR);
-cod.add(h);
+      a = jj_consume_token(MAIOR);
+cod.add(a);
       break;
       }
     case MENOR:{
-      i = jj_consume_token(MENOR);
-cod.add(i);
+      a = jj_consume_token(MENOR);
+cod.add(a);
       break;
       }
     default:
@@ -728,6 +731,8 @@ cod.add(i);
       jj_consume_token(-1);
       throw new ParseException();
     }
+{if ("" != null) return a;}
+    throw new Error("Missing return statement in function");
 }
 
   static final public Token ValorVar() throws ParseException {Token a;
@@ -1163,6 +1168,12 @@ cod.add(c);
     return false;
   }
 
+  static private boolean jj_3R_35()
+ {
+    if (jj_scan_token(AND)) return true;
+    return false;
+  }
+
   static private boolean jj_3R_24()
  {
     Token xsp;
@@ -1195,16 +1206,16 @@ cod.add(c);
     return false;
   }
 
-  static private boolean jj_3R_35()
- {
-    if (jj_scan_token(AND)) return true;
-    return false;
-  }
-
   static private boolean jj_3_1()
  {
     if (jj_3R_6()) return true;
     if (jj_3R_7()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_16()
+ {
+    if (jj_3R_24()) return true;
     return false;
   }
 
@@ -1220,12 +1231,6 @@ cod.add(c);
     return false;
   }
 
-  static private boolean jj_3R_16()
- {
-    if (jj_3R_24()) return true;
-    return false;
-  }
-
   static private boolean jj_3R_32()
  {
     if (jj_scan_token(DIV)) return true;
@@ -1235,6 +1240,12 @@ cod.add(c);
   static private boolean jj_3R_31()
  {
     if (jj_scan_token(MOD)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_29()
+ {
+    if (jj_scan_token(ADD)) return true;
     return false;
   }
 
@@ -1264,12 +1275,6 @@ cod.add(c);
     }
     }
     }
-    return false;
-  }
-
-  static private boolean jj_3R_29()
- {
-    if (jj_scan_token(ADD)) return true;
     return false;
   }
 
