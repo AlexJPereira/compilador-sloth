@@ -1,0 +1,11 @@
+first
+    int a = 3;
+    for(int i=0:5:1) begin
+        a = a + i;
+    end
+
+    a = a + 1;
+    #nao da erro ate aqui#
+
+    a = a + i;
+last
