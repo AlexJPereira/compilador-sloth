@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -18,24 +17,49 @@ public class Codigo
 		this.tokenImage = ti;
 	}
 
-	public void openBloco(){
-		localVar = true;
-		numLocalVar.push(0);
+	public void add(Token t){
+		tokenList.add(t);
+	}
+	
+	public void addDVarList(String id, int type){
+		if(localVar) numLocalVar.push(numLocalVar.pop()+1);
+		Variable var = new Variable(id, type);
+		dVariableList.add(var);
 	}
 
-	public void closeBloco(){
-		for(int i=numLocalVar.pop(); i>0; i--){
-			dVariableList.remove(dVariableList.size() - 1);
+	public void verifyVarList(Token t) throws ParseException{
+		boolean encontrou = false;
+		String a = t.image;
+
+		//try{
+			for(Variable var : dVariableList){
+				if(var.getId().equals(a)){
+					encontrou = true;
+					break;
+				}
+			}
+			if(!encontrou){
+				//_printVar();
+				String msg = "Variable " + t.image + " at line " +
+					t.beginLine + ", column " + t.beginColumn + " was not declared.";
+				throw new ParseException(msg);
+			}
+		//}
+		//catch(Exception e){
+		//		System.out.println("Variavel nao declarada "+ a +"!\n");
+		//}
+	}
+
+	public void verificaFirst(){
+		
+		try{
+			if(!mainDefinition) mainDefinition = true;
+			else throw new Exception();
 		}
-		if(numLocalVar.empty()) localVar = false;
-	}
-
-	public void setScope(int kind){
-		scope = kind;
-	}
-
-	public int getScope(){
-		return scope;
+		catch(Exception e){
+			System.out.println("Programa principal definido 2x!");
+		}
+		
 	}
 
 	public void openExpressao(int kind){
@@ -80,6 +104,55 @@ public class Codigo
 		}
 	}
 
+	public void checkOpExpressao(Token op) throws ParseException{
+		if(expectedReturn==12 && op.kind!=22){
+			String msg = "Expected + from "+ op.image + " at line " +
+					op.beginLine + ", column " + op.beginColumn+".";
+			throw new ParseException(msg);
+		}
+	}
+	
+	public void openBloco(){
+		localVar = true;
+		numLocalVar.push(0);
+	}
+
+	public void closeBloco(){
+		for(int i=numLocalVar.pop(); i>0; i--){
+			dVariableList.remove(dVariableList.size() - 1);
+		}
+		if(numLocalVar.empty()) localVar = false;
+	}
+
+	public int getVarType(Token t){
+		for(Variable var : dVariableList){
+			if(var.getId().equals(t.image)){
+				return var.getType();
+			}
+		}
+		return 0;
+	}
+
+	public int getValueType(Token t){
+		switch(t.kind){
+			case 16:
+				return 13;
+			case 17:
+				return 13;
+			case 59:
+				return 12;
+			case 60:
+				return 9;
+			case 61:
+				return 11;
+			case 62:
+				return 10;
+			case 63:
+				return 10;
+		}
+		return 0;
+	}
+
 	public boolean checkVarExpressaoInt(){
 		//				 int   dou   char  str   bool   void
 		boolean ret[] = {true, true, true, true, false, false};
@@ -116,98 +189,6 @@ public class Codigo
 		return ret[expectedReturn-9];
 	}
 
-	public void checkOpExpressao(Token op) throws ParseException{
-		if(expectedReturn==12 && op.kind!=22){
-			String msg = "Expected + from "+ op.image + " at line " +
-					op.beginLine + ", column " + op.beginColumn+".";
-			throw new ParseException(msg);
-		}
-	}
-
-	public int getVarType(Token t){
-		for(Variable var : dVariableList){
-			if(var.getId().equals(t.image)){
-				return var.getType();
-			}
-		}
-		return 0;
-	}
-
-	public int getValueType(Token t){
-		switch(t.kind){
-			case 16:
-				return 13;
-			case 17:
-				return 13;
-			case 59:
-				return 12;
-			case 60:
-				return 9;
-			case 61:
-				return 11;
-			case 62:
-				return 10;
-			case 63:
-				return 10;
-		}
-		return 0;
-	}
-
-	public void add(Token t){
-		tokenList.add(t);
-	}
-	
-	public void addDVarList(String id, int type){
-		if(localVar) numLocalVar.push(numLocalVar.pop()+1);
-		Variable var = new Variable(id, type);
-		dVariableList.add(var);
-	}
-
-	public List<Token> getTokenList(){
-		return tokenList;
-	}
-
-	public void _printVar(){
-		for(Variable var : dVariableList){
-			System.out.println(var.getId()+" "+var.getType());
-		}
-	}
-	
-	public void verifyVarList(Token t) throws ParseException{
-		boolean encontrou = false;
-		String a = t.image;
-
-		//try{
-			for(Variable var : dVariableList){
-				if(var.getId().equals(a)){
-					encontrou = true;
-					break;
-				}
-			}
-			if(!encontrou){
-				//_printVar();
-				String msg = "Variable " + t.image + " at line " +
-					t.beginLine + ", column " + t.beginColumn + " was not declared.";
-				throw new ParseException(msg);
-			}
-		//}
-		//catch(Exception e){
-		//		System.out.println("Variavel nao declarada "+ a +"!\n");
-		//}
-	}
-	
-	public void verificaFirst(){
-		
-		try{
-			if(!mainDefinition) mainDefinition = true;
-			else throw new Exception();
-		}
-		catch(Exception e){
-			System.out.println("Programa principal definido 2x!");
-		}
-		
-	}
-
 	public void printTokens(String[] tokenImage){
 		System.out.println("\n--- Tokens Encontrados ---\n");
 		for(Token nome : tokenList){
@@ -215,35 +196,25 @@ public class Codigo
 				"Token: " + tokenImage[nome.kind] + " -> " + nome.toString());
         }
 	}
+
+	public void printVars(){
+		for(Variable var : dVariableList){
+			System.out.println(var.getId()+" "+var.getType());
+		}
+	}
+
+	public List<Token> getTokenList(){
+		return tokenList;
+	}
+
+	public void setScope(int kind){
+		scope = kind;
+	}
+
+	public int getScope(){
+		return scope;
+	}
 }
 
-class Variable{
-	private String id;
-	private int type;
 
-	public Variable(String id, int type){
-		this.id = id; 
-		this.type= type; 
-	}
-	
-	public String getId(){
-		return id;
-	}
-	
-	public int getType(){
-		return type; 
-	}
-}
 
-/*
-- expressoes com string so podem fazer soma
-- verificar se a funcao ja foi declarada e se o numero de 
-parametros e o mesmo e se os parametros sao do mesmo tipo
-- fazer os imports 
-- verificar se tem string recebendo nao string
-- verificar os casts corretos
-- verificar se nao tem 2 funcoes main
-- for,while e foreach nao pode ser de string
-- checar os tipos do foreach
-
-*/
