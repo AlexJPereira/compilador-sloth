@@ -14,6 +14,9 @@ public class ExpressionOp{
                 litr.remove();
                 if(litr.next()!=4) return -1;
             }
+            if(elem==5){
+                return 5;
+            }
         }
 
         for(int i=0;i<5;i++){
@@ -109,46 +112,46 @@ public class ExpressionOp{
 
     private int opAddRet[][] = {
         //int   dou     char    str     bool
-        {0,     1,      0,      3,      -1,     },         //int       = 0
-        {1,     1,      1,      3,      -1,     },         //double    = 1
-        {0,     1,      2,      3,      -1,     },         //char      = 2
-        {3,     3,      3,      3,      3,      },         //string    = 3
-        {-1,    -1,     -1,     3,      4,      }         //boolean   = 4
+        {0,     1,      0,      3,      -1      },         //int       = 0
+        {1,     1,      1,      3,      -1      },         //double    = 1
+        {0,     1,      2,      3,      -1      },         //char      = 2
+        {3,     3,      3,      3,      3       },         //string    = 3
+        {-1,    -1,     -1,     3,      -1      }         //boolean   = 4
     };
 
     private int opAritRet[][] = {
         //int   dou     char    str     bool
-        {0,     1,      0,      -1,     -1,     },         //int       = 0
-        {1,     1,      1,      -1,     -1,     },         //double    = 1
-        {0,     1,      2,      -1,     -1,     },         //char      = 2
-        {-1,    -1,     -1,     -1,     -1,     },         //string    = 3
-        {-1,    -1,     -1,     -1,     4,      }         //boolean   = 4
+        {0,     1,      0,      -1,     -1      },         //int       = 0
+        {1,     1,      1,      -1,     -1      },         //double    = 1
+        {0,     1,      2,      -1,     -1      },         //char      = 2
+        {-1,    -1,     -1,     -1,     -1      },         //string    = 3
+        {-1,    -1,     -1,     -1,     -1      }         //boolean   = 4
     };
 
     private int opPowRet[][] = {
         //int   dou     char    str     bool
-        {1,     1,      1,      -1,     -1,     },         //int       = 0
-        {1,     1,      1,      -1,     -1,     },         //double    = 1
-        {1,     1,      1,      -1,     -1,     },         //char      = 2
-        {-1,    -1,     -1,     -1,     -1,     },         //string    = 3
-        {-1,    -1,     -1,     -1,     -1,     }         //boolean   = 4
+        {1,     1,      1,      -1,     -1      },         //int       = 0
+        {1,     1,      1,      -1,     -1      },         //double    = 1
+        {1,     1,      1,      -1,     -1      },         //char      = 2
+        {-1,    -1,     -1,     -1,     -1      },         //string    = 3
+        {-1,    -1,     -1,     -1,     -1      }         //boolean   = 4
     };
 
     private int opRelRet[][] = {
         //int   dou     char    str     bool
-        {4,     4,      4,      -1,     -1,     },         //int       = 0
-        {4,     4,      4,      -1,     -1,     },         //double    = 1
-        {4,     4,      4,      -1,     -1,     },         //char      = 2
-        {-1,    -1,     -1,     -1,      -1,     },         //string    = 3
-        {-1,    -1,     -1,     -1,     4,      }         //boolean   = 4
+        {4,     4,      4,      -1,     -1      },         //int       = 0
+        {4,     4,      4,      -1,     -1      },         //double    = 1
+        {4,     4,      4,      -1,     -1      },         //char      = 2
+        {-1,    -1,     -1,     -1,     -1      },         //string    = 3
+        {-1,    -1,     -1,     -1,     4       }         //boolean   = 4
     };
 
     private int opLogRet[][] = {
         //int   dou     char    str     bool
-        {-1,    -1,     -1,     -1,     -1,     },         //int       = 0
-        {-1,    -1,     -1,     -1,     -1,     },         //double    = 1
-        {-1,    -1,     -1,     -1,     -1,     },         //char      = 2
-        {-1,    -1,     -1,     -1,     -1,     },         //string    = 3
-        {-1,    -1,     -1,     -1,     4,      }         //boolean   = 4
+        {-1,    -1,     -1,     -1,     -1      },         //int       = 0
+        {-1,    -1,     -1,     -1,     -1      },         //double    = 1
+        {-1,    -1,     -1,     -1,     -1      },         //char      = 2
+        {-1,    -1,     -1,     -1,     -1      },         //string    = 3
+        {-1,    -1,     -1,     -1,     4       }         //boolean   = 4
     };
 }

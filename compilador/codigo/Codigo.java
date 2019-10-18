@@ -69,10 +69,15 @@ public class Codigo
 		
 	}
 
-	public void openExpressao(int kind){
+	public void openExpressao(int kind) throws ParseException{
 		expectedReturn = kind-9;
 		expressions = new Stack<List<Integer>>();
 		expressions.add(new ArrayList<Integer>());
+		if(expectedReturn==5){
+			List<Integer> ls = expressions.pop();
+			ls.add(5);
+			expressions.push(ls);
+		}
 	}
 
 	public void closeExpressao() throws ParseException{
@@ -80,6 +85,10 @@ public class Codigo
 		if(value==-1){
 			throw new ParseException("operacao invalida");
 		}
+		if(value==5)
+			if(expectedReturn!=5){
+				throw new ParseException("operacao com void");
+			} else return;
 		if(!expChecker.canReceive(value,expectedReturn)){
 			throw new ParseException("tipo errado"+value+" "+expectedReturn);
 		}
@@ -102,6 +111,9 @@ public class Codigo
 		int value = expChecker.expressionReturn(expressions.pop());
 		if(value==-1){
 			throw new ParseException("exp errada apos par");
+		}
+		if(value==5&&expectedReturn!=5){
+			throw new ParseException("operacao com void");
 		}
 		List<Integer> ls = expressions.pop();
 		ls.add(value);

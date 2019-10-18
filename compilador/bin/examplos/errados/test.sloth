@@ -1,7 +1,14 @@
+double test() begin
+    return 2;
+end
+
+void test2() begin
+    return;
+end
+
 first
-    double a = 1;
-    double b = 1.0;
-    double c = 'a';
-    #double d = "a";#
-    double e = true;
+    double a = 2+test()+test2();
+    char b = 'a';
+    boolean c = !(a+b>3);
+    
 last
