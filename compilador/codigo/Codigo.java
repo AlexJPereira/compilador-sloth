@@ -97,7 +97,9 @@ public class Codigo
 	public void addToExp(Token t){
 		int id = 0;
 		if(t.kind==58) {id = getVarType(t);}
+		else if(t.kind==54) id=3;
 		else {id = getValueType(t);}
+
 		List<Integer> ls = expressions.pop();
 		ls.add(id);
 		expressions.push(ls);

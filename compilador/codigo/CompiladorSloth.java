@@ -525,7 +525,7 @@ cod.closeExpressao();
 
   static final public void Read() throws ParseException {Token a,b,c;
     a = jj_consume_token(GET);
-cod.add(a);
+cod.add(a);cod.addToExp(a);
     b = jj_consume_token(ABREPAR);
 cod.add(b);
     c = jj_consume_token(FECHAPAR);

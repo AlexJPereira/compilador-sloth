@@ -298,7 +298,7 @@ void Atribuicao(int kind):
 void Read():
 {Token a,b,c;} // <GET><ABREPAR><FECHAPAR>
 {
-	(a=<GET>) {cod.add(a);}
+	(a=<GET>) {cod.add(a);cod.addToExp(a);}
 	(b=<ABREPAR>) {cod.add(b);}
 	(c=<FECHAPAR>) {cod.add(c);}
 }

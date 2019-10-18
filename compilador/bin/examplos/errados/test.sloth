@@ -1,5 +1,5 @@
-double test() begin
-    return 2;
+double test(int a, int b) begin
+    return a+b;
 end
 
 void test2() begin
@@ -7,8 +7,12 @@ void test2() begin
 end
 
 first
-    double a = 2+test()+test2();
+    double a = 2+test()+3;
     char b = 'a';
     boolean c = !(a+b>3);
+    string d = get();
+    while(a+4>3)begin
+        write("oi"+4);
+    end
     
 last
