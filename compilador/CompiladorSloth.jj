@@ -180,7 +180,7 @@ void Retorno():
 {
 	(a=<RETORNO>){cod.add(a);
 	cod.openExpressao(cod.getScope());}
-	[Expressao()]
+	[Expressao()]{cod.closeExpressao();}
 }
 
 Token ChamaFuncao():
@@ -231,7 +231,7 @@ void Write():
 	(a=<WRITE>){cod.add(a);}
 	(b=<ABREPAR>){cod.add(b);
 	cod.openExpressao(12);}
-	Expressao()
+	Expressao(){cod.closeExpressao();}
 	(c=<FECHAPAR>){cod.add(c);}		
 }
 
@@ -272,7 +272,7 @@ void DeclaraVar(Token d):
 	}
 	[((b=<ABREVET>){cod.add(b);
 	cod.openExpressao(9);}
-	Expressao()
+	Expressao(){cod.closeExpressao();}
 	(c=<FECHAVET>){cod.add(c);})]
 }
 
@@ -284,7 +284,7 @@ Token NomeVar():
 	cod.add(a);}
 	[((b=<ABREVET>){cod.add(b);
 	cod.openExpressao(9);}
-	Expressao()
+	Expressao(){cod.closeExpressao();}
 	(c=<FECHAVET>){cod.add(c);})])
 	{return a;}
 }
@@ -292,7 +292,7 @@ Token NomeVar():
 void Atribuicao(int kind):
 {Token a;} // <IGUALDADE>(Read()|Expressao())
 {
-	(a=<IGUALDADE>){cod.add(a);cod.openExpressao(kind);}(Read()|Expressao())
+	(a=<IGUALDADE>){cod.add(a);cod.openExpressao(kind);}(Read()|Expressao()){cod.closeExpressao();}
 }
 
 void Read():
@@ -315,8 +315,8 @@ void Expressao():
 {
 	(((a=<ABREPAR>){cod.add(a);cod.openParExp(a);}
 	(Expressao())+
-	(b=<FECHAPAR>){cod.add(b);cod.openParExp(b);})
-	| (c=<NOT>){cod.add(c);cod.addNotToExp(c);}
+	(b=<FECHAPAR>){cod.add(b);cod.closeParExp(b);})
+	| (c=<NOT>){cod.add(c);cod.addOpToExp(c);}
 	Expressao()
 	| (exp=ValorVar()){cod.addToExp(exp);}
 	| ( LOOKAHEAD(3) (exp=ChamaFuncao()){cod.addToExp(exp);}
@@ -328,7 +328,7 @@ void Operador():
 {Token a=null;} // OpArit()|OpRelac()
 {
 	((a=OpArit())|(a=OpRelac()))
-	{cod.addToExp(a);}
+	{cod.addOpToExp(a);}
 }
 
 Token OpArit():
@@ -393,7 +393,7 @@ void While():
 	(a=<WHILE>){cod.add(a);}
 	(b=<ABREPAR>){cod.add(b);
 	cod.openExpressao(13);}
-	Expressao()
+	Expressao(){cod.closeExpressao();}
 	(c=<FECHAPAR>){cod.add(c);}
 	Bloco()
 }
@@ -437,7 +437,7 @@ void If():
 	(a=<IF>){cod.add(a);}
 	(b=<ABREPAR>){cod.add(b);
 	cod.openExpressao(13);}
-	Expressao()
+	Expressao(){cod.closeExpressao();}
 	(c = <FECHAPAR>){cod.add(c);}
 	Bloco()
 	[(d = <ELSE>){cod.add(d);}Bloco()]

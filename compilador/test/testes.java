@@ -6,15 +6,25 @@ import java.util.ListIterator;
 
 public class testes{
     public static void main(String[] args){
-        System.out.println(test()[1]);
-    }
+        List<Integer> exp = new ArrayList<Integer>();
+        int elem, previous=-1, next=-1;
 
-    public static int[] test(){
-        int a[] = {1,2};
-        return a;
-    }
-}
+        for(int i=35;i<50;i++){
+            exp.add(i);
+        }
+        ListIterator<Integer> litr = exp.listIterator();
 
-class ElemOp{
-    public int op, value;
+        while(litr.hasNext()){
+            elem = litr.next();
+            if(elem==41){
+                litr.remove();
+                litr.next();
+                litr.set(4);
+            }
+        }
+
+        for(int aaaa : exp){
+            System.out.println(aaaa);
+        }
+    }
 }

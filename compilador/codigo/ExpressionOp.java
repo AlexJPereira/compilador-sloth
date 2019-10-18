@@ -6,9 +6,18 @@ public class ExpressionOp{
 
     public int expressionReturn(List<Integer> exp){
         ListIterator<Integer> litr = exp.listIterator();
-        int elem, previous=-1, next=-1;
+        int elem, set=-1, previous=-1, next=-1;
+
+        while(litr.hasNext()){
+            elem = litr.next();
+            if(elem==41){
+                litr.remove();
+                if(litr.next()!=4) return -1;
+            }
+        }
 
         for(int i=0;i<5;i++){
+            litr = exp.listIterator();
             int[] operador = opType(i);
             while(litr.hasNext()){
                 elem = litr.next();
@@ -16,15 +25,20 @@ public class ExpressionOp{
                     next = litr.next();
                     litr.remove();
                     litr.previous();
-                    litr.set(callOp(i, previous, next));
+                    set = callOp(i, previous, next);
+                    if(set==-1) return -1;
+                    litr.set(set);
                     litr.previous();
                     litr.remove();
-                    litr.next();
                 }
                 previous = elem;
             }
         }
         return exp.get(0);
+    }
+
+    public boolean canReceive(int num, int rec){
+        return canExpReceive[rec][num];
     }
 
     private int[] opType(int i){

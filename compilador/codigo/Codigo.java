@@ -8,7 +8,8 @@ public class Codigo
     private List<Token> tokenList = new ArrayList<Token>();
 	private List<Variable> dVariableList = new ArrayList<Variable>();
 	private Stack<Integer> numLocalVar = new Stack<Integer>();
-	private Stack<List<Integer>> expression = null;
+	private Stack<List<Integer>> expressions = null;
+	private ExpressionOp expChecker = new ExpressionOp();
 	private boolean mainDefinition = false;
 	private boolean localVar = false;
 	private int expectedReturn = 0;
@@ -64,31 +65,45 @@ public class Codigo
 	}
 
 	public void openExpressao(int kind){
-		expectedReturn = kind;
-		expression = new Stack<List<Integer>>();
+		expectedReturn = kind-9;
+		expressions = new Stack<List<Integer>>();
+		expressions.add(new ArrayList<Integer>());
 	}
 
-	public void addToExp(Token t) throws ParseException{
-		int id = 0;
-		if(var.kind==58) {id = getVarType(var);}
-		else {id = getValueType(var);}
+	public void closeExpressao() throws ParseException{
+		int value = expChecker.expressionReturn(expressions.pop());
+		if(expChecker.canReceive(value,expectedReturn)){
+			throw new ParseException("tipo errado"+value+" "+expectedReturn);
+		}
+	}
 
+	public void addToExp(Token t){
+		int id = 0;
+		if(t.kind==58) {id = getVarType(t);}
+		else {id = getValueType(t);}
+		List<Integer> ls = expressions.pop();
+		ls.add(id);
+		expressions.push(ls);
 	}
 
 	public void openParExp(Token t){
-
+		expressions.push(new ArrayList<Integer>());
 	}
 
-	public void addNotToExp(Token t){
-		
-	}
-
-	public void checkOpExpressao(Token op) throws ParseException{
-		if(expectedReturn==12 && op.kind!=22){
-			String msg = "Expected + from "+ op.image + " at line " +
-					op.beginLine + ", column " + op.beginColumn+".";
-			throw new ParseException(msg);
+	public void closeParExp(Token t) throws ParseException{
+		int value = expChecker.expressionReturn(expressions.pop());
+		if(value==-1){
+			throw new ParseException("exp errada apos par");
 		}
+		List<Integer> ls = expressions.pop();
+		ls.add(value);
+		expressions.push(ls);
+	}
+
+	public void addOpToExp(Token t){
+		List<Integer> ls = expressions.pop();
+		ls.add(t.kind);
+		expressions.push(ls);
 	}
 	
 	public void openBloco(){
