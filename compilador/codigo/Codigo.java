@@ -23,8 +23,13 @@ public class Codigo
 		tokenList.add(t);
 	}
 	
-	public void addDVarList(String id, int type){
+	public void addDVarList(String id, int type) throws ParseException{
 		if(localVar) numLocalVar.push(numLocalVar.pop()+1);
+		for(Variable var : dVariableList){
+			if(var.getId().equals(id)){
+				throw new ParseException("variavel ja declarada");
+			}
+		}
 		Variable var = new Variable(id, type);
 		dVariableList.add(var);
 	}
@@ -72,7 +77,10 @@ public class Codigo
 
 	public void closeExpressao() throws ParseException{
 		int value = expChecker.expressionReturn(expressions.pop());
-		if(expChecker.canReceive(value,expectedReturn)){
+		if(value==-1){
+			throw new ParseException("operacao invalida");
+		}
+		if(!expChecker.canReceive(value,expectedReturn)){
 			throw new ParseException("tipo errado"+value+" "+expectedReturn);
 		}
 	}

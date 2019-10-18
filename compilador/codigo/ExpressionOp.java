@@ -38,7 +38,7 @@ public class ExpressionOp{
     }
 
     public boolean canReceive(int num, int rec){
-        return canExpReceive[rec][num];
+        return canExpReceive[num][rec];
     }
 
     private int[] opType(int i){
