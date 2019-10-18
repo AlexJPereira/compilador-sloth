@@ -313,11 +313,14 @@ void Expressao():
 [LOOKAHEAD(2) Operador()Expressao()]
 */
 {
-	(((a=<ABREPAR>){cod.add(a);}(Expressao())+(b=<FECHAPAR>){cod.add(b);})
-	| (c=<NOT>){cod.add(c);}Expressao()
-	| (exp=ValorVar()){cod.checkVarExpressao(exp);}
-	| ( LOOKAHEAD(3) (exp=ChamaFuncao()){cod.checkVarExpressao(exp);}
-	| (exp=NomeVar())){cod.checkVarExpressao(exp);})
+	(((a=<ABREPAR>){cod.add(a);cod.openParExp(a);}
+	(Expressao())+
+	(b=<FECHAPAR>){cod.add(b);cod.openParExp(b);})
+	| (c=<NOT>){cod.add(c);cod.addNotToExp(c);}
+	Expressao()
+	| (exp=ValorVar()){cod.addToExp(exp);}
+	| ( LOOKAHEAD(3) (exp=ChamaFuncao()){cod.addToExp(exp);}
+	| (exp=NomeVar())){cod.addToExp(exp);})
 	[LOOKAHEAD(2) Operador()Expressao()]
 }
 
@@ -325,7 +328,7 @@ void Operador():
 {Token a=null;} // OpArit()|OpRelac()
 {
 	((a=OpArit())|(a=OpRelac()))
-	{cod.checkOpExpressao(a);}
+	{cod.addToExp(a);}
 }
 
 Token OpArit():
