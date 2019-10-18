@@ -129,7 +129,7 @@ TOKEN:
 	<IMPORT: "import">
 	|<GET: "get">
 	|<WRITE: "write">
-	|<COMENT: "#"(<ASC>)*"#">
+	|<COMENT: "#"(<ASC>|"\""|"\'")*"#">
 	|<SEPFUN: ",">
 }
 
