@@ -1,11 +1,5 @@
 first
-    #essa string funciona porque na compilacao sera feito cast#
-    string a = 1+2+3+true+3.0%;
-
-    #esse double nao da erro#
-    double b = 1+3.6%+'a'+34.278;
-
-    #java nao aceita#
-    int b = 1*2+5.0;
+    
+    double a = 1+2.0+'a'+3%;
 
 last

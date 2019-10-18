@@ -8,6 +8,8 @@ public class Codigo
     private List<Token> tokenList = new ArrayList<Token>();
 	private List<Variable> dVariableList = new ArrayList<Variable>();
 	private Stack<Integer> numLocalVar = new Stack<Integer>();
+	private Stack<List<Integer>> expressions = null;
+	private ExpressionOp expChecker = new ExpressionOp();
 	private boolean mainDefinition = false;
 	private boolean localVar = false;
 	private int expectedReturn = 0;
@@ -21,8 +23,13 @@ public class Codigo
 		tokenList.add(t);
 	}
 	
-	public void addDVarList(String id, int type){
+	public void addDVarList(String id, int type) throws ParseException{
 		if(localVar) numLocalVar.push(numLocalVar.pop()+1);
+		for(Variable var : dVariableList){
+			if(var.getId().equals(id)){
+				throw new ParseException("variavel ja declarada");
+			}
+		}
 		Variable var = new Variable(id, type);
 		dVariableList.add(var);
 	}
@@ -62,54 +69,61 @@ public class Codigo
 		
 	}
 
-	public void openExpressao(int kind){
-		expectedReturn = kind;
+	public void openExpressao(int kind) throws ParseException{
+		expectedReturn = kind-9;
+		expressions = new Stack<List<Integer>>();
+		expressions.add(new ArrayList<Integer>());
+		if(expectedReturn==5){
+			List<Integer> ls = expressions.pop();
+			ls.add(5);
+			expressions.push(ls);
+		}
 	}
 
-	public void checkVarExpressao(Token var) throws ParseException{
-		boolean canContinue = false;
+	public void closeExpressao() throws ParseException{
+		int value = expChecker.expressionReturn(expressions.pop());
+		if(value==-1){
+			throw new ParseException("operacao invalida");
+		}
+		if(value==5)
+			if(expectedReturn!=5){
+				throw new ParseException("operacao com void");
+			} else return;
+		if(!expChecker.canReceive(value,expectedReturn)){
+			throw new ParseException("tipo errado"+value+" "+expectedReturn);
+		}
+	}
+
+	public void addToExp(Token t){
 		int id = 0;
-
-		if(var.kind==58) {
-			id = getVarType(var);
-		}
-		else {
-			id = getValueType(var);
-		}
-
-		switch (id){
-			case 9:
-				canContinue = checkVarExpressaoInt();
-				break;
-			case 10:
-				canContinue = checkVarExpressaoDouble();
-				break;
-			case 11:
-				canContinue = checkVarExpressaoChar();
-				break;
-			case 12:
-				canContinue = checkVarExpressaoString();
-				break;
-			case 13:
-				canContinue = checkVarExpressaoBoolean();
-				break;
-			case 14:
-				canContinue = checkVarExpressaoVoid();
-				break;
-		}
-		if(!canContinue){
-			String msg = "Expected "+tokenImage[expectedReturn]+" from "+ var.image + " at line " +
-					var.beginLine + ", column " + var.beginColumn+", wich is "+tokenImage[id];
-			throw new ParseException(msg);
-		}
+		if(t.kind==58) {id = getVarType(t);}
+		else {id = getValueType(t);}
+		List<Integer> ls = expressions.pop();
+		ls.add(id);
+		expressions.push(ls);
 	}
 
-	public void checkOpExpressao(Token op) throws ParseException{
-		if(expectedReturn==12 && op.kind!=22){
-			String msg = "Expected + from "+ op.image + " at line " +
-					op.beginLine + ", column " + op.beginColumn+".";
-			throw new ParseException(msg);
+	public void openParExp(Token t){
+		expressions.push(new ArrayList<Integer>());
+	}
+
+	public void closeParExp(Token t) throws ParseException{
+		int value = expChecker.expressionReturn(expressions.pop());
+		if(value==-1){
+			throw new ParseException("exp errada apos par");
 		}
+		if(value==5&&expectedReturn!=5){
+			throw new ParseException("operacao com void");
+		}
+		List<Integer> ls = expressions.pop();
+		ls.add(value);
+		expressions.push(ls);
+	}
+
+	public void addOpToExp(Token t){
+		List<Integer> ls = expressions.pop();
+		ls.add(t.kind);
+		expressions.push(ls);
 	}
 	
 	public void openBloco(){
@@ -127,66 +141,30 @@ public class Codigo
 	public int getVarType(Token t){
 		for(Variable var : dVariableList){
 			if(var.getId().equals(t.image)){
-				return var.getType();
+				return var.getType()-9;
 			}
 		}
-		return 0;
+		return -1;
 	}
 
 	public int getValueType(Token t){
 		switch(t.kind){
 			case 16:
-				return 13;
+				return 13-9;
 			case 17:
-				return 13;
+				return 13-9;
 			case 59:
-				return 12;
+				return 12-9;
 			case 60:
-				return 9;
+				return 9-9;
 			case 61:
-				return 11;
+				return 11-9;
 			case 62:
-				return 10;
+				return 10-9;
 			case 63:
-				return 10;
+				return 10-9;
 		}
-		return 0;
-	}
-
-	public boolean checkVarExpressaoInt(){
-		//				 int   dou   char  str   bool   void
-		boolean ret[] = {true, true, true, true, false, false};
-		return ret[expectedReturn-9];
-	}
-
-	public boolean checkVarExpressaoDouble(){
-		//				 int    dou   char   str   bool   void
-		boolean ret[] = {false, true, false, true, false, false};
-		return ret[expectedReturn-9];
-	}
-
-	public boolean checkVarExpressaoChar(){
-		//				 int   dou   char  str   bool   void
-		boolean ret[] = {true, true, true, true, false, false};
-		return ret[expectedReturn-9];
-	}
-
-	public boolean checkVarExpressaoString(){
-		//				 int    dou    char   str   bool   void
-		boolean ret[] = {false, false, false, true, false, false};
-		return ret[expectedReturn-9];
-	}
-
-	public boolean checkVarExpressaoBoolean(){
-		//				 int    dou    char   str   bool  void
-		boolean ret[] = {false, false, false, true, true, false};
-		return ret[expectedReturn-9];
-	}
-
-	public boolean checkVarExpressaoVoid(){
-		//				 int    dou    char   str    bool   void
-		boolean ret[] = {false, false, false, false, false, false};
-		return ret[expectedReturn-9];
+		return -1;
 	}
 
 	public void printTokens(String[] tokenImage){
