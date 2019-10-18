@@ -4,19 +4,19 @@ import java.util.Stack;
 
 public class Codigo
 {
-	private String[] tokenImage;
     private List<Token> tokenList = new ArrayList<Token>();
 	private List<Variable> dVariableList = new ArrayList<Variable>();
 	private Stack<Integer> numLocalVar = new Stack<Integer>();
 	private Stack<List<Integer>> expressions = null;
 	private ExpressionOp expChecker = new ExpressionOp();
+	private ConstantsAdapter constAdp = null;
 	private boolean mainDefinition = false;
 	private boolean localVar = false;
 	private int expectedReturn = 0;
 	private int scope = 0;
 
 	public Codigo(String[] ti){
-		this.tokenImage = ti;
+		constAdp = new ConstantsAdapter(ti);
 	}
 
 	public void add(Token t){
@@ -169,11 +169,11 @@ public class Codigo
 		return -1;
 	}
 
-	public void printTokens(String[] tokenImage){
+	public void printTokens(){
 		System.out.println("\n--- Tokens Encontrados ---\n");
 		for(Token nome : tokenList){
             System.out.println(
-				"Token: " + tokenImage[nome.kind] + " -> " + nome.toString());
+				"Token: " + constAdp.getTokenImage()[nome.kind] + " -> " + nome.toString());
         }
 	}
 

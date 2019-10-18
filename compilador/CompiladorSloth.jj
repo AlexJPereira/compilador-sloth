@@ -19,8 +19,7 @@ public class CompiladorSloth
 			System.out.println(e.getMessage());
 		}
 		finally{
-			cod.printTokens(tokenImage);
-			//cod.testaMetodo(tokenImage);
+			cod.printTokens();
 		}
 	}
 }

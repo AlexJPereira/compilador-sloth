@@ -18,8 +18,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
                         System.out.println(e.getMessage());
                 }
                 finally{
-                        cod.printTokens(tokenImage);
-                        //cod.testaMetodo(tokenImage);
+                        cod.printTokens();
                 }
         }
 
@@ -1056,6 +1055,12 @@ cod.add(c);
     finally { jj_save(2, xla); }
   }
 
+  static private boolean jj_3R_49()
+ {
+    if (jj_scan_token(STRING)) return true;
+    return false;
+  }
+
   static private boolean jj_3R_48()
  {
     if (jj_scan_token(PORCENTAGEM)) return true;
@@ -1455,12 +1460,6 @@ cod.add(c);
     jj_scanpos = xsp;
     if (jj_3R_52()) return true;
     }
-    return false;
-  }
-
-  static private boolean jj_3R_49()
- {
-    if (jj_scan_token(STRING)) return true;
     return false;
   }
 
