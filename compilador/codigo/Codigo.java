@@ -58,16 +58,9 @@ public class Codigo
 			throw new ParseException("parametros errados para "+name.image);
 	}
 
-	public void verificaFirst(){
-		
-		try{
-			if(!mainDefinition) mainDefinition = true;
-			else throw new Exception();
-		}
-		catch(Exception e){
-			System.out.println("Programa principal definido 2x!");
-		}
-		
+	public void verificaFirst() throws ParseException{
+		if(!mainDefinition) mainDefinition = true;
+		else throw new ParseException("Programa principal definido 2x");
 	}
 
 	public void openExpressao(int kind) throws ParseException{
