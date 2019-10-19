@@ -12,6 +12,7 @@ public class Codigo
 	private ConstantsAdapter constAdp = null;
 	private boolean mainDefinition = false;
 	private boolean localVar = false;
+	private boolean expOpen = false;
 	private int expectedReturn = 0;
 	private int scope = 0;
 	private boolean hasReturn = false;
@@ -19,6 +20,8 @@ public class Codigo
 	public Codigo(String[] ti){
 		constAdp = new ConstantsAdapter(ti);
 	}
+
+	public Codigo(){}
 
 	public void add(Token t){
 		tokenList.add(t);
@@ -50,8 +53,8 @@ public class Codigo
 			throw new ParseException(msg);
 	}
 
-	public void verifyParameters(Token name, Token param) throws ParseException{
-		verifyVarList(name).checkParam(name,param);
+	public int getNextParam(Token name) throws ParseException{
+		return verifyVarList(name).getNextParam(name);
 	}
 
 	public void checkParameters(Token name) throws ParseException{
@@ -65,6 +68,7 @@ public class Codigo
 	}
 
 	public void openExpressao(int kind) throws ParseException{
+		expOpen = true;
 		expectedReturn = kind-9;
 		expressions = new Stack<List<Integer>>();
 		expressions.add(new ArrayList<Integer>());
@@ -76,6 +80,7 @@ public class Codigo
 	}
 
 	public void closeExpressao() throws ParseException{
+		expOpen=false;
 		int value = expChecker.expressionReturn(expressions.pop());
 		if(value==-1){
 			throw new ParseException("operacao invalida");

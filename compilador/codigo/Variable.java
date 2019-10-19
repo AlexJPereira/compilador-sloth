@@ -29,6 +29,14 @@ public class Variable{
 			checkedParam++;
 	}
 	
+	public int getNextParam(Token name) throws ParseException{
+		int aux = checkedParam;
+		checkedParam++;
+		if(aux<parameters.size())
+			return parameters.get(aux);
+		throw new ParseException("parametro nao encontrado "+name.image);
+	}
+
 	public boolean isAllParamsChecked(){
 		int aux = checkedParam;
 		checkedParam = 0;
