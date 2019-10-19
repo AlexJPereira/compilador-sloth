@@ -19,7 +19,8 @@ public class CompiladorSloth
 			System.out.println(e.getMessage());
 		}
 		finally{
-			cod.printTokens();
+			//cod.printTokens();
+			cod.printVars();
 		}
 	}
 }
@@ -156,22 +157,23 @@ void Programa():
 }
 
 void Funcao():
-{Token a=null,b;} // (<TIPOVOID>|TipoVar())NomeVar()<ABREPAR>[FuncPar()]<FECHAPAR>Bloco()
+{Token a=null,b; Variable var=null;} // (<TIPOVOID>|TipoVar())NomeVar()<ABREPAR>[FuncPar()]<FECHAPAR>Bloco()
 {
 	((a=<TIPOVOID>){cod.add(a);}|a=TipoVar()){cod.setScope(a.kind);}
-	DeclaraVar(a)
+	(var=DeclaraVar(a))
 	(a=<ABREPAR>){cod.add(a);cod.openBloco();}
-	[FuncPar()]
+	[FuncPar(var)]
 	(b=<FECHAPAR>){cod.add(b);}
 	Bloco(){cod.closeBloco();}
 }
 
-void FuncPar():
+void FuncPar(Variable var):
 {Token a, b;} // TipoVar()NomeVar()[<SEPFUN>FuncPar()]
 {
-	b=TipoVar()DeclaraVar(b)
+	b=TipoVar(){var.addParameter(b.kind);}
+	DeclaraVar(b)
 	[(a=<SEPFUN>){cod.add(a);}
-	FuncPar()]
+	FuncPar(var)]
 }
 
 void Retorno():
@@ -187,17 +189,19 @@ Token ChamaFuncao():
 {
 	(exp=NomeVar())
 	(a=<ABREPAR>){cod.add(a);}
-	[ChamaFuncPar()]
+	[ChamaFuncPar(exp)]
 	(b=<FECHAPAR>){cod.add(b);
+	cod.checkParameters(exp);
 	return exp;}
 }
 
-void ChamaFuncPar():
-{Token a;} // (NomeVar()|ValorVar())[<SEPFUN>FuncPar()]
+void ChamaFuncPar(Token exp):
+{Token a, b=null;} // (NomeVar()|ValorVar())[<SEPFUN>FuncPar()]
 {
-	(NomeVar()|ValorVar())
+	(b=NomeVar()|b=ValorVar())
+	{cod.verifyParameters(exp,b);}
 	[(a=<SEPFUN>){cod.add(a);}
-	ChamaFuncPar()]
+	ChamaFuncPar(exp)]
 }
 
 void Importacao():
@@ -262,17 +266,18 @@ Token TipoVar():
 	}
 }
 
-void DeclaraVar(Token d):
-{Token a,b,c;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
+Variable DeclaraVar(Token d):
+{Token a,b,c; Variable var=null;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
 {
-	(a=<NOMEVAR>){
+	((a=<NOMEVAR>){
 		cod.add(a);
-		cod.addDVarList(a.image, d.kind);
+		var=cod.addDVarList(a.image, d.kind);
 	}
 	[((b=<ABREVET>){cod.add(b);
 	cod.openExpressao(9);}
 	Expressao(){cod.closeExpressao();}
-	(c=<FECHAVET>){cod.add(c);})]
+	(c=<FECHAVET>){cod.add(c);})])
+	{return var;}
 }
 
 
