@@ -1,0 +1,9 @@
+void helloWorld() begin
+    write("Hello World\n");
+end
+
+double two(int a, int b) begin
+    return a+b;
+end
+
+import "../test/test2.sloth"

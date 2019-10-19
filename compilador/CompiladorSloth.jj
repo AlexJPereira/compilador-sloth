@@ -264,7 +264,7 @@ void ManVar():
 {Token a,b;} //(TipoVar()NomeVar()[Atribuicao()])|(NomeVar()Atribuicao())|(ChamaFuncao())
 {
 	(a=TipoVar()ManVarSeq(a))
-	| ( LOOKAHEAD(3) (b=NomeVar()Atribuicao(cod.getVarType(b)))
+	| ( LOOKAHEAD(3) (b=NomeVar()Atribuicao(cod.getVarType(b)+9))
 	| ChamaFuncao())
 
 }
@@ -273,7 +273,6 @@ void ManVarSeq(Token b):
 {Token a;}
 {
 	DeclaraVar(b)
-	[Atribuicao(b.kind)]
 	[(a=<SEPFUN>){cod.add(a);}
 	ManVarSeq(b)]
 }
@@ -295,10 +294,11 @@ Variable DeclaraVar(Token d):
 		cod.add(a);
 		var=cod.addDVarList(a.image, d.kind);
 	}
-	[((b=<ABREVET>){cod.add(b);
+	[LOOKAHEAD(2) (((b=<ABREVET>){cod.add(b);
 	cod.openExpressao(9);}
-	Expressao(){cod.closeExpressao();}
-	(c=<FECHAVET>){cod.add(c);})])
+	Expressao(){cod.closeExpressao();})
+	(c=<FECHAVET>){cod.add(c);}
+	|Atribuicao(d.kind))])
 	{return var;}
 }
 
