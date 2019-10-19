@@ -154,6 +154,11 @@ TOKEN:
 	|<PORCENTAGEM: (<REAL>|<INTEIRO>)<PORCE>>
 }
 
+TOKEN:
+{
+	<TOKENERROR: <ASC>>
+}
+
 void Programa():
 {Token a,b;} // (((Importacao()|<COMENT>)*Execucao())|Execucao())(<COMENT>)*<EOF>
 {

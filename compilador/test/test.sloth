@@ -1,8 +1,15 @@
-int soma(int a, int b)begin
-    return a+b;
+int fibo(int n) begin
+    when(n<2)begin
+        return n;
+    end otherwise begin
+        return fibo(n-1)+fibo(n-2);
+    end
+end
+
+void helloWorld() begin
+    write("Hello World\n");
 end
 
 first
-    int a = soma(1,soma(1,soma(1,soma(1,soma(soma(1,2),soma(1,2))))));
-    
+    int a = fibo(4);
 last
