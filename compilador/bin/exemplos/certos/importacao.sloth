@@ -1,0 +1,5 @@
+import "../bin/exemplos/certos/importacao2.sloth" 
+
+first
+    int a = arq2(2);
+last
