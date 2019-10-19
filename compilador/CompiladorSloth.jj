@@ -166,12 +166,12 @@ void Programa():
 void Funcao():
 {Token a=null,b; Variable var=null;} // (<TIPOVOID>|TipoVar())NomeVar()<ABREPAR>[FuncPar()]<FECHAPAR>Bloco()
 {
-	((a=<TIPOVOID>){cod.add(a);}|a=TipoVar()){cod.setScope(a.kind);}
+	((a=<TIPOVOID>){cod.add(a);cod.setHasReturn(true);}|a=TipoVar(){cod.openFunc();}){cod.setScope(a.kind);}
 	(var=DeclaraVar(a))
 	(a=<ABREPAR>){cod.add(a);cod.openBloco();}
 	[FuncPar(var)]
 	(b=<FECHAPAR>){cod.add(b);}
-	Bloco(){cod.closeBloco();}
+	Bloco(){cod.closeBloco();cod.closeFunc();}
 }
 
 void FuncPar(Variable var):
@@ -187,7 +187,8 @@ void Retorno():
 {Token a;} // <RETORNO>Expressao()
 {
 	(a=<RETORNO>){cod.add(a);
-	cod.openExpressao(cod.getScope());}
+	cod.openExpressao(cod.getScope());
+	cod.setHasReturn(true);}
 	[Expressao()]{cod.closeExpressao();}
 }
 
@@ -198,7 +199,6 @@ Token ChamaFuncao():
 	(a=<ABREPAR>){cod.add(a);}
 	[ChamaFuncPar(exp)]
 	(b=<FECHAPAR>){cod.add(b);
-	cod.checkParameters(exp);
 	return exp;}
 }
 
@@ -264,7 +264,7 @@ void ManVar():
 {Token a,b;} //(TipoVar()NomeVar()[Atribuicao()])|(NomeVar()Atribuicao())|(ChamaFuncao())
 {
 	(a=TipoVar()ManVarSeq(a))
-	| ( LOOKAHEAD(3) (b=NomeVar()Atribuicao(cod.getVarType(b)))
+	| ( LOOKAHEAD(3) (b=NomeVar()Atribuicao(cod.getVarType(b)+9))
 	| ChamaFuncao())
 
 }
@@ -273,7 +273,6 @@ void ManVarSeq(Token b):
 {Token a;}
 {
 	DeclaraVar(b)
-	[Atribuicao(b.kind)]
 	[(a=<SEPFUN>){cod.add(a);}
 	ManVarSeq(b)]
 }
@@ -295,24 +294,28 @@ Variable DeclaraVar(Token d):
 		cod.add(a);
 		var=cod.addDVarList(a.image, d.kind);
 	}
-	[((b=<ABREVET>){cod.add(b);
+	[LOOKAHEAD(2) (((b=<ABREVET>){cod.add(b);
+	var.setIsVet(true);
 	cod.openExpressao(9);}
-	Expressao(){cod.closeExpressao();}
-	(c=<FECHAVET>){cod.add(c);})])
+	Expressao(){cod.closeExpressao();})
+	(c=<FECHAVET>){cod.add(c);}
+	|Atribuicao(d.kind))])
 	{return var;}
 }
 
 
 Token NomeVar():
-{Token a,b,c;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
+{Token a,b,c; boolean vet = false; Variable var;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
 {
-	((a=<NOMEVAR>){cod.verifyVarList(a);
+	((a=<NOMEVAR>){var=cod.verifyVarList(a);
 	cod.add(a);}
 	[((b=<ABREVET>){cod.add(b);
+	vet = true;
 	cod.openExpressao(9);}
 	Expressao(){cod.closeExpressao();}
 	(c=<FECHAVET>){cod.add(c);})])
-	{return a;}
+	{var.checkVet(vet);
+	return a;}
 }
 
 void Atribuicao(int kind):
@@ -345,8 +348,9 @@ void Expressao():
 	| (c=<NOT>){cod.add(c);cod.addOpToExp(c);}
 	Expressao()
 	| (exp=ValorVar()){cod.addToExp(exp);}
-	| ( LOOKAHEAD(3) (exp=ChamaFuncao()){cod.addToExp(exp);}
+	| (( LOOKAHEAD(3) (exp=ChamaFuncao()){cod.addToExp(exp);}
 	| (exp=NomeVar())){cod.addToExp(exp);})
+	{cod.checkParameters(exp);})
 	[LOOKAHEAD(2) Operador()Expressao()]
 }
 
@@ -425,7 +429,7 @@ void While():
 }
 
 void For():
-{Token a,b,c,d,e,f;}/*
+{Token a,b,c,d,e,f,g;}/*
 <FOR><ABREPAR>NomeVar()<IGUALDADE>
 (ValorVar()|NomeVar())<SEPFOR>
 (ValorVar()|NomeVar())<SEPFOR>
@@ -434,25 +438,31 @@ void For():
 {
 	(a=<FOR>){cod.add(a);}
 	(b=<ABREPAR>){cod.add(b);}
-	((f=TipoVar()DeclaraVar(f))|NomeVar())
-	(c=<IGUALDADE>){cod.add(c);}
-	(ValorVar()|NomeVar())
-	(d=<SEPFOR>){cod.add(d);}
-	(ValorVar()|NomeVar())
-	(d=<SEPFOR>){cod.add(d);}
-	(ValorVar()|NomeVar())
-	(e = <FECHAPAR>){cod.add(e);}
+
+	(f=<TIPOINT>){cod.add(f);}
+	(g=<NOMEVAR>){cod.add(g);cod.addDVarList(g.image,f.kind);}
+	Atribuicao(f.kind)
+
+	(d=<SEPFOR>){cod.add(d);cod.openExpressao(9);}
+	Expressao(){cod.closeExpressao();}
+
+	(d=<SEPFOR>){cod.add(d);cod.openExpressao(9);}
+	Expressao(){cod.closeExpressao();}
+	(e=<FECHAPAR>){cod.add(e);}
 	Bloco()
 }
 
 void Foreach():
-{Token a,b,c,d;} // <FOREACH><ABREPAR>NomeVar()<SEPFOR>NomeVar()<FECHAPAR>Bloco()
+{Token a,b,c,d,e,f;} // <FOREACH><ABREPAR>NomeVar()<SEPFOR>NomeVar()<FECHAPAR>Bloco()
 {
 	(a=<FOREACH>){cod.add(a);}
 	(b=<ABREPAR>){cod.add(b);}
-	NomeVar()
+	(f=<NOMEVAR>){cod.add(f);}
 	(c=<SEPFOR>){cod.add(c);}
-	NomeVar()
+	(e=<NOMEVAR>){
+		cod.add(e);
+		cod.checkForeach(f, e);
+	}
 	(d=<FECHAPAR>){cod.add(d);}
 	Bloco()
 }

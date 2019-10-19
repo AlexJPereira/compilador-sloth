@@ -7,6 +7,7 @@ public class Variable{
 	private List<Integer> parameters = null;
 	private int checkedParam=0;
 	private Codigo cod;
+	private boolean isVet=false;
 
 	public Variable(String id, int type, Codigo cod){
 		this.id = id; 
@@ -29,8 +30,16 @@ public class Variable{
 	}
 	
 	public boolean isAllParamsChecked(){
+		int aux = checkedParam;
+		checkedParam = 0;
 		if(parameters==null) return true;
-		else return (parameters.size()==checkedParam);
+		else return (parameters.size()==aux);
+	}
+
+	public void checkVet(boolean vet) throws ParseException{
+		if(vet!=isVet)
+			if(vet) throw new ParseException("a variavel nao e vetor");
+			else throw new ParseException("a variavel e um vetor, faltou [");
 	}
 
 	public String getId(){
@@ -59,5 +68,13 @@ public class Variable{
 			System.out.println();
 		}
 		
+	}
+
+	public void setIsVet(boolean v){
+		isVet = v;
+	}
+
+	public boolean getIsVet(){
+		return isVet;
 	}
 }

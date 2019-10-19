@@ -14,6 +14,7 @@ public class Codigo
 	private boolean localVar = false;
 	private int expectedReturn = 0;
 	private int scope = 0;
+	private boolean hasReturn = false;
 
 	public Codigo(String[] ti){
 		constAdp = new ConstantsAdapter(ti);
@@ -120,6 +121,36 @@ public class Codigo
 		List<Integer> ls = expressions.pop();
 		ls.add(t.kind);
 		expressions.push(ls);
+	}
+
+	public void checkForeach(Token input,  Token container) throws ParseException{
+		Variable cont = verifyVarList(container);
+		if(!cont.getIsVet())
+			throw new ParseException("variavel nao e vetor");
+		else
+			addDVarList(input.image, cont.getType());
+	}
+
+	public void checkFor(Token input) throws ParseException{
+		Variable inp = verifyVarList(input);
+		if(inp.getIsVet())
+			throw new ParseException("variavel e vetor");
+		if(inp.getType()!=9)
+			throw new ParseException("variavel nao e inteiro");
+	}
+
+	public void openFunc(){
+		hasReturn = false;
+	}
+
+	public void setHasReturn(boolean hasReturn){
+		this.hasReturn = hasReturn;
+	}
+
+	public void closeFunc() throws ParseException{
+		if(!hasReturn){
+			throw new ParseException("expressao sem retorno");
+		}
 	}
 	
 	public void openBloco(){

@@ -7,6 +7,9 @@ public class ExpressionOp{
         ListIterator<Integer> litr = exp.listIterator();
         int elem, set=-1, previous=-1, next=-1;
 
+        if(exp.size()==0)
+            return 5;
+
         while(litr.hasNext()){
             elem = litr.next();
             if(elem==41){
