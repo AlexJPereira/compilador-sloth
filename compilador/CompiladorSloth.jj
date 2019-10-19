@@ -199,7 +199,6 @@ Token ChamaFuncao():
 	(a=<ABREPAR>){cod.add(a);}
 	[ChamaFuncPar(exp)]
 	(b=<FECHAPAR>){cod.add(b);
-	cod.checkParameters(exp);
 	return exp;}
 }
 
@@ -346,8 +345,9 @@ void Expressao():
 	| (c=<NOT>){cod.add(c);cod.addOpToExp(c);}
 	Expressao()
 	| (exp=ValorVar()){cod.addToExp(exp);}
-	| ( LOOKAHEAD(3) (exp=ChamaFuncao()){cod.addToExp(exp);}
+	| (( LOOKAHEAD(3) (exp=ChamaFuncao()){cod.addToExp(exp);}
 	| (exp=NomeVar())){cod.addToExp(exp);})
+	{cod.checkParameters(exp);})
 	[LOOKAHEAD(2) Operador()Expressao()]
 }
 

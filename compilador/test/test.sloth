@@ -1,7 +1,8 @@
-int soma(int a, int b) begin
+double soma(int a, double b) begin
     return a+b;
 end
 
 first
-    int a = soma;
+    double a = soma(2,3^3);
+    double b = soma(2,3.0);
 last

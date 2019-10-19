@@ -29,8 +29,10 @@ public class Variable{
 	}
 	
 	public boolean isAllParamsChecked(){
+		int aux = checkedParam;
+		checkedParam = 0;
 		if(parameters==null) return true;
-		else return (parameters.size()==checkedParam);
+		else return (parameters.size()==aux);
 	}
 
 	public String getId(){
