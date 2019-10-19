@@ -6,6 +6,9 @@ import java.util.ListIterator;
 
 public class testes{
     public static void main(String[] args){
-        boolean a = "a"+4>3+5+"asd";
+        int a =3;
+        for(int b:a){
+            System.out.println(b);
+        }
     }
 }

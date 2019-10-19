@@ -295,6 +295,7 @@ Variable DeclaraVar(Token d):
 		var=cod.addDVarList(a.image, d.kind);
 	}
 	[LOOKAHEAD(2) (((b=<ABREVET>){cod.add(b);
+	var.setIsVet(true);
 	cod.openExpressao(9);}
 	Expressao(){cod.closeExpressao();})
 	(c=<FECHAVET>){cod.add(c);}
@@ -304,15 +305,17 @@ Variable DeclaraVar(Token d):
 
 
 Token NomeVar():
-{Token a,b,c;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
+{Token a,b,c; boolean vet = false; Variable var;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
 {
-	((a=<NOMEVAR>){cod.verifyVarList(a);
+	((a=<NOMEVAR>){var=cod.verifyVarList(a);
 	cod.add(a);}
 	[((b=<ABREVET>){cod.add(b);
+	vet = true;
 	cod.openExpressao(9);}
 	Expressao(){cod.closeExpressao();}
 	(c=<FECHAVET>){cod.add(c);})])
-	{return a;}
+	{var.checkVet(vet);
+	return a;}
 }
 
 void Atribuicao(int kind):
@@ -447,7 +450,7 @@ void For():
 }
 
 void Foreach():
-{Token a,b,c,d;} // <FOREACH><ABREPAR>NomeVar()<SEPFOR>NomeVar()<FECHAPAR>Bloco()
+{Token a,b,c,d,tipo;} // <FOREACH><ABREPAR>NomeVar()<SEPFOR>NomeVar()<FECHAPAR>Bloco()
 {
 	(a=<FOREACH>){cod.add(a);}
 	(b=<ABREPAR>){cod.add(b);}

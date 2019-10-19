@@ -3,6 +3,7 @@ double soma(int a, double b) begin
 end
 
 first
-    double a = soma(2,3^3);
-    double b = soma(2,3.0);
+    int a, b[2];
+    b[3] = 2;
+    
 last
