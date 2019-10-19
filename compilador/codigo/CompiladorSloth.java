@@ -176,7 +176,7 @@ cod.closeExpressao();
 
   final public Token ChamaFuncao() throws ParseException {Token a,b,exp;
     exp = jj_consume_token(NOMEVAR);
-cod.add(exp);
+cod.add(exp);cod.openChamaFunc(exp);
     a = jj_consume_token(ABREPAR);
 cod.add(a);
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {

@@ -195,7 +195,7 @@ void Retorno():
 Token ChamaFuncao():
 {Token a,b,exp;} // NomeVar()<ABREPAR>[ChamaFuncPar()]<FECHAPAR>
 {
-	(exp=<NOMEVAR>){cod.add(exp);}
+	(exp=<NOMEVAR>){cod.add(exp);cod.openChamaFunc(exp);}
 	(a=<ABREPAR>){cod.add(a);}
 	[ChamaFuncPar(exp)]
 	(b=<FECHAPAR>){cod.add(b);
