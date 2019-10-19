@@ -1,4 +1,7 @@
+int soma(int a, int b) begin
+    return a+b;
+end
+
 first
-    boolean a;
-    a= !(2>3)&&2>3;
+    int a = soma;
 last

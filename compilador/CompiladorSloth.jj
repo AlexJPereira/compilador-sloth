@@ -166,12 +166,12 @@ void Programa():
 void Funcao():
 {Token a=null,b; Variable var=null;} // (<TIPOVOID>|TipoVar())NomeVar()<ABREPAR>[FuncPar()]<FECHAPAR>Bloco()
 {
-	((a=<TIPOVOID>){cod.add(a);}|a=TipoVar()){cod.setScope(a.kind);}
+	((a=<TIPOVOID>){cod.add(a);cod.setHasReturn(true);}|a=TipoVar(){cod.openFunc();}){cod.setScope(a.kind);}
 	(var=DeclaraVar(a))
 	(a=<ABREPAR>){cod.add(a);cod.openBloco();}
 	[FuncPar(var)]
 	(b=<FECHAPAR>){cod.add(b);}
-	Bloco(){cod.closeBloco();}
+	Bloco(){cod.closeBloco();cod.closeFunc();}
 }
 
 void FuncPar(Variable var):
@@ -187,7 +187,8 @@ void Retorno():
 {Token a;} // <RETORNO>Expressao()
 {
 	(a=<RETORNO>){cod.add(a);
-	cod.openExpressao(cod.getScope());}
+	cod.openExpressao(cod.getScope());
+	cod.setHasReturn(true);}
 	[Expressao()]{cod.closeExpressao();}
 }
 
