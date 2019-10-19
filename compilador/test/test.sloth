@@ -3,7 +3,9 @@ double soma(int a, double b) begin
 end
 
 first
-    int a, b[2];
-    b[3] = 2;
+    for(int i=0:5:1) begin
+        i=i+1;
+    end
+    i=2;
     
 last

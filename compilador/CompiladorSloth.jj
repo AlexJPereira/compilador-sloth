@@ -429,7 +429,7 @@ void While():
 }
 
 void For():
-{Token a,b,c,d,e,f;}/*
+{Token a,b,c,d,e,f,g;}/*
 <FOR><ABREPAR>NomeVar()<IGUALDADE>
 (ValorVar()|NomeVar())<SEPFOR>
 (ValorVar()|NomeVar())<SEPFOR>
@@ -438,25 +438,31 @@ void For():
 {
 	(a=<FOR>){cod.add(a);}
 	(b=<ABREPAR>){cod.add(b);}
-	((f=TipoVar()DeclaraVar(f))|NomeVar())
-	(c=<IGUALDADE>){cod.add(c);}
-	(ValorVar()|NomeVar())
-	(d=<SEPFOR>){cod.add(d);}
-	(ValorVar()|NomeVar())
-	(d=<SEPFOR>){cod.add(d);}
-	(ValorVar()|NomeVar())
-	(e = <FECHAPAR>){cod.add(e);}
+
+	(f=<TIPOINT>){cod.add(f);}
+	(g=<NOMEVAR>){cod.add(g);cod.addDVarList(g.image,f.kind);}
+	Atribuicao(f.kind)
+
+	(d=<SEPFOR>){cod.add(d);cod.openExpressao(9);}
+	Expressao(){cod.closeExpressao();}
+
+	(d=<SEPFOR>){cod.add(d);cod.openExpressao(9);}
+	Expressao(){cod.closeExpressao();}
+	(e=<FECHAPAR>){cod.add(e);}
 	Bloco()
 }
 
 void Foreach():
-{Token a,b,c,d,tipo;} // <FOREACH><ABREPAR>NomeVar()<SEPFOR>NomeVar()<FECHAPAR>Bloco()
+{Token a,b,c,d,e,f;} // <FOREACH><ABREPAR>NomeVar()<SEPFOR>NomeVar()<FECHAPAR>Bloco()
 {
 	(a=<FOREACH>){cod.add(a);}
 	(b=<ABREPAR>){cod.add(b);}
-	NomeVar()
+	(f=<NOMEVAR>){cod.add(f);}
 	(c=<SEPFOR>){cod.add(c);}
-	NomeVar()
+	(e=<NOMEVAR>){
+		cod.add(e);
+		cod.checkForeach(f, e);
+	}
 	(d=<FECHAPAR>){cod.add(d);}
 	Bloco()
 }

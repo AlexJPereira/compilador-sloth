@@ -6,9 +6,9 @@ import java.util.ListIterator;
 
 public class testes{
     public static void main(String[] args){
-        int a =3;
-        for(int b:a){
-            System.out.println(b);
+        int a;
+        for(a;a<2;a++){
+            System.out.println(a);
         }
     }
 }
