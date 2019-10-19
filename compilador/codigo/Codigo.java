@@ -196,6 +196,10 @@ public class Codigo
 	public int getScope(){
 		return scope;
 	}
+
+	public ExpressionOp getExpChecker(){
+		return expChecker;
+	}
 }
 
 

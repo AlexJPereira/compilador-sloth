@@ -22,7 +22,7 @@ public class Variable{
 		if(param.kind==58) {id = cod.getVarType(param);}
 		else {id = cod.getValueType(param);}
 
-		if(parameters.get(checkedParam)!=id)
+		if(!cod.getExpChecker().canReceive(id, parameters.get(checkedParam)))
 			throw new ParseException("parametro nao encontrado "+param.image);
 		else
 			checkedParam++;
