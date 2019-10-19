@@ -6,10 +6,18 @@ int fibo(int n) begin
     end
 end
 
-void helloWorld() begin
-    write("Hello World\n");
+int soma(int a, int b) begin
+    return a+b;
+end
+
+double soma2(int a, double b) begin
+    return a+b;
 end
 
 first
-    int a = fibo(4);
+    int a = 0;
+    while((a*2)+3/(2*(soma(a+5,1)+2)) < 2.0%+soma2(1,soma(25/3,3*soma(4,5))/5)) begin
+        write("test"+fibo(4)+"\n");
+        a = a + 1;
+    end
 last

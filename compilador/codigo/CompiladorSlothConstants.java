@@ -127,7 +127,7 @@ public interface CompiladorSlothConstants {
   /** RegularExpression Id. */
   int PORCENTAGEM = 63;
   /** RegularExpression Id. */
-  int TOKENERROR = 64;
+  int UNKNOWMTOKEN = 64;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -198,7 +198,7 @@ public interface CompiladorSlothConstants {
     "<CARACTER>",
     "<REAL>",
     "<PORCENTAGEM>",
-    "<TOKENERROR>",
+    "<UNKNOWMTOKEN>",
   };
 
 }
