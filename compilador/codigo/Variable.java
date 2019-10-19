@@ -1,37 +1,34 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class Variable{
 	private String id;
 	private int type;
 	private List<Integer> parameters = null;
-	private int checkedParam=0;
-	private Codigo cod;
+	private Stack<Integer> checkedParam = new Stack<Integer>();
 	private boolean isVet=false;
 
-	public Variable(String id, int type, Codigo cod){
+	public Variable(String id, int type){
 		this.id = id; 
 		this.type = type;
-		this.cod = cod;
 	}
 
-	public void checkParam(Token name, Token param) throws ParseException{
-		if(parameters==null)
-			throw new ParseException("funcao nao tem parametros");
-
-		int id = 0;
-		if(param.kind==58) {id = cod.getVarType(param);}
-		else {id = cod.getValueType(param);}
-
-		if(!cod.getExpChecker().canReceive(id, parameters.get(checkedParam)))
-			throw new ParseException("parametro nao encontrado "+param.image);
-		else
-			checkedParam++;
+	public void openParamChecker(){
+		checkedParam.push(0);
 	}
 	
+	public int getNextParam(Token name) throws ParseException{
+		int aux = checkedParam.peek();
+		checkedParam.push(checkedParam.pop()+1);
+		if(aux<parameters.size())
+			return parameters.get(aux);
+		throw new ParseException("parametro nao encontrado "+name.image);
+	}
+
 	public boolean isAllParamsChecked(){
-		int aux = checkedParam;
-		checkedParam = 0;
+		int aux = checkedParam.peek();
+		checkedParam.pop();
 		if(parameters==null) return true;
 		else return (parameters.size()==aux);
 	}

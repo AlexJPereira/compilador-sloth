@@ -6,19 +6,21 @@ public class Codigo
 {
     private List<Token> tokenList = new ArrayList<Token>();
 	private List<Variable> dVariableList = new ArrayList<Variable>();
+	private Stack<Integer> expectedReturn = new Stack<Integer>();
 	private Stack<Integer> numLocalVar = new Stack<Integer>();
-	private Stack<List<Integer>> expressions = null;
+	private Stack<Stack<List<Integer>>> expressions = new Stack<Stack<List<Integer>>>();
 	private ExpressionOp expChecker = new ExpressionOp();
 	private ConstantsAdapter constAdp = null;
 	private boolean mainDefinition = false;
 	private boolean localVar = false;
-	private int expectedReturn = 0;
 	private int scope = 0;
 	private boolean hasReturn = false;
 
 	public Codigo(String[] ti){
 		constAdp = new ConstantsAdapter(ti);
 	}
+
+	public Codigo(){}
 
 	public void add(Token t){
 		tokenList.add(t);
@@ -31,7 +33,7 @@ public class Codigo
 				throw new ParseException("variavel ja declarada");
 			}
 		}
-		Variable var = new Variable(id, type, this);
+		Variable var = new Variable(id, type);
 		dVariableList.add(var);
 		return var;
 	}
@@ -50,8 +52,12 @@ public class Codigo
 			throw new ParseException(msg);
 	}
 
-	public void verifyParameters(Token name, Token param) throws ParseException{
-		verifyVarList(name).checkParam(name,param);
+	public int getNextParam(Token name) throws ParseException{
+		return verifyVarList(name).getNextParam(name);
+	}
+
+	public void openChamaFunc(Token t) throws ParseException{
+		verifyVarList(t).openParamChecker();
 	}
 
 	public void checkParameters(Token name) throws ParseException{
@@ -65,28 +71,30 @@ public class Codigo
 	}
 
 	public void openExpressao(int kind) throws ParseException{
-		expectedReturn = kind-9;
-		expressions = new Stack<List<Integer>>();
-		expressions.add(new ArrayList<Integer>());
-		if(expectedReturn==5){
-			List<Integer> ls = expressions.pop();
+		expectedReturn.push(kind-9);
+		expressions.push(new Stack<List<Integer>>());
+		expressions.peek().add(new ArrayList<Integer>());
+		if(expectedReturn.peek()==5){
+			List<Integer> ls = expressions.peek().pop();
 			ls.add(5);
-			expressions.push(ls);
+			expressions.peek().push(ls);
 		}
 	}
 
 	public void closeExpressao() throws ParseException{
-		int value = expChecker.expressionReturn(expressions.pop());
+		int value = expChecker.expressionReturn(expressions.peek().pop());
 		if(value==-1){
 			throw new ParseException("operacao invalida");
 		}
 		if(value==5)
-			if(expectedReturn!=5){
+			if(expectedReturn.peek()!=5){
 				throw new ParseException("operacao com void");
 			} else return;
-		if(!expChecker.canReceive(value,expectedReturn)){
-			throw new ParseException("tipo errado"+value+" "+expectedReturn);
+		if(!expChecker.canReceive(value,expectedReturn.peek())){
+			throw new ParseException("tipo errado"+value+" "+expectedReturn.peek());
 		}
+		expectedReturn.pop();
+		expressions.pop();
 	}
 
 	public void addToExp(Token t){
@@ -95,32 +103,32 @@ public class Codigo
 		else if(t.kind==54) id=3;
 		else {id = getValueType(t);}
 
-		List<Integer> ls = expressions.pop();
+		List<Integer> ls = expressions.peek().pop();
 		ls.add(id);
-		expressions.push(ls);
+		expressions.peek().push(ls);
 	}
 
 	public void openParExp(Token t){
-		expressions.push(new ArrayList<Integer>());
+		expressions.peek().push(new ArrayList<Integer>());
 	}
 
 	public void closeParExp(Token t) throws ParseException{
-		int value = expChecker.expressionReturn(expressions.pop());
+		int value = expChecker.expressionReturn(expressions.peek().pop());
 		if(value==-1){
 			throw new ParseException("exp errada apos par");
 		}
-		if(value==5&&expectedReturn!=5){
+		if(value==5&&expectedReturn.peek()!=5){
 			throw new ParseException("operacao com void");
 		}
-		List<Integer> ls = expressions.pop();
+		List<Integer> ls = expressions.peek().pop();
 		ls.add(value);
-		expressions.push(ls);
+		expressions.peek().push(ls);
 	}
 
 	public void addOpToExp(Token t){
-		List<Integer> ls = expressions.pop();
+		List<Integer> ls = expressions.peek().pop();
 		ls.add(t.kind);
-		expressions.push(ls);
+		expressions.peek().push(ls);
 	}
 
 	public void checkForeach(Token input,  Token container) throws ParseException{

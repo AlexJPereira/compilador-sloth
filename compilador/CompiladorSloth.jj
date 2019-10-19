@@ -154,6 +154,11 @@ TOKEN:
 	|<PORCENTAGEM: (<REAL>|<INTEIRO>)<PORCE>>
 }
 
+TOKEN:
+{
+	<UNKNOWMTOKEN: <ASC>>
+}
+
 void Programa():
 {Token a,b;} // (((Importacao()|<COMENT>)*Execucao())|Execucao())(<COMENT>)*<EOF>
 {
@@ -164,13 +169,13 @@ void Programa():
 }
 
 void Funcao():
-{Token a=null,b; Variable var=null;} // (<TIPOVOID>|TipoVar())NomeVar()<ABREPAR>[FuncPar()]<FECHAPAR>Bloco()
+{Token a=null,b,c,d; Variable var=null;} // (<TIPOVOID>|TipoVar())NomeVar()<ABREPAR>[FuncPar()]<FECHAPAR>Bloco()
 {
 	((a=<TIPOVOID>){cod.add(a);cod.setHasReturn(true);}|a=TipoVar(){cod.openFunc();}){cod.setScope(a.kind);}
-	(var=DeclaraVar(a))
-	(a=<ABREPAR>){cod.add(a);cod.openBloco();}
+	(b=<NOMEVAR>){cod.add(b);var=cod.addDVarList(b.image, a.kind);}
+	(c=<ABREPAR>){cod.add(c);cod.openBloco();}
 	[FuncPar(var)]
-	(b=<FECHAPAR>){cod.add(b);}
+	(d=<FECHAPAR>){cod.add(d);}
 	Bloco(){cod.closeBloco();cod.closeFunc();}
 }
 
@@ -195,18 +200,19 @@ void Retorno():
 Token ChamaFuncao():
 {Token a,b,exp;} // NomeVar()<ABREPAR>[ChamaFuncPar()]<FECHAPAR>
 {
-	(exp=NomeVar())
+	(exp=<NOMEVAR>){cod.add(exp);cod.openChamaFunc(exp);}
 	(a=<ABREPAR>){cod.add(a);}
 	[ChamaFuncPar(exp)]
 	(b=<FECHAPAR>){cod.add(b);
+	cod.checkParameters(exp);
 	return exp;}
 }
 
 void ChamaFuncPar(Token exp):
-{Token a, b=null;} // (NomeVar()|ValorVar())[<SEPFUN>FuncPar()]
-{
-	(b=NomeVar()|b=ValorVar())
-	{cod.verifyParameters(exp,b);}
+{Token a, b=null; int paramType;} // (NomeVar()|ValorVar())[<SEPFUN>FuncPar()]
+{	
+	{paramType=cod.getNextParam(exp);cod.openExpressao(paramType+9);}
+	Expressao(){cod.closeExpressao();}
 	[(a=<SEPFUN>){cod.add(a);}
 	ChamaFuncPar(exp)]
 }
@@ -348,9 +354,8 @@ void Expressao():
 	| (c=<NOT>){cod.add(c);cod.addOpToExp(c);}
 	Expressao()
 	| (exp=ValorVar()){cod.addToExp(exp);}
-	| (( LOOKAHEAD(3) (exp=ChamaFuncao()){cod.addToExp(exp);}
-	| (exp=NomeVar())){cod.addToExp(exp);})
-	{cod.checkParameters(exp);})
+	| ((LOOKAHEAD(2)(exp=ChamaFuncao())
+	| (exp=NomeVar())){cod.addToExp(exp);}))
 	[LOOKAHEAD(2) Operador()Expressao()]
 }
 
