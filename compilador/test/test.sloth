@@ -4,5 +4,6 @@ end
 
 first
     int b[2], c;
+    #c=2;#
     int a = 2+(3*(4-b[0])/c);
 last
