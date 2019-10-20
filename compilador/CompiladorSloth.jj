@@ -285,8 +285,7 @@ void ManVar():
 {Token a,b;} //(TipoVar()NomeVar()[Atribuicao()])|(NomeVar()Atribuicao())|(ChamaFuncao())
 {
 	(a=TipoVar()ManVarSeq(a))
-	| ( LOOKAHEAD(3) ((b=NomeVar()){cod.checkInitVar(b);}
-	Atribuicao(cod.getVarType(b)+9){cod.initializeVar(b);})
+	| ( LOOKAHEAD(3) ((b=NomeVar())Atribuicao(cod.getVarType(b)+9){cod.initializeVar(b);})
 	| ChamaFuncao())
 
 }
