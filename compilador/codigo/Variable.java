@@ -7,7 +7,8 @@ public class Variable{
 	private int type;
 	private List<Integer> parameters = null;
 	private Stack<Integer> checkedParam = new Stack<Integer>();
-	private boolean isVet=false;
+	private boolean isVet = false;
+	private boolean wasInit = false;
 
 	public Variable(String id, int type){
 		this.id = id; 
@@ -18,12 +19,13 @@ public class Variable{
 		checkedParam.push(0);
 	}
 	
-	public int getNextParam(Token name) throws ParseException{
+	public int getNextParam(Token name, String file) throws ParseException{
 		int aux = checkedParam.peek();
 		checkedParam.push(checkedParam.pop()+1);
 		if(aux<parameters.size())
 			return parameters.get(aux);
-		throw new ParseException("parametro nao encontrado "+name.image);
+		new ErrorCreator(file).throwPE(name, "The function "+name.image+" has fewer parameters.");
+		return 5;
 	}
 
 	public boolean isAllParamsChecked(){
@@ -33,10 +35,18 @@ public class Variable{
 		else return (parameters.size()==aux);
 	}
 
-	public void checkVet(boolean vet) throws ParseException{
+	public void checkVet(boolean vet, Token t, String file) throws ParseException{
 		if(vet!=isVet)
-			if(vet) throw new ParseException("a variavel nao e vetor");
-			else throw new ParseException("a variavel e um vetor, faltou [");
+			if(vet) new ErrorCreator(file).throwPE(t, "The variable "+t.image+" is not an array.");
+			else new ErrorCreator(file).throwPE(t, "The variable "+t.image+" is an array.");
+	}
+
+	public void init(){
+		wasInit=true;
+	}
+
+	public boolean getInit(){
+		return wasInit;
 	}
 
 	public String getId(){
