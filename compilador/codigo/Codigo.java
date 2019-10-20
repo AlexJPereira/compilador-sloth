@@ -30,7 +30,7 @@ public class Codigo
 		if(localVar) numLocalVar.push(numLocalVar.pop()+1);
 		for(Variable var : dVariableList){
 			if(var.getId().equals(id)){
-				throw new ParseException("variavel ja declarada");
+				throw new ParseException("Variable "+id+" is already defined.");
 			}
 		}
 		Variable var = new Variable(id, type);
