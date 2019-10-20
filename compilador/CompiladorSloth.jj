@@ -285,7 +285,8 @@ void ManVar():
 {Token a,b;} //(TipoVar()NomeVar()[Atribuicao()])|(NomeVar()Atribuicao())|(ChamaFuncao())
 {
 	(a=TipoVar()ManVarSeq(a))
-	| ( LOOKAHEAD(3) (b=NomeVar()Atribuicao(cod.getVarType(b)+9))
+	| ( LOOKAHEAD(3) ((b=NomeVar()){cod.checkInitVar(b);}
+	Atribuicao(cod.getVarType(b)+9){cod.initializeVar(b);})
 	| ChamaFuncao())
 
 }
@@ -319,8 +320,8 @@ Variable DeclaraVar(Token d):
 	var.setIsVet(true);
 	cod.openExpressao(9);}
 	(e=Expressao()){cod.closeExpressao(e);})
-	(c=<FECHAVET>){cod.add(c);}
-	|Atribuicao(d.kind))])
+	(c=<FECHAVET>){cod.add(c);cod.initializeVar(a);}
+	|(Atribuicao(d.kind)){cod.initializeVar(a);})])
 	{return var;}
 }
 
@@ -370,7 +371,7 @@ Token Expressao():
 	Expressao()
 	| (a=ValorVar()){cod.addToExp(a);}
 	| ((LOOKAHEAD(2)(a=ChamaFuncao())
-	| (a=NomeVar())){cod.addToExp(a);}))
+	| (a=NomeVar())){cod.addToExp(a);cod.checkInitVar(a);}))
 	[LOOKAHEAD(2) Operador()Expressao()]
 	{return a;}
 }
@@ -462,7 +463,7 @@ void For():
 
 	(f=<TIPOINT>){cod.add(f);}
 	(g=<NOMEVAR>){cod.add(g);cod.addDVarList(g.image,f.kind, g);}
-	Atribuicao(f.kind)
+	Atribuicao(f.kind){cod.initializeVar(g);}
 
 	(d=<SEPFOR>){cod.add(d);cod.openExpressao(9);}
 	(c=Expressao()){cod.closeExpressao(c);}

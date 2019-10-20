@@ -7,7 +7,8 @@ public class Variable{
 	private int type;
 	private List<Integer> parameters = null;
 	private Stack<Integer> checkedParam = new Stack<Integer>();
-	private boolean isVet=false;
+	private boolean isVet = false;
+	private boolean wasInit = false;
 
 	public Variable(String id, int type){
 		this.id = id; 
@@ -38,6 +39,14 @@ public class Variable{
 		if(vet!=isVet)
 			if(vet) new ErrorCreator(file).throwPE(t, "The variable "+t.image+" is not an array.");
 			else new ErrorCreator(file).throwPE(t, "The variable "+t.image+" is an array.");
+	}
+
+	public void init(){
+		wasInit=true;
+	}
+
+	public boolean getInit(){
+		return wasInit;
 	}
 
 	public String getId(){

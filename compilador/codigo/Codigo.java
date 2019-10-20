@@ -129,6 +129,15 @@ public class Codigo
 		expressions.peek().push(ls);
 	}
 
+	public void initializeVar(Token a) throws ParseException{
+		verifyVarList(a).init();
+	}
+
+	public void checkInitVar(Token a) throws ParseException{
+		if(!verifyVarList(a).getInit())
+			new ErrorCreator(file.peek()).throwPE(a, "The variable "+a.image+" was not initialized.");
+	}
+
 	public void checkForeach(Token input,  Token container) throws ParseException{
 		Variable cont = verifyVarList(container);
 		if(!cont.getIsVet())
