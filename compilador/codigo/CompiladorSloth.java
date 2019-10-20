@@ -9,22 +9,31 @@ public class CompiladorSloth implements CompiladorSlothConstants {
 
         public static void main(String[] args) throws ParseException
         {
-                try
-                {
-                        System.out.println("\n--->  Sloth Compiler  <---\n");
-                        CompiladorSloth analizador = new CompiladorSloth(System.in) ;
-                        analizador.Programa();
-                        System.out.println("--- Compilado sem erros ---");
-                }
+                System.out.println("\n--->  Sloth Compiler  <---\n");
+                String fname;
+
+                try{
+                        fname = args[0];
+            File f = new File(fname) ;
+            CompiladorSloth cs = new CompiladorSloth(new FileReader(f));
+            cs.Programa();
+                        System.out.println("File "+fname+" was successful compiled");
+        }
                 catch(ParseException e)
                 {
-                        System.out.println("Analyzer: errors were found!");
+                        System.out.println("Compiler Error: An error occurred.");
                         System.out.println(e.getMessage());
                 }
-                finally{
-                        cod.printTokens();
-                        //cod.printVars();
+                catch (IOException e) {
+                System.out.println("File Error: An error occurred.");
+                System.out.println(e.getMessage());
+        }
+                catch(ArrayIndexOutOfBoundsException e){
+                        System.out.println("Argument Error: No file at program argument.");
                 }
+                System.out.println();
+                //cod.printTokens();
+                //cod.printVars();
         }
 
   final public void Programa() throws ParseException {Token a,b;
@@ -1010,47 +1019,6 @@ cod.add(c);
     finally { jj_save(4, xla); }
   }
 
-  private boolean jj_3R_6()
- {
-    if (jj_3R_16()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_21()
- {
-    if (jj_3R_30()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_27()
- {
-    if (jj_scan_token(TIPOVOID)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_14()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_21()) {
-    jj_scanpos = xsp;
-    if (jj_3R_22()) return true;
-    }
-    return false;
-  }
-
-  private boolean jj_3R_17()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_27()) {
-    jj_scanpos = xsp;
-    if (jj_3R_28()) return true;
-    }
-    if (jj_scan_token(NOMEVAR)) return true;
-    return false;
-  }
-
   private boolean jj_3_4()
  {
     if (jj_3R_13()) return true;
@@ -1489,6 +1457,47 @@ cod.add(c);
     }
     }
     }
+    return false;
+  }
+
+  private boolean jj_3R_6()
+ {
+    if (jj_3R_16()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_21()
+ {
+    if (jj_3R_30()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_27()
+ {
+    if (jj_scan_token(TIPOVOID)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_14()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_21()) {
+    jj_scanpos = xsp;
+    if (jj_3R_22()) return true;
+    }
+    return false;
+  }
+
+  private boolean jj_3R_17()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_27()) {
+    jj_scanpos = xsp;
+    if (jj_3R_28()) return true;
+    }
+    if (jj_scan_token(NOMEVAR)) return true;
     return false;
   }
 
