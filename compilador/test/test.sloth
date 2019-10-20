@@ -1,3 +1,8 @@
+int soma(int a)begin
+    return 1;
+end
+
 first
-    int a, b, c, b;
+    int b;
+    int a = b[2];
 last

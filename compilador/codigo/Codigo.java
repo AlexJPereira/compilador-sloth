@@ -1,10 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-import java.io.File;
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.io.IOException;
 
 public class Codigo
 {
@@ -13,17 +9,17 @@ public class Codigo
 	private Stack<Integer> expectedReturn = new Stack<Integer>();
 	private Stack<Integer> numLocalVar = new Stack<Integer>();
 	private Stack<Stack<List<Integer>>> expressions = new Stack<Stack<List<Integer>>>();
+	private Stack<String> file = new Stack<String>();
 	private ExpressionOp expChecker = new ExpressionOp();
 	private ConstantsAdapter constAdp = null;
 	private boolean mainDefinition = false;
 	private boolean localVar = false;
 	private int scope = 0;
 	private boolean hasReturn = false;
-	private String file = null;
 
 	public Codigo(String[] ti, String fname){
 		constAdp = new ConstantsAdapter(ti);
-		this.file = fname;
+		this.file.push(fname);
 	}
 
 	public void add(Token t){
@@ -34,11 +30,7 @@ public class Codigo
 		if(localVar) numLocalVar.push(numLocalVar.pop()+1);
 		for(Variable var : dVariableList){
 			if(var.getId().equals(id)){
-				throw new ParseException(
-				"File:\t\t"+file+
-				"\nLine "+t.beginLine+":\t\t"+removeTabs(getFileLine(t.beginLine))+
-				"\nColumn "+t.beginColumn+":\t"+addTabs(getFileLine(t.beginLine), t.beginColumn)+
-				"\nVariable "+id+" is already defined.");
+				new ErrorCreator(file.peek()).throwPE(t, "Variable "+t.image+" is already defined.");
 			}
 		}
 		Variable var = new Variable(id, type);
@@ -48,20 +40,17 @@ public class Codigo
 
 	public Variable verifyVarList(Token t) throws ParseException{
 		String a = t.image;
-
-		//try{
-			for(Variable var : dVariableList){
-				if(var.getId().equals(a)){
-					return var;
-				}
+		for(Variable var : dVariableList){
+			if(var.getId().equals(a)){
+				return var;
 			}
-			String msg = "Variable " + t.image + " at line " +
-				t.beginLine + ", column " + t.beginColumn + " was not declared.";
-			throw new ParseException(msg);
+		}
+		new ErrorCreator(file.peek()).throwPE(t, "Variable "+t.image+" was not defined.");
+		return null;
 	}
 
 	public int getNextParam(Token name) throws ParseException{
-		return verifyVarList(name).getNextParam(name);
+		return verifyVarList(name).getNextParam(name, file.peek());
 	}
 
 	public void openChamaFunc(Token t) throws ParseException{
@@ -70,15 +59,15 @@ public class Codigo
 
 	public void checkParameters(Token name) throws ParseException{
 		if(!verifyVarList(name).isAllParamsChecked())
-			throw new ParseException("parametros errados para "+name.image);
+			new ErrorCreator(file.peek()).throwPE(name, "Function "+name.image+" does not have all the parameters.");
 	}
 
-	public void verificaFirst() throws ParseException{
+	public void verificaFirst(Token t) throws ParseException{
 		if(!mainDefinition) mainDefinition = true;
-		else throw new ParseException("Programa principal definido 2x");
+		else new ErrorCreator(file.peek()).throwPE(t, "A second main function was found.");
 	}
 
-	public void openExpressao(int kind) throws ParseException{
+	public void openExpressao(int kind){
 		expectedReturn.push(kind-9);
 		expressions.push(new Stack<List<Integer>>());
 		expressions.peek().add(new ArrayList<Integer>());
@@ -89,18 +78,19 @@ public class Codigo
 		}
 	}
 
-	public void closeExpressao() throws ParseException{
+	public void closeExpressao(Token t) throws ParseException{
 		int value = expChecker.expressionReturn(expressions.peek().pop());
-		if(value==-1){
-			throw new ParseException("operacao invalida");
-		}
+		if(value==-1)
+			new ErrorCreator(file.peek()).throwPE(t, "Invalid operator use in the expression.");
+
 		if(value==5)
-			if(expectedReturn.peek()!=5){
-				throw new ParseException("operacao com void");
-			} else return;
-		if(!expChecker.canReceive(value,expectedReturn.peek())){
-			throw new ParseException("tipo errado"+value+" "+expectedReturn.peek());
-		}
+			if(expectedReturn.peek()!=5)
+				new ErrorCreator(file.peek()).throwPE(t, "Expression with void.");
+			else return;
+
+		if(!expChecker.canReceive(value,expectedReturn.peek()))
+			new ErrorCreator(file.peek()).throwPE(t, "Expression type is "+constAdp.getTokenImage()[value+9]+", expected: "+constAdp.getTokenImage()[expectedReturn.peek()+9]+".");
+		
 		expectedReturn.pop();
 		expressions.pop();
 	}
@@ -123,10 +113,10 @@ public class Codigo
 	public void closeParExp(Token t) throws ParseException{
 		int value = expChecker.expressionReturn(expressions.peek().pop());
 		if(value==-1){
-			throw new ParseException("exp errada apos par");
+			new ErrorCreator(file.peek()).throwPE(t, "Invalid operator use inside parenteses.");
 		}
 		if(value==5&&expectedReturn.peek()!=5){
-			throw new ParseException("operacao com void");
+			new ErrorCreator(file.peek()).throwPE(t, "Expression with void.");
 		}
 		List<Integer> ls = expressions.peek().pop();
 		ls.add(value);
@@ -142,17 +132,9 @@ public class Codigo
 	public void checkForeach(Token input,  Token container) throws ParseException{
 		Variable cont = verifyVarList(container);
 		if(!cont.getIsVet())
-			throw new ParseException("variavel nao e vetor");
+			new ErrorCreator(file.peek()).throwPE(container, "The variable must be an array.");
 		else
 			addDVarList(input.image, cont.getType(), input);
-	}
-
-	public void checkFor(Token input) throws ParseException{
-		Variable inp = verifyVarList(input);
-		if(inp.getIsVet())
-			throw new ParseException("variavel e vetor");
-		if(inp.getType()!=9)
-			throw new ParseException("variavel nao e inteiro");
 	}
 
 	public void openFunc(){
@@ -163,10 +145,9 @@ public class Codigo
 		this.hasReturn = hasReturn;
 	}
 
-	public void closeFunc() throws ParseException{
-		if(!hasReturn){
-			throw new ParseException("expressao sem retorno");
-		}
+	public void closeFunc(Token t) throws ParseException{
+		if(!hasReturn)
+			new ErrorCreator(file.peek()).throwPE(t, "The function must have a return.");
 	}
 	
 	public void openBloco(){
@@ -241,38 +222,16 @@ public class Codigo
 		return expChecker;
 	}
 
-	public String getFileLine(int line){
-		try{
-			FileReader fr = new FileReader(file);
-			BufferedReader br = new BufferedReader(fr);
-			for(int i=0;i<line-1;i++){
-				br.readLine();
-			}
-			String ret = br.readLine();
-			br.close();
-			return ret;
-		}
-		catch(IOException e){
-			return null;
-		}
+	public void addFile(String nome){
+		file.push(nome);
 	}
 
-	public String removeTabs(String str){
-		while(str.charAt(0)==' '||str.charAt(0)=='\t')
-			str = str.substring(1);
-		return str;
+	public void removeFile(){
+		file.pop();
 	}
 
-	public String addTabs(String str, int c){
-		int j=0;
-		while(str.charAt(j)==' '||str.charAt(j)=='\t'){
-			c--;j++;
-		}
-		String ret = "";
-		for(int i=0;i<c-1;i++){
-			ret = ret + " ";
-		}
-		return ret+"^";
+	public String getFile(){
+		return file.peek();
 	}
 }
 

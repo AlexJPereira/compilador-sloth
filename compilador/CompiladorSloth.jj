@@ -189,7 +189,7 @@ void Funcao():
 	(c=<ABREPAR>){cod.add(c);cod.openBloco();}
 	[FuncPar(var)]
 	(d=<FECHAPAR>){cod.add(d);}
-	Bloco(){cod.closeBloco();cod.closeFunc();}
+	Bloco(){cod.closeBloco();cod.closeFunc(a);}
 }
 
 void FuncPar(Variable var):
@@ -207,7 +207,7 @@ void Retorno():
 	(a=<RETORNO>){cod.add(a);
 	cod.openExpressao(cod.getScope());
 	cod.setHasReturn(true);}
-	[Expressao()]{cod.closeExpressao();}
+	[a=Expressao()]{cod.closeExpressao(a);}
 }
 
 Token ChamaFuncao():
@@ -222,10 +222,10 @@ Token ChamaFuncao():
 }
 
 void ChamaFuncPar(Token exp):
-{Token a, b=null; int paramType;} // (NomeVar()|ValorVar())[<SEPFUN>FuncPar()]
+{Token a, b; int paramType;} // (NomeVar()|ValorVar())[<SEPFUN>FuncPar()]
 {	
 	{paramType=cod.getNextParam(exp);cod.openExpressao(paramType+9);}
-	Expressao(){cod.closeExpressao();}
+	(b=Expressao()){cod.closeExpressao(b);}
 	[(a=<SEPFUN>){cod.add(a);}
 	ChamaFuncPar(exp)]
 }
@@ -240,10 +240,12 @@ void Importacao():
 			String fname = b.image;
 			fname = fname.substring(0, fname.length()-1);
 			fname = fname.substring(1);
-
             File f = new File(fname) ;
+
+			cod.addFile(fname);
             CompiladorSloth cs = new CompiladorSloth(new FileReader(f));
-            cs.Programa(); 
+            cs.Programa();
+			cod.removeFile();
         }
 		catch (IOException e) {
       		System.out.println("File Error: An error occurred.");
@@ -256,7 +258,7 @@ void Execucao():
 {Token a,b,c;} //<FIRST>(Linha())*<LAST>
 {
 	(a=<FIRST>){cod.add(a);
-	cod.verificaFirst();
+	cod.verificaFirst(a);
 	cod.setScope(14);}
 	(Linha()|(b=<COMENT>){cod.add(b);})*
 	(c=<LAST>){cod.add(c);}
@@ -270,12 +272,12 @@ void Linha():
 }
 
 void Write():
-{Token a,b,c;} //<WRITE><ABREPAR>Expressao()<FECHAPAR>
+{Token a,b,c,d;} //<WRITE><ABREPAR>Expressao()<FECHAPAR>
 {
 	(a=<WRITE>){cod.add(a);}
 	(b=<ABREPAR>){cod.add(b);
 	cod.openExpressao(12);}
-	Expressao(){cod.closeExpressao();}
+	(d=Expressao()){cod.closeExpressao(d);}
 	(c=<FECHAPAR>){cod.add(c);}		
 }
 
@@ -307,7 +309,7 @@ Token TipoVar():
 }
 
 Variable DeclaraVar(Token d):
-{Token a,b,c; Variable var=null;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
+{Token a,b,c,e; Variable var=null;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
 {
 	((a=<NOMEVAR>){
 		cod.add(a);
@@ -316,7 +318,7 @@ Variable DeclaraVar(Token d):
 	[LOOKAHEAD(2) (((b=<ABREVET>){cod.add(b);
 	var.setIsVet(true);
 	cod.openExpressao(9);}
-	Expressao(){cod.closeExpressao();})
+	(e=Expressao()){cod.closeExpressao(e);})
 	(c=<FECHAVET>){cod.add(c);}
 	|Atribuicao(d.kind))])
 	{return var;}
@@ -324,35 +326,35 @@ Variable DeclaraVar(Token d):
 
 
 Token NomeVar():
-{Token a,b,c; boolean vet = false; Variable var;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
+{Token a,b,c,d; boolean vet = false; Variable var;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
 {
 	((a=<NOMEVAR>){var=cod.verifyVarList(a);
 	cod.add(a);}
 	[((b=<ABREVET>){cod.add(b);
 	vet = true;
 	cod.openExpressao(9);}
-	Expressao(){cod.closeExpressao();}
+	(d=Expressao()){cod.closeExpressao(d);}
 	(c=<FECHAVET>){cod.add(c);})])
-	{var.checkVet(vet);
+	{var.checkVet(vet,a,cod.getFile());
 	return a;}
 }
 
 void Atribuicao(int kind):
-{Token a;} // <IGUALDADE>(Read()|Expressao())
+{Token a,b;} // <IGUALDADE>(Read()|Expressao())
 {
-	(a=<IGUALDADE>){cod.add(a);cod.openExpressao(kind);}(Read()|Expressao()){cod.closeExpressao();}
+	(a=<IGUALDADE>){cod.add(a);cod.openExpressao(kind);}((b=Read())|(b=Expressao())){cod.closeExpressao(b);}
 }
 
-void Read():
+Token Read():
 {Token a,b,c;} // <GET><ABREPAR><FECHAPAR>
 {
 	(a=<GET>) {cod.add(a);cod.addToExp(a);}
 	(b=<ABREPAR>) {cod.add(b);}
-	(c=<FECHAPAR>) {cod.add(c);}
+	(c=<FECHAPAR>) {cod.add(c);return a;}
 }
 
-void Expressao():
-{Token a,b,c,exp;} /*
+Token Expressao():
+{Token a,b;} /*
 ((<ABREPAR>(Expressao())+<FECHAPAR>)
 | <NOT>Expressao()
 | ValorVar()
@@ -363,13 +365,14 @@ void Expressao():
 {
 	(((a=<ABREPAR>){cod.add(a);cod.openParExp(a);}
 	(Expressao())+
-	(b=<FECHAPAR>){cod.add(b);cod.closeParExp(b);})
-	| (c=<NOT>){cod.add(c);cod.addOpToExp(c);}
+	(b=<FECHAPAR>){cod.add(b);cod.closeParExp(a);})
+	| (a=<NOT>){cod.add(a);cod.addOpToExp(a);}
 	Expressao()
-	| (exp=ValorVar()){cod.addToExp(exp);}
-	| ((LOOKAHEAD(2)(exp=ChamaFuncao())
-	| (exp=NomeVar())){cod.addToExp(exp);}))
+	| (a=ValorVar()){cod.addToExp(a);}
+	| ((LOOKAHEAD(2)(a=ChamaFuncao())
+	| (a=NomeVar())){cod.addToExp(a);}))
 	[LOOKAHEAD(2) Operador()Expressao()]
+	{return a;}
 }
 
 void Operador():
@@ -436,12 +439,12 @@ void FluxoDados():
 }
 
 void While():
-{Token a,b,c;} // <WHILE><ABREPAR>Expressao()<FECHAPAR>Bloco()
+{Token a,b,c,d;} // <WHILE><ABREPAR>Expressao()<FECHAPAR>Bloco()
 {
 	(a=<WHILE>){cod.add(a);}
 	(b=<ABREPAR>){cod.add(b);
 	cod.openExpressao(13);}
-	Expressao(){cod.closeExpressao();}
+	(d=Expressao()){cod.closeExpressao(d);}
 	(c=<FECHAPAR>){cod.add(c);}
 	Bloco()
 }
@@ -462,10 +465,10 @@ void For():
 	Atribuicao(f.kind)
 
 	(d=<SEPFOR>){cod.add(d);cod.openExpressao(9);}
-	Expressao(){cod.closeExpressao();}
+	(c=Expressao()){cod.closeExpressao(c);}
 
 	(d=<SEPFOR>){cod.add(d);cod.openExpressao(9);}
-	Expressao(){cod.closeExpressao();}
+	(c=Expressao()){cod.closeExpressao(c);}
 	(e=<FECHAPAR>){cod.add(e);}
 	Bloco()
 }
@@ -486,12 +489,12 @@ void Foreach():
 }
 
 void If():
-{Token a,b,c,d;} // <IF><ABREPAR>Expressao()<FECHAPAR>Bloco()[<ELSE>Bloco()]
+{Token a,b,c,d,e;} // <IF><ABREPAR>Expressao()<FECHAPAR>Bloco()[<ELSE>Bloco()]
 {
 	(a=<IF>){cod.add(a);}
 	(b=<ABREPAR>){cod.add(b);
 	cod.openExpressao(13);}
-	Expressao(){cod.closeExpressao();}
+	(e=Expressao()){cod.closeExpressao(e);}
 	(c = <FECHAPAR>){cod.add(c);}
 	Bloco()
 	[(d = <ELSE>){cod.add(d);}Bloco()]
