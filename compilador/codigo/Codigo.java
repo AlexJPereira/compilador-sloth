@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.io.File;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 public class Codigo
 {
@@ -15,22 +19,26 @@ public class Codigo
 	private boolean localVar = false;
 	private int scope = 0;
 	private boolean hasReturn = false;
+	private String file = null;
 
-	public Codigo(String[] ti){
+	public Codigo(String[] ti, String fname){
 		constAdp = new ConstantsAdapter(ti);
+		this.file = fname;
 	}
-
-	public Codigo(){}
 
 	public void add(Token t){
 		tokenList.add(t);
 	}
 	
-	public Variable addDVarList(String id, int type) throws ParseException{
+	public Variable addDVarList(String id, int type, Token t) throws ParseException{
 		if(localVar) numLocalVar.push(numLocalVar.pop()+1);
 		for(Variable var : dVariableList){
 			if(var.getId().equals(id)){
-				throw new ParseException("Variable "+id+" is already defined.");
+				throw new ParseException(
+				"File:\t\t"+file+
+				"\nLine "+t.beginLine+":\t\t"+removeTabs(getFileLine(t.beginLine))+
+				"\nColumn "+t.beginColumn+":\t"+addTabs(getFileLine(t.beginLine), t.beginColumn)+
+				"\nVariable "+id+" is already defined.");
 			}
 		}
 		Variable var = new Variable(id, type);
@@ -136,7 +144,7 @@ public class Codigo
 		if(!cont.getIsVet())
 			throw new ParseException("variavel nao e vetor");
 		else
-			addDVarList(input.image, cont.getType());
+			addDVarList(input.image, cont.getType(), input);
 	}
 
 	public void checkFor(Token input) throws ParseException{
@@ -231,6 +239,40 @@ public class Codigo
 
 	public ExpressionOp getExpChecker(){
 		return expChecker;
+	}
+
+	public String getFileLine(int line){
+		try{
+			FileReader fr = new FileReader(file);
+			BufferedReader br = new BufferedReader(fr);
+			for(int i=0;i<line-1;i++){
+				br.readLine();
+			}
+			String ret = br.readLine();
+			br.close();
+			return ret;
+		}
+		catch(IOException e){
+			return null;
+		}
+	}
+
+	public String removeTabs(String str){
+		while(str.charAt(0)==' '||str.charAt(0)=='\t')
+			str = str.substring(1);
+		return str;
+	}
+
+	public String addTabs(String str, int c){
+		int j=0;
+		while(str.charAt(j)==' '||str.charAt(j)=='\t'){
+			c--;j++;
+		}
+		String ret = "";
+		for(int i=0;i<c-1;i++){
+			ret = ret + " ";
+		}
+		return ret+"^";
 	}
 }
 

@@ -5,21 +5,25 @@ PARSER_BEGIN(CompiladorSloth)
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.BufferedReader;
 import java.io.IOException;
 
 public class CompiladorSloth
 {
-    private static Codigo cod = new Codigo(tokenImage);
+    private static Codigo cod = null;
     
 	public static void main(String[] args) throws ParseException
 	{
 		System.out.println("\n--->  Sloth Compiler  <---\n");
-		String fname;
 
 		try{
-			fname = args[0];
+			String fname = args[0];
             File f = new File(fname) ;
-            CompiladorSloth cs = new CompiladorSloth(new FileReader(f));
+			FileReader fr = new FileReader(f);
+			BufferedReader br = new BufferedReader(fr);
+			cod = new Codigo(tokenImage, fname);
+
+            CompiladorSloth cs = new CompiladorSloth(fr);
             cs.Programa();
 			System.out.println("File "+fname+" was successful compiled");
         }
@@ -181,7 +185,7 @@ void Funcao():
 {Token a=null,b,c,d; Variable var=null;} // (<TIPOVOID>|TipoVar())NomeVar()<ABREPAR>[FuncPar()]<FECHAPAR>Bloco()
 {
 	((a=<TIPOVOID>){cod.add(a);cod.setHasReturn(true);}|a=TipoVar(){cod.openFunc();}){cod.setScope(a.kind);}
-	(b=<NOMEVAR>){cod.add(b);var=cod.addDVarList(b.image, a.kind);}
+	(b=<NOMEVAR>){cod.add(b);var=cod.addDVarList(b.image, a.kind, b);}
 	(c=<ABREPAR>){cod.add(c);cod.openBloco();}
 	[FuncPar(var)]
 	(d=<FECHAPAR>){cod.add(d);}
@@ -242,8 +246,8 @@ void Importacao():
             cs.Programa(); 
         }
 		catch (IOException e) {
-      		System.out.println("An error occurred.");
-      		e.printStackTrace();
+      		System.out.println("File Error: An error occurred.");
+      		System.out.println(e.getMessage());
     	}
 	}
 }
@@ -307,7 +311,7 @@ Variable DeclaraVar(Token d):
 {
 	((a=<NOMEVAR>){
 		cod.add(a);
-		var=cod.addDVarList(a.image, d.kind);
+		var=cod.addDVarList(a.image, d.kind, a);
 	}
 	[LOOKAHEAD(2) (((b=<ABREVET>){cod.add(b);
 	var.setIsVet(true);
@@ -454,7 +458,7 @@ void For():
 	(b=<ABREPAR>){cod.add(b);}
 
 	(f=<TIPOINT>){cod.add(f);}
-	(g=<NOMEVAR>){cod.add(g);cod.addDVarList(g.image,f.kind);}
+	(g=<NOMEVAR>){cod.add(g);cod.addDVarList(g.image,f.kind, g);}
 	Atribuicao(f.kind)
 
 	(d=<SEPFOR>){cod.add(d);cod.openExpressao(9);}
