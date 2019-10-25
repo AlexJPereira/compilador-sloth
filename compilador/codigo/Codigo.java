@@ -19,7 +19,7 @@ public class Codigo implements CompiladorSlothConstants
 	private boolean hasReturn = false;
 
 	public Codigo(String[] ti, String fname){
-		//constAdp = new ConstantsAdapter(ti);
+		constAdp = new ConstantsAdapter(ti);
 		this.file.push(fname);
 	}
 

@@ -3,5 +3,5 @@ int soma(int a)begin
 end
 
 first
-    int a = 3*5+(2);
+    for (a
 last

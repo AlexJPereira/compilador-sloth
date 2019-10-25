@@ -118,8 +118,7 @@ TOKEN:
 {
 	<AND: "&&">
 	|<OR: "||">
-	|<NOT: "!">
-	|<XOR: "|+">
+	|<NOT: "!"> // o xor removido estava aqui
 }
 
 TOKEN:
@@ -399,7 +398,6 @@ Token OpRelac():
 {
 	((a=<AND>){cod.add(a);}
 	|(a=<OR>){cod.add(a);}
-	|(a=<XOR>){cod.add(a);}
 	|(a=<IGUAL>){cod.add(a);}
 	|(a=<DIF>){cod.add(a);}
 	|(a=<MAIGUAL>){cod.add(a);}
