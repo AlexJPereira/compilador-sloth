@@ -243,6 +243,10 @@ public class Codigo implements CompiladorSlothConstants
 	public String getFile(){
 		return file.peek();
 	}
+
+	public String[] getTokenImage(){
+		return constAdp.getTokenImage();
+	}
 }
 
 
