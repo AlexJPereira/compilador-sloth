@@ -1,8 +1,9 @@
 int soma(int a)begin
     return a+1;
-end
+end #oi#
 
 first
     int a = soma(2);
     int c;
+    double d = 2.0+3%;
 last

@@ -62,11 +62,27 @@ public class CodeTranslator implements CompiladorSlothConstants{
                 case FIRST:
                     codJavaFIRST();
                     break;
+                case LAST:
+                    codJavaLAST();
+                    break;
+                case BEGIN:
+                    codJavaBEGIN();
+                    break;
+                case END:
+                    codJavaEND();
+                    break;
+                case COMENT:
+                    codJavaCOMENT();
+                    break;
+                case PORCENTAGEM:
+                    codJavaPORCENTAGEM();
+                    break;
                 default:
                     codeJavaDefault(t);
             }
             code.remove(0);
         }
+        codJavaLAST();
         
     }
 
@@ -195,6 +211,33 @@ public class CodeTranslator implements CompiladorSlothConstants{
         sb.append("public static void main(String[] args){\n");
         tabs++;
         insertTabs();
+    }
+
+    private void codJavaLAST(){
+        if(sb.charAt(sb.length()-1)=='\t') sb.delete(sb.length()-1,sb.length());
+        sb.append("}\n");
+        tabs=tabs-1;
+        insertTabs();
+    }
+
+    private void codJavaBEGIN(){
+        sb.append("{\n");
+        tabs++;
+        insertTabs();
+    }
+
+    private void codJavaEND(){
+        codJavaLAST();
+    }
+
+    private void codJavaCOMENT(){
+        sb.append("/* "+code.get(0).image.substring(1, code.get(0).image.length()-1)+" */\n");
+        insertTabs();
+    }
+    
+    private void codJavaPORCENTAGEM(){
+        double valor = Double.parseDouble(code.get(0).image.substring(0, code.get(0).image.length()-1))/100;
+        sb.append(valor);
     }
 
     private void insertTabs(){
