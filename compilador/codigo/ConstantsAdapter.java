@@ -3,7 +3,7 @@ public class ConstantsAdapter implements CompiladorSlothConstants{
     private String[] tokenImage;
 
     public ConstantsAdapter(String[] ti){
-        this.tokenImage] = ti;
+        this.tokenImage = ti;
         this.tokenImage[EOF] = "<EOF>";
         this.tokenImage[LETRA] = "<LETRA>";
         this.tokenImage[DIGITO] = "<DIGITO>";
