@@ -10,7 +10,7 @@ public class testes{
     public static ListIterator<String> litr = null;
     private static Scanner sc1 = new Scanner(System.in);
     public static void main(String[] args){
-        String test = sc1.nextLine();
+        char test = sc1.next().charAt(0);
         System.out.println(test);
     }
 

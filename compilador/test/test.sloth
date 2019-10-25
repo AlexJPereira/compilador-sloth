@@ -1,11 +1,9 @@
 int soma(int a)begin
     return a+1;
-end #oi#
+end
 
 first
-    int a = soma(2);
-    int c;
-    double d = 2.0+3%;
-    int e = get(int);
-    write("oi kkk");
+    double test = get(double);
+    test = test + soma(3);
+    write(""+test);
 last

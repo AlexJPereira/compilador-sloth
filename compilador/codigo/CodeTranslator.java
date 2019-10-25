@@ -130,10 +130,14 @@ public class CodeTranslator implements CompiladorSlothConstants{
         || t.kind == ELSE)
         {
             Variable var = null;
-            try{var = cod.verifyVarList(code.get(1));}catch(Exception e){}
-            if(var.getIsFunc()){
-                sb.append("private static "+t.image+" ");
-            }else{
+            try{
+                var = cod.verifyVarList(code.get(1));
+                if(var.getIsFunc()){
+                    sb.append("private static "+t.image+" ");
+                }else{
+                    sb.append(t.image+" ");
+                }
+            }catch(Exception e){
                 sb.append(t.image+" ");
             }
             return;
@@ -255,15 +259,27 @@ public class CodeTranslator implements CompiladorSlothConstants{
         sb.insert(0, "import java.util.Scanner;\n\n");
         code.remove(0);code.remove(0);
         int type = code.get(0).kind;
-        if(type == ABREPAR){
-            sb.append("get.nextLine()");
-            return;
+        switch(type){
+            case FECHAPAR:
+                sb.append("get.nextLine()");
+                break;
+            case TIPOSTRING:
+                sb.append("get.nextLine()");
+                break;
+            case TIPOBOOLEAN:
+                sb.append("get.nextBoolean()");
+                break;
+            case TIPOCHAR:
+                sb.append("get.next().charAt(0)");
+                break;
+            case TIPODOUBLE:
+                sb.append("get.nextDouble()");
+                break;
+            case TIPOINT:
+                sb.append("get.nextInt()");
+                break;
         }
-        if(type == TIPOSTRING){
-            sb.append("get.nextLine()");
-        }
-
-        
+        if(type!=FECHAPAR) code.remove(0);
     }
 
     private void insertTabs(){
