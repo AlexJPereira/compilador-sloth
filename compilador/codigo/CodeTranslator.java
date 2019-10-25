@@ -17,6 +17,10 @@ public class CodeTranslator implements CompiladorSlothConstants{
     public void build(){
         Token t;
 
+        sb.append("public class app{\n");
+        tabs++;
+        insertTabs();
+
         while(!code.isEmpty()){
             t = code.get(0);
             switch(t.kind){
@@ -53,7 +57,10 @@ public class CodeTranslator implements CompiladorSlothConstants{
                     codJavaSEPFOR();
                     break;
                 case FOREACH:
-                    codJAVAFOREACH();
+                    codJavaFOREACH();
+                    break;
+                case FIRST:
+                    codJavaFIRST();
                     break;
                 default:
                     codeJavaDefault(t);
@@ -97,9 +104,20 @@ public class CodeTranslator implements CompiladorSlothConstants{
 
     private void codeJavaDefault(Token t){
         if(
-        (t.kind >= TIPOINT && t.kind <= RETORNO)
+        (t.kind >= TIPOINT && t.kind < RETORNO)
         || t.kind == ELSE)
         {
+            Variable var = null;
+            try{var = cod.verifyVarList(code.get(1));}catch(Exception e){}
+            if(var.getIsFunc()){
+                sb.append("private static "+t.image+" ");
+            }else{
+                sb.append(t.image+" ");
+            }
+            return;
+        }
+
+        if(t.kind==RETORNO){
             sb.append(t.image+" ");
             return;
         }
@@ -169,8 +187,14 @@ public class CodeTranslator implements CompiladorSlothConstants{
         }
     }
 
-    private void codJAVAFOREACH(){
+    private void codJavaFOREACH(){
         sb.append("for");
+    }
+
+    private void codJavaFIRST(){
+        sb.append("public static void main(String[] args){\n");
+        tabs++;
+        insertTabs();
     }
 
     private void insertTabs(){

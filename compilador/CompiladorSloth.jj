@@ -199,9 +199,22 @@ void FuncPar(Variable var):
 {Token a, b;} // TipoVar()NomeVar()[<SEPFUN>FuncPar()]
 {
 	b=TipoVar(){var.addParameter(b.kind);}
-	DeclaraVar(b)
+	DeclaraVarFunc(b)
 	[(a=<SEPFUN>){cod.add(a);}
 	FuncPar(var)]
+}
+
+Variable DeclaraVarFunc(Token d):
+{Token a,b,c,e; Variable var=null;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
+{
+	((a=<NOMEVAR>){
+		cod.add(a);
+		var=cod.addDVarList(a.image, d.kind, a);
+		var.init();
+	}
+	[((b=<ABREVET>){cod.add(b); var.setIsVet(true);}
+	(c=<FECHAVET>){cod.add(c);cod.initializeVar(a);})])
+	{return var;}
 }
 
 void Retorno():
@@ -326,7 +339,6 @@ Variable DeclaraVar(Token d):
 	|(Atribuicao(d.kind)){cod.initializeVar(a);})])
 	{return var;}
 }
-
 
 Token NomeVar():
 {Token a,b,c,d; boolean vet = false; Variable var;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]

@@ -14,7 +14,7 @@ public class testes{
 
     }
 
-    void test(){
+    void test(int a[]){
         System.out.println("oi");
     }
 }

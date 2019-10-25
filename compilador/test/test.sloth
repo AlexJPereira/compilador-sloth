@@ -1,5 +1,5 @@
 int soma(int a)begin
-    return 1;
+    return a+1;
 end
 
 first
