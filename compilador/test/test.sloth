@@ -1,9 +1,9 @@
 int soma(int a)begin
-    return 1;
+    return a+1;
 end
 
 first
-    int b[2], c;
-    #c=2;#
-    int a = 2+(3*(4-b[0])/c);
+    double test = get(double);
+    test = test + soma(3);
+    write(""+test);
 last

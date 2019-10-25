@@ -2,13 +2,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class Variable{
+public class Variable implements CompiladorSlothConstants{
 	private String id;
 	private int type;
 	private List<Integer> parameters = null;
 	private Stack<Integer> checkedParam = new Stack<Integer>();
 	private boolean isVet = false;
 	private boolean wasInit = false;
+	private boolean isFunc = false;
 
 	public Variable(String id, int type){
 		this.id = id; 
@@ -25,7 +26,7 @@ public class Variable{
 		if(aux<parameters.size())
 			return parameters.get(aux);
 		new ErrorCreator(file).throwPE(name, "The function "+name.image+" has fewer parameters.");
-		return 5;
+		return TIPOVOID-TIPOINT;
 	}
 
 	public boolean isAllParamsChecked(){
@@ -59,7 +60,7 @@ public class Variable{
 
 	public void addParameter(int type){
 		if(parameters==null) parameters = new ArrayList<Integer>();
-		parameters.add(type-9);
+		parameters.add(type-TIPOINT);
 	}
 
 	public List<Integer> getParameters(){
@@ -70,7 +71,7 @@ public class Variable{
 		if(parameters!=null){
 			System.out.print("parametersType: ");
 			for(int param : parameters){
-				System.out.print(param+9+" ");
+				System.out.print(param+TIPOINT+" ");
 			}
 			System.out.println();
 		}
@@ -83,5 +84,13 @@ public class Variable{
 
 	public boolean getIsVet(){
 		return isVet;
+	}
+
+	public void setIsFunc(boolean v){
+		isFunc = v;
+	}
+
+	public boolean getIsFunc(){
+		return isFunc;
 	}
 }

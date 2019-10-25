@@ -25,6 +25,10 @@ public class CompiladorSloth
 
             CompiladorSloth cs = new CompiladorSloth(fr);
             cs.Programa();
+
+			CodeTranslator ct = new CodeTranslator(cod, args[1]);
+			ct.buildJava();
+			ct.printCodeGen();
 			System.out.println("File "+fname+" was successful compiled");
         }
 		catch(ParseException e)
@@ -119,7 +123,6 @@ TOKEN:
 	<AND: "&&">
 	|<OR: "||">
 	|<NOT: "!">
-	|<XOR: "|+">
 }
 
 TOKEN:
@@ -185,7 +188,7 @@ void Funcao():
 {Token a=null,b,c,d; Variable var=null;} // (<TIPOVOID>|TipoVar())NomeVar()<ABREPAR>[FuncPar()]<FECHAPAR>Bloco()
 {
 	((a=<TIPOVOID>){cod.add(a);cod.setHasReturn(true);}|a=TipoVar(){cod.openFunc();}){cod.setScope(a.kind);}
-	(b=<NOMEVAR>){cod.add(b);var=cod.addDVarList(b.image, a.kind, b);}
+	(b=<NOMEVAR>){cod.add(b);var=cod.addDVarList(b.image, a.kind, b);var.setIsFunc(true);}
 	(c=<ABREPAR>){cod.add(c);cod.openBloco();}
 	[FuncPar(var)]
 	(d=<FECHAPAR>){cod.add(d);}
@@ -196,9 +199,22 @@ void FuncPar(Variable var):
 {Token a, b;} // TipoVar()NomeVar()[<SEPFUN>FuncPar()]
 {
 	b=TipoVar(){var.addParameter(b.kind);}
-	DeclaraVar(b)
+	DeclaraVarFunc(b)
 	[(a=<SEPFUN>){cod.add(a);}
 	FuncPar(var)]
+}
+
+Variable DeclaraVarFunc(Token d):
+{Token a,b,c,e; Variable var=null;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
+{
+	((a=<NOMEVAR>){
+		cod.add(a);
+		var=cod.addDVarList(a.image, d.kind, a);
+		var.init();
+	}
+	[((b=<ABREVET>){cod.add(b); var.setIsVet(true);}
+	(c=<FECHAVET>){cod.add(c);cod.initializeVar(a);})])
+	{return var;}
 }
 
 void Retorno():
@@ -324,11 +340,10 @@ Variable DeclaraVar(Token d):
 	{return var;}
 }
 
-
 Token NomeVar():
 {Token a,b,c,d; boolean vet = false; Variable var;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
 {
-	((a=<NOMEVAR>){var=cod.verifyVarList(a);
+	((a=<NOMEVAR>){var=cod.verifyVarList(a, false);
 	cod.add(a);}
 	[((b=<ABREVET>){cod.add(b);
 	vet = true;
@@ -346,11 +361,18 @@ void Atribuicao(int kind):
 }
 
 Token Read():
-{Token a,b,c;} // <GET><ABREPAR><FECHAPAR>
+{Token a,b,c,d=null;} // <GET><ABREPAR><FECHAPAR>
 {
-	(a=<GET>) {cod.add(a);cod.addToExp(a);}
+	(a=<GET>) {cod.add(a);}
 	(b=<ABREPAR>) {cod.add(b);}
-	(c=<FECHAPAR>) {cod.add(c);return a;}
+	[(d=TipoVar())]
+	(c=<FECHAPAR>)
+	{
+		cod.add(c);
+		if(d==null) cod.addToExp(TIPOSTRING);
+		else cod.addToExp(d.kind);
+		return a;
+	}
 }
 
 Token Expressao():
@@ -370,7 +392,7 @@ Token Expressao():
 	Expressao()
 	| (a=ValorVar()){cod.addToExp(a);}
 	| ((LOOKAHEAD(2)(a=ChamaFuncao())
-	| (a=NomeVar())){cod.addToExp(a);cod.checkInitVar(a);}))
+	| ((a=NomeVar()){cod.checkInitVar(a);})){cod.addToExp(a);}))
 	[LOOKAHEAD(2) Operador()Expressao()]
 	{return a;}
 }
@@ -399,7 +421,6 @@ Token OpRelac():
 {
 	((a=<AND>){cod.add(a);}
 	|(a=<OR>){cod.add(a);}
-	|(a=<XOR>){cod.add(a);}
 	|(a=<IGUAL>){cod.add(a);}
 	|(a=<DIF>){cod.add(a);}
 	|(a=<MAIGUAL>){cod.add(a);}
