@@ -2,7 +2,7 @@ import java.util.List;
 
 public class CodeTranslator implements CompiladorSlothConstants{
     private Codigo cod = null;
-    private StringBuilder sb = new StringBuilder();
+    private StringBuilder sb = null;
     private List<Token> code = null;
     private int tabs = 0;
     private boolean sepfor = false;
@@ -14,7 +14,8 @@ public class CodeTranslator implements CompiladorSlothConstants{
         this.code = cod.getTokenList();
     }
 
-    public void build(){
+    public void buildJava(){
+        sb = new StringBuilder();
         Token t;
 
         sb.append("public class app{\n");
