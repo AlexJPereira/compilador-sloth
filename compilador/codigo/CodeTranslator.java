@@ -253,7 +253,17 @@ public class CodeTranslator implements CompiladorSlothConstants{
     private void codJavaGet(){
         sb.insert(18, "\tprivate static Scanner get = new Scanner(System.in);\n");
         sb.insert(0, "import java.util.Scanner;\n\n");
-        sb.append("get.nextLine");
+        code.remove(0);code.remove(0);
+        int type = code.get(0).kind;
+        if(type == ABREPAR){
+            sb.append("get.nextLine()");
+            return;
+        }
+        if(type == TIPOSTRING){
+            sb.append("get.nextLine()");
+        }
+
+        
     }
 
     private void insertTabs(){

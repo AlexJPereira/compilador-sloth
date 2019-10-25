@@ -117,6 +117,12 @@ public class Codigo implements CompiladorSlothConstants
 		expressions.peek().push(ls);
 	}
 
+	public void addToExp(int type){
+		List<Integer> ls = expressions.peek().pop();
+		ls.add(type-TIPOINT);
+		expressions.peek().push(ls);
+	}
+
 	public void openParExp(Token t){
 		expressions.peek().push(new ArrayList<Integer>());
 	}

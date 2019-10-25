@@ -6,6 +6,6 @@ first
     int a = soma(2);
     int c;
     double d = 2.0+3%;
-    string e = get();
+    int e = get(int);
     write("oi kkk");
 last

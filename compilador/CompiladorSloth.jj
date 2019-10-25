@@ -361,11 +361,18 @@ void Atribuicao(int kind):
 }
 
 Token Read():
-{Token a,b,c;} // <GET><ABREPAR><FECHAPAR>
+{Token a,b,c,d=null;} // <GET><ABREPAR><FECHAPAR>
 {
-	(a=<GET>) {cod.add(a);cod.addToExp(a);}
+	(a=<GET>) {cod.add(a);}
 	(b=<ABREPAR>) {cod.add(b);}
-	(c=<FECHAPAR>) {cod.add(c);return a;}
+	[(d=TipoVar())]
+	(c=<FECHAPAR>)
+	{
+		cod.add(c);
+		if(d==null) cod.addToExp(TIPOSTRING);
+		else cod.addToExp(d.kind);
+		return a;
+	}
 }
 
 Token Expressao():
