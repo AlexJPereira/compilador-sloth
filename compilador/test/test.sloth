@@ -3,5 +3,6 @@ int soma(int a)begin
 end
 
 first
-    for (a
+    int a = soma(2);
+    int c;
 last

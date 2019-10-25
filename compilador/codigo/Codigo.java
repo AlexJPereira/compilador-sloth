@@ -11,7 +11,6 @@ public class Codigo implements CompiladorSlothConstants
 	private Stack<Stack<List<Integer>>> expressions = new Stack<Stack<List<Integer>>>();
 	private Stack<String> file = new Stack<String>();
 	private ExpressionOp expChecker = new ExpressionOp();
-	private ConstantsAdapter constAdp = null;
 	private boolean mainDefinition = false;
 	private boolean localVar = false;
 	private int scope = 0;
@@ -19,7 +18,6 @@ public class Codigo implements CompiladorSlothConstants
 	private boolean hasReturn = false;
 
 	public Codigo(String[] ti, String fname){
-		constAdp = new ConstantsAdapter(ti);
 		this.file.push(fname);
 	}
 
@@ -50,12 +48,24 @@ public class Codigo implements CompiladorSlothConstants
 		return null;
 	}
 
+	public Variable verifyVarList(Token t, boolean isFunc) throws ParseException{
+		Variable var = verifyVarList(t);
+		if(var.getIsFunc()!=isFunc){
+			if(isFunc){
+				new ErrorCreator(file.peek()).throwPE(t, "Variable "+t.image+" is not a function.");
+			}else{
+				new ErrorCreator(file.peek()).throwPE(t, "Variable "+t.image+" is a function.");
+			}
+		}
+		return var;
+	}
+
 	public int getNextParam(Token name) throws ParseException{
 		return verifyVarList(name).getNextParam(name, file.peek());
 	}
 
 	public void openChamaFunc(Token t) throws ParseException{
-		verifyVarList(t).openParamChecker();
+		verifyVarList(t, true).openParamChecker();
 	}
 
 	public void checkParameters(Token name) throws ParseException{
@@ -90,7 +100,7 @@ public class Codigo implements CompiladorSlothConstants
 			else return;
 
 		if(!expChecker.canReceive(value,expectedReturn.peek()))
-			new ErrorCreator(file.peek()).throwPE(t, "Expression type is "+constAdp.getTokenImage()[value+TIPOINT]+", expected: "+constAdp.getTokenImage()[expectedReturn.peek()+TIPOINT]+".");
+			new ErrorCreator(file.peek()).throwPE(t, "Expression type is "+tokenImage[value+TIPOINT]+", expected: "+tokenImage[expectedReturn.peek()+TIPOINT]+".");
 		
 		expectedReturn.pop();
 		expressions.pop();
@@ -144,7 +154,7 @@ public class Codigo implements CompiladorSlothConstants
 		if(!cont.getIsVet())
 			new ErrorCreator(file.peek()).throwPE(container, "The variable must be an array.");
 		else
-			addDVarList(input.image, cont.getType(), input);
+			addDVarList(input.image, cont.getType(), input).init();
 	}
 
 	public void openFunc(){
@@ -205,7 +215,7 @@ public class Codigo implements CompiladorSlothConstants
 		System.out.println("\n--- Tokens Encontrados ---\n");
 		for(Token nome : tokenList){
             System.out.println(
-				"Token: " + constAdp.getTokenImage()[nome.kind] + " -> " + nome.toString());
+				"Token: " + tokenImage[nome.kind] + " -> " + nome.toString());
         }
 	}
 
@@ -245,7 +255,7 @@ public class Codigo implements CompiladorSlothConstants
 	}
 
 	public String[] getTokenImage(){
-		return constAdp.getTokenImage();
+		return tokenImage;
 	}
 }
 

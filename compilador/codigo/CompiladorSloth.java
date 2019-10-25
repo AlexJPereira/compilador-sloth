@@ -21,6 +21,10 @@ public class CompiladorSloth implements CompiladorSlothConstants {
 
             CompiladorSloth cs = new CompiladorSloth(fr);
             cs.Programa();
+
+                        CodeTranslator ct = new CodeTranslator(cod);
+                        ct.build();
+                        ct.printCodeGen();
                         System.out.println("File "+fname+" was successful compiled");
         }
                 catch(ParseException e)
@@ -122,7 +126,7 @@ cod.openFunc();
     }
 cod.setScope(a.kind);
     b = jj_consume_token(NOMEVAR);
-cod.add(b);var=cod.addDVarList(b.image, a.kind, b);
+cod.add(b);var=cod.addDVarList(b.image, a.kind, b);var.setIsFunc(true);
     c = jj_consume_token(ABREPAR);
 cod.add(c);cod.openBloco();
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -496,7 +500,7 @@ cod.initializeVar(a);
 
   final public Token NomeVar() throws ParseException {Token a,b,c,d; boolean vet = false; Variable var;
     a = jj_consume_token(NOMEVAR);
-var=cod.verifyVarList(a);
+var=cod.verifyVarList(a, false);
         cod.add(a);
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case ABREVET:{
@@ -613,6 +617,7 @@ cod.addToExp(a);
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case NOMEVAR:{
           a = NomeVar();
+cod.checkInitVar(a);
           break;
           }
         default:
@@ -621,7 +626,7 @@ cod.addToExp(a);
           throw new ParseException();
         }
       }
-cod.addToExp(a);cod.checkInitVar(a);
+cod.addToExp(a);
       break;
       }
     default:
@@ -1023,26 +1028,6 @@ cod.add(c);
     try { return (!jj_3_5()); }
     catch(LookaheadSuccess ls) { return true; }
     finally { jj_save(4, xla); }
-  }
-
-  private boolean jj_3R_24()
- {
-    if (jj_scan_token(NOT)) return true;
-    return false;
-  }
-
-  private boolean jj_3_1()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_6()) {
-    jj_scanpos = xsp;
-    if (jj_3R_7()) {
-    jj_scanpos = xsp;
-    if (jj_3R_8()) return true;
-    }
-    }
-    return false;
   }
 
   private boolean jj_3R_23()
@@ -1495,6 +1480,26 @@ cod.add(c);
   private boolean jj_3R_25()
  {
     if (jj_3R_32()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_24()
+ {
+    if (jj_scan_token(NOT)) return true;
+    return false;
+  }
+
+  private boolean jj_3_1()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_6()) {
+    jj_scanpos = xsp;
+    if (jj_3R_7()) {
+    jj_scanpos = xsp;
+    if (jj_3R_8()) return true;
+    }
+    }
     return false;
   }
 

@@ -25,6 +25,10 @@ public class CompiladorSloth
 
             CompiladorSloth cs = new CompiladorSloth(fr);
             cs.Programa();
+
+			CodeTranslator ct = new CodeTranslator(cod);
+			ct.build();
+			ct.printCodeGen();
 			System.out.println("File "+fname+" was successful compiled");
         }
 		catch(ParseException e)
@@ -118,7 +122,7 @@ TOKEN:
 {
 	<AND: "&&">
 	|<OR: "||">
-	|<NOT: "!"> // o xor removido estava aqui
+	|<NOT: "!">
 }
 
 TOKEN:
@@ -184,7 +188,7 @@ void Funcao():
 {Token a=null,b,c,d; Variable var=null;} // (<TIPOVOID>|TipoVar())NomeVar()<ABREPAR>[FuncPar()]<FECHAPAR>Bloco()
 {
 	((a=<TIPOVOID>){cod.add(a);cod.setHasReturn(true);}|a=TipoVar(){cod.openFunc();}){cod.setScope(a.kind);}
-	(b=<NOMEVAR>){cod.add(b);var=cod.addDVarList(b.image, a.kind, b);}
+	(b=<NOMEVAR>){cod.add(b);var=cod.addDVarList(b.image, a.kind, b);var.setIsFunc(true);}
 	(c=<ABREPAR>){cod.add(c);cod.openBloco();}
 	[FuncPar(var)]
 	(d=<FECHAPAR>){cod.add(d);}
@@ -327,7 +331,7 @@ Variable DeclaraVar(Token d):
 Token NomeVar():
 {Token a,b,c,d; boolean vet = false; Variable var;} 	// <NOMEVAR>[(<ABREVET>Expressao()<FECHAVET>)]
 {
-	((a=<NOMEVAR>){var=cod.verifyVarList(a);
+	((a=<NOMEVAR>){var=cod.verifyVarList(a, false);
 	cod.add(a);}
 	[((b=<ABREVET>){cod.add(b);
 	vet = true;
@@ -369,7 +373,7 @@ Token Expressao():
 	Expressao()
 	| (a=ValorVar()){cod.addToExp(a);}
 	| ((LOOKAHEAD(2)(a=ChamaFuncao())
-	| (a=NomeVar())){cod.addToExp(a);cod.checkInitVar(a);}))
+	| ((a=NomeVar()){cod.checkInitVar(a);})){cod.addToExp(a);}))
 	[LOOKAHEAD(2) Operador()Expressao()]
 	{return a;}
 }

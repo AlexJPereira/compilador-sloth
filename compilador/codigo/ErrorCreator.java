@@ -27,7 +27,7 @@ public class ErrorCreator{
 	}
 
 	public String removeTabs(String str){
-		while(str.charAt(0)==' '||str.charAt(0)=='\t')
+		while(str.charAt(0)==32||str.charAt(0)=='\t')
 			str = str.substring(1);
 		return str;
 	}
@@ -45,6 +45,7 @@ public class ErrorCreator{
 	}
 
 	public void throwPE(Token t, String msg)throws ParseException{
+		
 		throw new ParseException(
 			"File:\t\t"+file+
 			"\nLine "+t.beginLine+":\t\t"+removeTabs(getFileLine(t.beginLine))+

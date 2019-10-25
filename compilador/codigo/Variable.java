@@ -9,6 +9,7 @@ public class Variable implements CompiladorSlothConstants{
 	private Stack<Integer> checkedParam = new Stack<Integer>();
 	private boolean isVet = false;
 	private boolean wasInit = false;
+	private boolean isFunc = false;
 
 	public Variable(String id, int type){
 		this.id = id; 
@@ -83,5 +84,13 @@ public class Variable implements CompiladorSlothConstants{
 
 	public boolean getIsVet(){
 		return isVet;
+	}
+
+	public void setIsFunc(boolean v){
+		isFunc = v;
+	}
+
+	public boolean getIsFunc(){
+		return isFunc;
 	}
 }
