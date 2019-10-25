@@ -26,7 +26,7 @@ public class CompiladorSloth
             CompiladorSloth cs = new CompiladorSloth(fr);
             cs.Programa();
 
-			CodeTranslator ct = new CodeTranslator(cod);
+			CodeTranslator ct = new CodeTranslator(cod, args[1]);
 			ct.buildJava();
 			ct.printCodeGen();
 			System.out.println("File "+fname+" was successful compiled");

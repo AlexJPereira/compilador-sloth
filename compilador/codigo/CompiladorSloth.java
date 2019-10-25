@@ -22,8 +22,8 @@ public class CompiladorSloth implements CompiladorSlothConstants {
             CompiladorSloth cs = new CompiladorSloth(fr);
             cs.Programa();
 
-                        CodeTranslator ct = new CodeTranslator(cod);
-                        ct.build();
+                        CodeTranslator ct = new CodeTranslator(cod, args[1]);
+                        ct.buildJava();
                         ct.printCodeGen();
                         System.out.println("File "+fname+" was successful compiled");
         }

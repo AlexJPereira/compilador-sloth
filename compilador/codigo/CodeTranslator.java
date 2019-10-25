@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 public class CodeTranslator implements CompiladorSlothConstants{
@@ -8,17 +11,24 @@ public class CodeTranslator implements CompiladorSlothConstants{
     private boolean sepfor = false;
     private boolean callfor = false;
     private String nomevar = "";
+    private String outName = "";
+    private String className = "";
 
-    public CodeTranslator(Codigo cod){
+    public CodeTranslator(Codigo cod,  String outName){
         this.cod = cod;
         this.code = cod.getTokenList();
+        if(outName.lastIndexOf(".java")==-1)
+            this.outName = outName;
+        else
+            this.outName = outName.substring(0, outName.lastIndexOf(".java"));
+        this.className = this.outName.substring(this.outName.lastIndexOf("/")+1,this.outName.length());
     }
 
-    public void buildJava(){
+    public void buildJava() throws IOException{
         sb = new StringBuilder();
         Token t;
 
-        sb.append("public class app{\n");
+        sb.append("public class "+className+"{\n");
         tabs++;
         insertTabs();
 
@@ -90,6 +100,7 @@ public class CodeTranslator implements CompiladorSlothConstants{
             code.remove(0);
         }
         codJavaLAST();
+        writeToFile(outName+".java");
         
     }
 
@@ -256,7 +267,7 @@ public class CodeTranslator implements CompiladorSlothConstants{
     }
 
     private void codJavaGet(){
-        sb.insert(18, "\tprivate static Scanner get = new Scanner(System.in);\n");
+        sb.insert(sb.indexOf(className+"{\n")+className.length()+2, "\tprivate static Scanner get = new Scanner(System.in);\n");
         sb.insert(0, "import java.util.Scanner;\n\n");
         code.remove(0);code.remove(0);
         int type = code.get(0).kind;
@@ -291,5 +302,11 @@ public class CodeTranslator implements CompiladorSlothConstants{
 
     public void printCodeGen(){
         System.out.println(sb.toString());
+    }
+
+    public void writeToFile(String filename) throws IOException{
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+            writer.write(sb.toString());
+            writer.close();
     }
 }
