@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class Codigo
+public class Codigo implements CompiladorSlothConstants
 {
     private List<Token> tokenList = new ArrayList<Token>();
 	private List<Variable> dVariableList = new ArrayList<Variable>();
@@ -11,14 +11,13 @@ public class Codigo
 	private Stack<Stack<List<Integer>>> expressions = new Stack<Stack<List<Integer>>>();
 	private Stack<String> file = new Stack<String>();
 	private ExpressionOp expChecker = new ExpressionOp();
-	private ConstantsAdapter constAdp = null;
 	private boolean mainDefinition = false;
 	private boolean localVar = false;
 	private int scope = 0;
+	private int ERROTYPE = -1;
 	private boolean hasReturn = false;
 
 	public Codigo(String[] ti, String fname){
-		constAdp = new ConstantsAdapter(ti);
 		this.file.push(fname);
 	}
 
@@ -49,12 +48,24 @@ public class Codigo
 		return null;
 	}
 
+	public Variable verifyVarList(Token t, boolean isFunc) throws ParseException{
+		Variable var = verifyVarList(t);
+		if(var.getIsFunc()!=isFunc){
+			if(isFunc){
+				new ErrorCreator(file.peek()).throwPE(t, "Variable "+t.image+" is not a function.");
+			}else{
+				new ErrorCreator(file.peek()).throwPE(t, "Variable "+t.image+" is a function.");
+			}
+		}
+		return var;
+	}
+
 	public int getNextParam(Token name) throws ParseException{
 		return verifyVarList(name).getNextParam(name, file.peek());
 	}
 
 	public void openChamaFunc(Token t) throws ParseException{
-		verifyVarList(t).openParamChecker();
+		verifyVarList(t, true).openParamChecker();
 	}
 
 	public void checkParameters(Token name) throws ParseException{
@@ -68,41 +79,47 @@ public class Codigo
 	}
 
 	public void openExpressao(int kind){
-		expectedReturn.push(kind-9);
+		expectedReturn.push(kind-TIPOINT);
 		expressions.push(new Stack<List<Integer>>());
 		expressions.peek().add(new ArrayList<Integer>());
-		if(expectedReturn.peek()==5){
+		if(expectedReturn.peek()==(TIPOVOID-TIPOINT)){
 			List<Integer> ls = expressions.peek().pop();
-			ls.add(5);
+			ls.add(TIPOVOID-TIPOINT);
 			expressions.peek().push(ls);
 		}
 	}
 
 	public void closeExpressao(Token t) throws ParseException{
 		int value = expChecker.expressionReturn(expressions.peek().pop());
-		if(value==-1)
+		if(value==ERROTYPE)
 			new ErrorCreator(file.peek()).throwPE(t, "Invalid operator use in the expression.");
 
-		if(value==5)
-			if(expectedReturn.peek()!=5)
+		if(value==(TIPOVOID-TIPOINT))
+			if(expectedReturn.peek()!=(TIPOVOID-TIPOINT))
 				new ErrorCreator(file.peek()).throwPE(t, "Expression with void.");
 			else return;
 
 		if(!expChecker.canReceive(value,expectedReturn.peek()))
-			new ErrorCreator(file.peek()).throwPE(t, "Expression type is "+constAdp.getTokenImage()[value+9]+", expected: "+constAdp.getTokenImage()[expectedReturn.peek()+9]+".");
+			new ErrorCreator(file.peek()).throwPE(t, "Expression type is "+tokenImage[value+TIPOINT]+", expected: "+tokenImage[expectedReturn.peek()+TIPOINT]+".");
 		
 		expectedReturn.pop();
 		expressions.pop();
 	}
 
 	public void addToExp(Token t){
-		int id = 0;
-		if(t.kind==58) {id = getVarType(t);}
-		else if(t.kind==54) id=3;
+		int id = ERROTYPE;
+		if(t.kind==NOMEVAR) {id = getVarType(t);}
+		else if(t.kind==GET) id = TIPOSTRING-TIPOINT;
 		else {id = getValueType(t);}
 
 		List<Integer> ls = expressions.peek().pop();
 		ls.add(id);
+		expressions.peek().push(ls);
+	}
+
+	public void addToExp(int type){
+		List<Integer> ls = expressions.peek().pop();
+		ls.add(type-TIPOINT);
 		expressions.peek().push(ls);
 	}
 
@@ -112,10 +129,10 @@ public class Codigo
 
 	public void closeParExp(Token t) throws ParseException{
 		int value = expChecker.expressionReturn(expressions.peek().pop());
-		if(value==-1){
+		if(value==ERROTYPE){
 			new ErrorCreator(file.peek()).throwPE(t, "Invalid operator use inside parenteses.");
 		}
-		if(value==5&&expectedReturn.peek()!=5){
+		if(value==(TIPOVOID-TIPOINT)&&expectedReturn.peek()!=(TIPOVOID-TIPOINT)){
 			new ErrorCreator(file.peek()).throwPE(t, "Expression with void.");
 		}
 		List<Integer> ls = expressions.peek().pop();
@@ -143,7 +160,7 @@ public class Codigo
 		if(!cont.getIsVet())
 			new ErrorCreator(file.peek()).throwPE(container, "The variable must be an array.");
 		else
-			addDVarList(input.image, cont.getType(), input);
+			addDVarList(input.image, cont.getType(), input).init();
 	}
 
 	public void openFunc(){
@@ -174,37 +191,37 @@ public class Codigo
 	public int getVarType(Token t){
 		for(Variable var : dVariableList){
 			if(var.getId().equals(t.image)){
-				return var.getType()-9;
+				return var.getType()-TIPOINT;
 			}
 		}
-		return -1;
+		return ERROTYPE;
 	}
 
 	public int getValueType(Token t){
 		switch(t.kind){
-			case 16:
-				return 13-9;
-			case 17:
-				return 13-9;
-			case 59:
-				return 12-9;
-			case 60:
-				return 9-9;
-			case 61:
-				return 11-9;
-			case 62:
-				return 10-9;
-			case 63:
-				return 10-9;
+			case TRUE:
+				return TIPOBOOLEAN-TIPOINT;
+			case FALSE:
+				return TIPOBOOLEAN-TIPOINT;
+			case STRING:
+				return TIPOSTRING-TIPOINT;
+			case INTEIRO:
+				return TIPOINT-TIPOINT;
+			case CARACTER:
+				return TIPOCHAR-TIPOINT;
+			case REAL:
+				return TIPODOUBLE-TIPOINT;
+			case PORCENTAGEM:
+				return TIPODOUBLE-TIPOINT;
 		}
-		return -1;
+		return ERROTYPE;
 	}
 
 	public void printTokens(){
 		System.out.println("\n--- Tokens Encontrados ---\n");
 		for(Token nome : tokenList){
             System.out.println(
-				"Token: " + constAdp.getTokenImage()[nome.kind] + " -> " + nome.toString());
+				"Token: " + tokenImage[nome.kind] + " -> " + nome.toString());
         }
 	}
 
@@ -241,6 +258,10 @@ public class Codigo
 
 	public String getFile(){
 		return file.peek();
+	}
+
+	public String[] getTokenImage(){
+		return tokenImage;
 	}
 }
 
