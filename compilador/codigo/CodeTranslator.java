@@ -77,6 +77,12 @@ public class CodeTranslator implements CompiladorSlothConstants{
                 case PORCENTAGEM:
                     codJavaPORCENTAGEM();
                     break;
+                case WRITE:
+                    codJavaWrite();
+                    break;
+                case GET:
+                    codJavaGet();
+                    break;
                 default:
                     codeJavaDefault(t);
             }
@@ -238,6 +244,16 @@ public class CodeTranslator implements CompiladorSlothConstants{
     private void codJavaPORCENTAGEM(){
         double valor = Double.parseDouble(code.get(0).image.substring(0, code.get(0).image.length()-1))/100;
         sb.append(valor);
+    }
+
+    private void codJavaWrite(){
+        sb.append("System.out.println");
+    }
+
+    private void codJavaGet(){
+        sb.insert(18, "\tprivate static Scanner get = new Scanner(System.in);\n");
+        sb.insert(0, "import java.util.Scanner;\n\n");
+        sb.append("get.nextLine");
     }
 
     private void insertTabs(){

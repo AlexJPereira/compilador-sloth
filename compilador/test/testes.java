@@ -8,10 +8,10 @@ import java.util.Scanner;
 /* a */
 public class testes{
     public static ListIterator<String> litr = null;
+    private static Scanner sc1 = new Scanner(System.in);
     public static void main(String[] args){
-        double test = Math.pow(3,2);
+        String test = sc1.nextLine();
         System.out.println(test);
-
     }
 
     void test(int a[]){
