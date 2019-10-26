@@ -9,6 +9,6 @@ first
     a[1] = b*c[1];
 
     foreach(num:a) begin
-        write(num+" "+d);
+        write(num+" "+d+"\n");
     end
 last

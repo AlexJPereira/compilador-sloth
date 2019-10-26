@@ -17,7 +17,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
             File f = new File(fname) ;
                         FileReader fr = new FileReader(f);
                         BufferedReader br = new BufferedReader(fr);
-                        cod = new Codigo(f.getCanonicalPath());
+                        cod = new Codigo("/"+f.getCanonicalPath());
 
             CompiladorSloth cs = new CompiladorSloth(fr);
             cs.Programa();
@@ -264,7 +264,7 @@ cod.add(a);
     a = jj_consume_token(IMPORT);
     b = jj_consume_token(STRING);
 try{
-                        String fname = b.image;
+                        String fname = cod.getFile().substring(0,cod.getFile().lastIndexOf('/')+1)+b.image.substring(1,b.image.length());
                         fname = fname.substring(0, fname.length()-1);
                         fname = fname.substring(1);
             File f = new File(fname) ;

@@ -2,5 +2,5 @@ import "importacao2.sloth"
 
 first
     int a = a2(2);
-    write(""+a);
+    write(a+"\n");
 last

@@ -10,6 +10,7 @@ public class CodeTranslator implements CompiladorSlothConstants{
     private StringBuilder sbToken = null;
     private List<Token> code = null;
     private List<String> varArray = new ArrayList<String>();
+    private List<String> varFunc = new ArrayList<String>();
     private int tabs = 0;
     private int ultimoTipoLido = -1;
     private String ultimaVarLida = null;
@@ -210,8 +211,9 @@ public class CodeTranslator implements CompiladorSlothConstants{
             Variable var = null;
             try{
                 var = cod.verifyVarList(code.get(1));
-                if(var.getIsFunc()){
+                if(var.getIsFunc() && !varFunc.contains(t.image)){
                     sb.append("private static "+t.image+" ");
+                    varFunc.add(t.image);
                 }else{
                     sb.append(t.image+" ");
                 }

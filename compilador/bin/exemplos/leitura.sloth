@@ -4,5 +4,5 @@ first
     string c = get(string);
     double d = get(double);
 
-    write(a+b+c+d);
+    write(a+b+c+d+"\n");
 last
