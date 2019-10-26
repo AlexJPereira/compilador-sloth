@@ -1,6 +1,7 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CodeTranslator implements CompiladorSlothConstants{
@@ -8,8 +9,10 @@ public class CodeTranslator implements CompiladorSlothConstants{
     private StringBuilder sb = null;
     private StringBuilder sbToken = null;
     private List<Token> code = null;
+    private List<String> varArray = new ArrayList<String>();
     private int tabs = 0;
     private int ultimoTipoLido = -1;
+    private String ultimaVarLida = null;
     private boolean sepfor = false;
     private boolean callfor = false;
     private boolean hasGet = false;
@@ -45,6 +48,9 @@ public class CodeTranslator implements CompiladorSlothConstants{
                     break;
                 case ABREVET:
                     codeJavaABREVET();
+                    break;
+                case TIPOSTRING:
+                    codeJavaTIPOSTRING();
                     break;
                 case MOD:
                     codeJavaMOD();
@@ -151,7 +157,15 @@ public class CodeTranslator implements CompiladorSlothConstants{
     }
 
     private void codeJavaABREVET(){
-        sb.append("[] = new "+cod.getTokenImage()[ultimoTipoLido].substring(1,cod.getTokenImage()[ultimoTipoLido].length()-1)+"[");
+        if(!varArray.contains(ultimaVarLida)){
+            sb.append("[] = new "+cod.getTokenImage()[ultimoTipoLido].substring(1,cod.getTokenImage()[ultimoTipoLido].length()-1)+"[");
+            varArray.add(ultimaVarLida);
+        } 
+        else sb.append("[");
+    }
+
+    private void codeJavaTIPOSTRING(){
+        sb.append("String ");
     }
 
     private void codeJavaMOD(){
@@ -188,6 +202,7 @@ public class CodeTranslator implements CompiladorSlothConstants{
 
     private void codeJavaDefault(Token t){
         if(t.kind >= TIPOINT && t.kind < RETORNO) ultimoTipoLido = t.kind;
+        if(t.kind == NOMEVAR) ultimaVarLida = t.image;
         if(
         (t.kind >= TIPOINT && t.kind < RETORNO)
         || t.kind == ELSE)
