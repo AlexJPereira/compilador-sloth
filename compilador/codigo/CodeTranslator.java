@@ -9,6 +9,7 @@ public class CodeTranslator implements CompiladorSlothConstants{
     private StringBuilder sbToken = null;
     private List<Token> code = null;
     private int tabs = 0;
+    private int ultimoTipoLido = -1;
     private boolean sepfor = false;
     private boolean callfor = false;
     private String nomevar = "";
@@ -40,6 +41,9 @@ public class CodeTranslator implements CompiladorSlothConstants{
             t = code.get(0);
             switch(t.kind){
                 case EOF:
+                    break;
+                case ABREVET:
+                    codeJavaABREVET();
                     break;
                 case MOD:
                     codeJavaMOD();
@@ -145,6 +149,10 @@ public class CodeTranslator implements CompiladorSlothConstants{
         }
     }
 
+    private void codeJavaABREVET(){
+        sb.append("[] = new "+cod.getTokenImage()[ultimoTipoLido].substring(1,cod.getTokenImage()[ultimoTipoLido].length()-1)+"[");
+    }
+
     private void codeJavaMOD(){
         sb.append("%");
     }
@@ -178,6 +186,7 @@ public class CodeTranslator implements CompiladorSlothConstants{
     }
 
     private void codeJavaDefault(Token t){
+        if(t.kind >= TIPOINT && t.kind < RETORNO) ultimoTipoLido = t.kind;
         if(
         (t.kind >= TIPOINT && t.kind < RETORNO)
         || t.kind == ELSE)
