@@ -1,0 +1,3 @@
+int a2(int a) begin
+    return 2*a;
+end

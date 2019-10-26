@@ -1,3 +1,0 @@
-int arq2(int a) begin
-    return 2*a;
-end

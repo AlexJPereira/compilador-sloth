@@ -1,6 +1,7 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CodeTranslator implements CompiladorSlothConstants{
@@ -8,9 +9,14 @@ public class CodeTranslator implements CompiladorSlothConstants{
     private StringBuilder sb = null;
     private StringBuilder sbToken = null;
     private List<Token> code = null;
+    private List<String> varArray = new ArrayList<String>();
+    private List<String> varFunc = new ArrayList<String>();
     private int tabs = 0;
+    private int ultimoTipoLido = -1;
+    private String ultimaVarLida = null;
     private boolean sepfor = false;
     private boolean callfor = false;
+    private boolean hasGet = false;
     private String nomevar = "";
     private String outName = "";
     private String className = "";
@@ -30,7 +36,7 @@ public class CodeTranslator implements CompiladorSlothConstants{
         sbToken = new StringBuilder();
         Token t;
         buildToken();
-        tabs = 1;
+        tabs = 0;
 
         sb.append("public class "+className+"{\n");
         tabs++;
@@ -40,6 +46,12 @@ public class CodeTranslator implements CompiladorSlothConstants{
             t = code.get(0);
             switch(t.kind){
                 case EOF:
+                    break;
+                case ABREVET:
+                    codeJavaABREVET();
+                    break;
+                case TIPOSTRING:
+                    codeJavaTIPOSTRING();
                     break;
                 case MOD:
                     codeJavaMOD();
@@ -145,6 +157,18 @@ public class CodeTranslator implements CompiladorSlothConstants{
         }
     }
 
+    private void codeJavaABREVET(){
+        if(!varArray.contains(ultimaVarLida)){
+            sb.append("[] = new "+cod.getTokenImage()[ultimoTipoLido].substring(1,cod.getTokenImage()[ultimoTipoLido].length()-1)+"[");
+            varArray.add(ultimaVarLida);
+        } 
+        else sb.append("[");
+    }
+
+    private void codeJavaTIPOSTRING(){
+        sb.append("String ");
+    }
+
     private void codeJavaMOD(){
         sb.append("%");
     }
@@ -163,13 +187,13 @@ public class CodeTranslator implements CompiladorSlothConstants{
 
         parenteses = 0;
         index = 1;
-        if(code.get(1).image=="("){parenteses=1;}
+        if(code.get(index).kind==ABREPAR){parenteses=1;}
         while(parenteses>0){
             index++;
-            if(code.get(index).image==")") parenteses--;
-            if(code.get(index).image=="(") parenteses++;
+            if(code.get(index).kind==FECHAPAR) parenteses--;
+            if(code.get(index).kind==ABREPAR) parenteses++;
         }
-        code.add(index, new Token(FECHAPAR, ")"));
+        code.add(index+1, new Token(FECHAPAR, ")"));
     }
 
     private void codeJavaEOL(){
@@ -178,6 +202,8 @@ public class CodeTranslator implements CompiladorSlothConstants{
     }
 
     private void codeJavaDefault(Token t){
+        if(t.kind >= TIPOINT && t.kind < RETORNO) ultimoTipoLido = t.kind;
+        if(t.kind == NOMEVAR) ultimaVarLida = t.image;
         if(
         (t.kind >= TIPOINT && t.kind < RETORNO)
         || t.kind == ELSE)
@@ -185,8 +211,9 @@ public class CodeTranslator implements CompiladorSlothConstants{
             Variable var = null;
             try{
                 var = cod.verifyVarList(code.get(1));
-                if(var.getIsFunc()){
+                if(var.getIsFunc() && !varFunc.contains(t.image)){
                     sb.append("private static "+t.image+" ");
+                    varFunc.add(t.image);
                 }else{
                     sb.append(t.image+" ");
                 }
@@ -304,12 +331,15 @@ public class CodeTranslator implements CompiladorSlothConstants{
     }
 
     private void codJavaWrite(){
-        sb.append("System.out.println");
+        sb.append("System.out.print");
     }
 
     private void codJavaGet(){
-        sb.insert(sb.indexOf(className+"{\n")+className.length()+2, "\tprivate static Scanner get = new Scanner(System.in);\n");
-        sb.insert(0, "import java.util.Scanner;\n\n");
+        if(!hasGet){
+            sb.insert(sb.indexOf(className+"{\n")+className.length()+2, "\tprivate static Scanner get = new Scanner(System.in);\n");
+            sb.insert(0, "import java.util.Scanner;\n\n");
+            hasGet = true;
+        }
         code.remove(0);code.remove(0);
         int type = code.get(0).kind;
         switch(type){
