@@ -3,7 +3,7 @@ int soma(int a)begin
 end
 
 first
-    double test = get(double);
-    test = test + soma(3);
-    write(""+test);
+    int b[2];
+    foreach(a:b) begin
+    end
 last

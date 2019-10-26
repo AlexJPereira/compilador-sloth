@@ -17,14 +17,15 @@ public class CompiladorSloth implements CompiladorSlothConstants {
             File f = new File(fname) ;
                         FileReader fr = new FileReader(f);
                         BufferedReader br = new BufferedReader(fr);
-                        cod = new Codigo(tokenImage, fname);
+                        cod = new Codigo(fname);
 
             CompiladorSloth cs = new CompiladorSloth(fr);
             cs.Programa();
 
                         CodeTranslator ct = new CodeTranslator(cod, args[1]);
-                        ct.buildJava();
-                        ct.printCodeGen();
+                        ct.build();
+                        //ct.printCodeGen();
+                        //ct.printTokenCodeGen();
                         System.out.println("File "+fname+" was successful compiled");
         }
                 catch(ParseException e)
