@@ -24,7 +24,8 @@ public class CompiladorSloth implements CompiladorSlothConstants {
 
                         CodeTranslator ct = new CodeTranslator(cod, args[1]);
                         ct.build();
-                        ct.printTokenCodeGen();
+                        //ct.printCodeGen();
+                        //ct.printTokenCodeGen();
                         System.out.println("File "+fname+" was successful compiled");
         }
                 catch(ParseException e)
