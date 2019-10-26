@@ -29,12 +29,12 @@ public class CodeTranslator implements CompiladorSlothConstants{
         sb = new StringBuilder();
         sbToken = new StringBuilder();
         Token t;
+        buildToken();
+        tabs = 1;
 
         sb.append("public class "+className+"{\n");
         tabs++;
-        insertTabs();
-
-        buildToken();
+        insertTabs(sb);
 
         while(!code.isEmpty()){
             t = code.get(0);
@@ -104,12 +104,45 @@ public class CodeTranslator implements CompiladorSlothConstants{
             code.remove(0);
         }
         codJavaLAST();
-        writeToFile(outName+".java");
+        writeToFile(outName);
         
     }
 
     public void buildToken(){
-        
+        for(Token t : code){
+            switch(t.kind){
+                case EOL:
+                    sbToken.append(tokenImage[t.kind]+"\n");
+                    insertTabs(sbToken);
+                    break;
+                case FIRST:
+                    tabs++;
+                    sbToken.append(tokenImage[t.kind]+"\n");
+                    insertTabs(sbToken);
+                    break;
+                case LAST:
+                    tabs--;
+                    if(sbToken.charAt(sbToken.length()-1)=='\t')
+                        sbToken.delete(sbToken.length()-1,sbToken.length());
+                    sbToken.append(tokenImage[t.kind]+"\n");
+                    insertTabs(sbToken);
+                    break;
+                case BEGIN:
+                    tabs++;
+                    sbToken.append(tokenImage[t.kind]+"\n");
+                    insertTabs(sbToken);
+                    break;
+                case END:
+                    tabs--;
+                    if(sbToken.charAt(sbToken.length()-1)=='\t')
+                        sbToken.delete(sbToken.length()-1,sbToken.length());
+                    sbToken.append(tokenImage[t.kind]+"\n");
+                    insertTabs(sbToken);
+                    break;
+                default:
+                    sbToken.append(tokenImage[t.kind]);
+            }
+        }
     }
 
     private void codeJavaMOD(){
@@ -141,7 +174,7 @@ public class CodeTranslator implements CompiladorSlothConstants{
 
     private void codeJavaEOL(){
         sb.append(";\n");
-        insertTabs();
+        insertTabs(sb);
     }
 
     private void codeJavaDefault(Token t){
@@ -240,20 +273,20 @@ public class CodeTranslator implements CompiladorSlothConstants{
     private void codJavaFIRST(){
         sb.append("public static void main(String[] args){\n");
         tabs++;
-        insertTabs();
+        insertTabs(sb);
     }
 
     private void codJavaLAST(){
         if(sb.charAt(sb.length()-1)=='\t') sb.delete(sb.length()-1,sb.length());
         sb.append("}\n");
         tabs=tabs-1;
-        insertTabs();
+        insertTabs(sb);
     }
 
     private void codJavaBEGIN(){
         sb.append("{\n");
         tabs++;
-        insertTabs();
+        insertTabs(sb);
     }
 
     private void codJavaEND(){
@@ -262,7 +295,7 @@ public class CodeTranslator implements CompiladorSlothConstants{
 
     private void codJavaCOMENT(){
         sb.append("/* "+code.get(0).image.substring(1, code.get(0).image.length()-1)+" */\n");
-        insertTabs();
+        insertTabs(sb);
     }
     
     private void codJavaPORCENTAGEM(){
@@ -302,7 +335,7 @@ public class CodeTranslator implements CompiladorSlothConstants{
         if(type!=FECHAPAR) code.remove(0);
     }
 
-    private void insertTabs(){
+    private void insertTabs(StringBuilder sb){
         for(int i=0;i<tabs;i++){
             sb.append("\t");
         }
@@ -317,8 +350,12 @@ public class CodeTranslator implements CompiladorSlothConstants{
     }
 
     public void writeToFile(String filename) throws IOException{
-            BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filename+".java"));
             writer.write(sb.toString());
+            writer.close();
+
+            writer = new BufferedWriter(new FileWriter(filename+".txt"));
+            writer.write(sbToken.toString());
             writer.close();
     }
 }
