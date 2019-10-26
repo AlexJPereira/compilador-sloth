@@ -1,0 +1,6 @@
+import "importacao2.sloth" 
+
+first
+    int a = a2(2);
+    write(a+"\n");
+last

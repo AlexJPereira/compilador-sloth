@@ -1,20 +1,25 @@
 import java.util.List;
 import java.util.ListIterator;
 
-public class ExpressionOp{
+public class ExpressionOp implements CompiladorSlothConstants{
+
+    private int ERRORTYPE = -1;
 
     public int expressionReturn(List<Integer> exp){
         ListIterator<Integer> litr = exp.listIterator();
-        int elem, set=-1, previous=-1, next=-1;
+        int elem, set=ERRORTYPE, previous=ERRORTYPE, next=ERRORTYPE;
+
+        if(exp.size()==0)
+            return TIPOVOID-TIPOINT;
 
         while(litr.hasNext()){
             elem = litr.next();
-            if(elem==41){
+            if(elem==NOT){
                 litr.remove();
-                if(litr.next()!=4) return -1;
+                if(litr.next()!=TIPOBOOLEAN-TIPOINT) return ERRORTYPE;
             }
-            if(elem==5){
-                return 5;
+            if(elem==TIPOVOID-TIPOINT){
+                return TIPOVOID-TIPOINT;
             }
         }
 
@@ -28,7 +33,7 @@ public class ExpressionOp{
                     litr.remove();
                     litr.previous();
                     set = callOp(i, previous, next);
-                    if(set==-1) return -1;
+                    if(set==ERRORTYPE) return ERRORTYPE;
                     litr.set(set);
                     litr.previous();
                     litr.remove();
@@ -46,19 +51,19 @@ public class ExpressionOp{
     private int[] opType(int i){
         switch(i){
             case 0:
-                int pow[] = {27,27}; 
+                int pow[] = {POW,POW}; 
                 return pow;
             case 1:
-                int arit[] = {23,26}; 
+                int arit[] = {SUB,DIV}; 
                 return arit;
             case 2:
-                int add[] = {22,22}; 
+                int add[] = {ADD,ADD}; 
                 return add;
             case 3:
-                int rel[] = {32,37}; 
+                int rel[] = {IGUAL,MEIGUAL}; 
                 return rel;
             case 4:
-                int log[] = {39,42}; 
+                int log[] = {AND,NOT}; 
                 return log;
         }
         return new int[2];
