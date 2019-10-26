@@ -11,14 +11,16 @@ public class Codigo implements CompiladorSlothConstants
 	private Stack<Stack<List<Integer>>> expressions = new Stack<Stack<List<Integer>>>();
 	private Stack<String> file = new Stack<String>();
 	private ExpressionOp expChecker = new ExpressionOp();
+	private ConstantsAdapter constAdp = new ConstantsAdapter();
 	private boolean mainDefinition = false;
 	private boolean localVar = false;
 	private int scope = 0;
 	private int ERROTYPE = -1;
 	private boolean hasReturn = false;
 
-	public Codigo(String[] ti, String fname){
+	public Codigo(String fname){
 		this.file.push(fname);
+
 	}
 
 	public void add(Token t){
@@ -261,7 +263,7 @@ public class Codigo implements CompiladorSlothConstants
 	}
 
 	public String[] getTokenImage(){
-		return tokenImage;
+		return constAdp.getTokenImage();
 	}
 }
 

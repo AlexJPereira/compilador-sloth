@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "buildBook-dev": "gitbook build ./documentacao ./docs",
     "buildTest": "cd compilador/codigo && javacc ../CompiladorSloth.jj && javac *.java && java CompiladorSloth.java ../test/test.sloth ../test/test.java",
-    "runTest": "cd compilador/codigo && java CompiladorSloth.java ../test/test.sloth"
+    "runTest": "cd compilador/codigo && java CompiladorSloth.java ../test/test.sloth ../test/test.java"
   },
   "repository": {
     "type": "git",

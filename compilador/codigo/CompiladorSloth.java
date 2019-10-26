@@ -17,7 +17,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
             File f = new File(fname) ;
                         FileReader fr = new FileReader(f);
                         BufferedReader br = new BufferedReader(fr);
-                        cod = new Codigo(tokenImage, fname);
+                        cod = new Codigo(fname);
 
             CompiladorSloth cs = new CompiladorSloth(fr);
             cs.Programa();

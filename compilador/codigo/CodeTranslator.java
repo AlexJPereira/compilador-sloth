@@ -220,7 +220,7 @@ public class CodeTranslator implements CompiladorSlothConstants{
             while(sb.charAt(index)!='('){
                 index--;
             }
-            sb.insert(index+1, tokenImage[vartype].substring(1,tokenImage[vartype].length()-1) +" ");
+            sb.insert(index+1, cod.getTokenImage()[vartype].substring(1,cod.getTokenImage()[vartype].length()-1) +" ");
             sb.append(" : ");
         }
     }
