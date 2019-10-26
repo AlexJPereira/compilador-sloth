@@ -329,7 +329,7 @@ public class CodeTranslator implements CompiladorSlothConstants{
     }
 
     private void codJavaWrite(){
-        sb.append("System.out.println");
+        sb.append("System.out.print");
     }
 
     private void codJavaGet(){

@@ -8,7 +8,7 @@ public class out{
 		a[0] = b+c[0];
 		a[1] = b*c[1];
 		for(int num : a){
-			System.out.println(num+" "+d);
+			System.out.print(num+" "+d);
 		}
 	}
 }
