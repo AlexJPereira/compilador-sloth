@@ -163,13 +163,13 @@ public class CodeTranslator implements CompiladorSlothConstants{
 
         parenteses = 0;
         index = 1;
-        if(code.get(1).image=="("){parenteses=1;}
+        if(code.get(index).kind==ABREPAR){parenteses=1;}
         while(parenteses>0){
             index++;
-            if(code.get(index).image==")") parenteses--;
-            if(code.get(index).image=="(") parenteses++;
+            if(code.get(index).kind==FECHAPAR) parenteses--;
+            if(code.get(index).kind==ABREPAR) parenteses++;
         }
-        code.add(index, new Token(FECHAPAR, ")"));
+        code.add(index+1, new Token(FECHAPAR, ")"));
     }
 
     private void codeJavaEOL(){

@@ -17,7 +17,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
             File f = new File(fname) ;
                         FileReader fr = new FileReader(f);
                         BufferedReader br = new BufferedReader(fr);
-                        cod = new Codigo(fname);
+                        cod = new Codigo(f.getCanonicalPath());
 
             CompiladorSloth cs = new CompiladorSloth(fr);
             cs.Programa();
@@ -269,7 +269,7 @@ try{
                         fname = fname.substring(1);
             File f = new File(fname) ;
 
-                        cod.addFile(fname);
+                        cod.addFile(f.getCanonicalPath());
             CompiladorSloth cs = new CompiladorSloth(new FileReader(f));
             cs.Programa();
                         cod.removeFile();

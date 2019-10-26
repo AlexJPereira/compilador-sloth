@@ -20,7 +20,6 @@ public class Codigo implements CompiladorSlothConstants
 
 	public Codigo(String fname){
 		this.file.push(fname);
-
 	}
 
 	public void add(Token t){
