@@ -6,6 +6,7 @@ import java.util.List;
 public class CodeTranslator implements CompiladorSlothConstants{
     private Codigo cod = null;
     private StringBuilder sb = null;
+    private StringBuilder sbToken = null;
     private List<Token> code = null;
     private int tabs = 0;
     private boolean sepfor = false;
@@ -24,13 +25,16 @@ public class CodeTranslator implements CompiladorSlothConstants{
         this.className = this.outName.substring(this.outName.lastIndexOf("/")+1,this.outName.length());
     }
 
-    public void buildJava() throws IOException{
+    public void build() throws IOException{
         sb = new StringBuilder();
+        sbToken = new StringBuilder();
         Token t;
 
         sb.append("public class "+className+"{\n");
         tabs++;
         insertTabs();
+
+        buildToken();
 
         while(!code.isEmpty()){
             t = code.get(0);
@@ -101,6 +105,10 @@ public class CodeTranslator implements CompiladorSlothConstants{
         }
         codJavaLAST();
         writeToFile(outName+".java");
+        
+    }
+
+    public void buildToken(){
         
     }
 
@@ -302,6 +310,10 @@ public class CodeTranslator implements CompiladorSlothConstants{
 
     public void printCodeGen(){
         System.out.println(sb.toString());
+    }
+
+    public void printTokenCodeGen(){
+        System.out.println(sbToken.toString());
     }
 
     public void writeToFile(String filename) throws IOException{

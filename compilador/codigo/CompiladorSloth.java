@@ -23,8 +23,8 @@ public class CompiladorSloth implements CompiladorSlothConstants {
             cs.Programa();
 
                         CodeTranslator ct = new CodeTranslator(cod, args[1]);
-                        ct.buildJava();
-                        ct.printCodeGen();
+                        ct.build();
+                        ct.printTokenCodeGen();
                         System.out.println("File "+fname+" was successful compiled");
         }
                 catch(ParseException e)
