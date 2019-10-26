@@ -12,6 +12,7 @@ public class CodeTranslator implements CompiladorSlothConstants{
     private int ultimoTipoLido = -1;
     private boolean sepfor = false;
     private boolean callfor = false;
+    private boolean hasGet = false;
     private String nomevar = "";
     private String outName = "";
     private String className = "";
@@ -317,8 +318,11 @@ public class CodeTranslator implements CompiladorSlothConstants{
     }
 
     private void codJavaGet(){
-        sb.insert(sb.indexOf(className+"{\n")+className.length()+2, "\tprivate static Scanner get = new Scanner(System.in);\n");
-        sb.insert(0, "import java.util.Scanner;\n\n");
+        if(!hasGet){
+            sb.insert(sb.indexOf(className+"{\n")+className.length()+2, "\tprivate static Scanner get = new Scanner(System.in);\n");
+            sb.insert(0, "import java.util.Scanner;\n\n");
+            hasGet = true;
+        }
         code.remove(0);code.remove(0);
         int type = code.get(0).kind;
         switch(type){

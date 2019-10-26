@@ -1,0 +1,8 @@
+first
+    char a = get(char);
+    string b = get();
+    string c = get(string);
+    double d = get(double);
+
+    write(a+b+c+d);
+last
