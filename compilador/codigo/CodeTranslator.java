@@ -30,7 +30,7 @@ public class CodeTranslator implements CompiladorSlothConstants{
         sbToken = new StringBuilder();
         Token t;
         buildToken();
-        tabs = 1;
+        tabs = 0;
 
         sb.append("public class "+className+"{\n");
         tabs++;
