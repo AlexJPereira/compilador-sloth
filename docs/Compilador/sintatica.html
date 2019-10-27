@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Download jar · Compilador Sloth</title>
+        <title>Análise Sintática · Compilador Sloth</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="build.html" />
+    <link rel="next" href="automatos.html" />
     
     
-    <link rel="prev" href="./" />
+    <link rel="prev" href="tokens.html" />
     
 
     </head>
@@ -102,9 +102,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="./">
+        <li class="chapter " data-level="1.2" data-path="../Instalacao/">
             
-                <a href="./">
+                <a href="../Instalacao/">
             
                     
                     Instalação e utilização
@@ -116,9 +116,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="1.2.1" data-path="download.html">
+        <li class="chapter " data-level="1.2.1" data-path="../Instalacao/download.html">
             
-                <a href="download.html">
+                <a href="../Instalacao/download.html">
             
                     
                     Download jar
@@ -129,9 +129,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.2" data-path="build.html">
+        <li class="chapter " data-level="1.2.2" data-path="../Instalacao/build.html">
             
-                <a href="build.html">
+                <a href="../Instalacao/build.html">
             
                     
                     Instalar pelo código-fonte
@@ -205,9 +205,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="../Compilador/">
+        <li class="chapter " data-level="1.4" data-path="./">
             
-                <a href="../Compilador/">
+                <a href="./">
             
                     
                     Criação do compilador
@@ -219,9 +219,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.4.1" data-path="../Compilador/lexico.html">
+        <li class="chapter " data-level="1.4.1" data-path="lexico.html">
             
-                <a href="../Compilador/lexico.html">
+                <a href="lexico.html">
             
                     
                     Análise Léxica
@@ -233,9 +233,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.4.1.1" data-path="../Compilador/tokens.html">
+        <li class="chapter " data-level="1.4.1.1" data-path="tokens.html">
             
-                <a href="../Compilador/tokens.html">
+                <a href="tokens.html">
             
                     
                     Tokens
@@ -251,9 +251,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.2" data-path="../Compilador/sintatica.html">
+        <li class="chapter active" data-level="1.4.2" data-path="sintatica.html">
             
-                <a href="../Compilador/sintatica.html">
+                <a href="sintatica.html">
             
                     
                     Análise Sintática
@@ -265,9 +265,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.4.2.1" data-path="../Compilador/automatos.html">
+        <li class="chapter " data-level="1.4.2.1" data-path="automatos.html">
             
-                <a href="../Compilador/automatos.html">
+                <a href="automatos.html">
             
                     
                     Autômatos
@@ -283,9 +283,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3" data-path="../Compilador/semantica.html">
+        <li class="chapter " data-level="1.4.3" data-path="semantica.html">
             
-                <a href="../Compilador/semantica.html">
+                <a href="semantica.html">
             
                     
                     Análise Semântica
@@ -296,9 +296,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.4" data-path="../Compilador/geradorCod.html">
+        <li class="chapter " data-level="1.4.4" data-path="geradorCod.html">
             
-                <a href="../Compilador/geradorCod.html">
+                <a href="geradorCod.html">
             
                     
                     Geração de Código
@@ -344,7 +344,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Download jar</a>
+        <a href=".." >Análise Sintática</a>
     </h1>
 </div>
 
@@ -359,14 +359,33 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="download-jar">Download Jar</h1>
-<p>A instala&#xE7;&#xE3;o mais simples &#xE9; o download direto do arquivo <code>.jar</code> direto da <a href="https://github.com/wykke/CompiladorSloth/releases" target="_blank">realese</a>.</p>
-<p>Ao abrir o site do github, des&#xE7;a na p&#xE1;gina at&#xE9; encontrar a vers&#xE3;o que queira baixar o compilador sloth, sendo que a primeira vers&#xE3;o que aparece &#xE9; a mais recente. Em assets selecione CompiladorSloth.jar e o download ser&#xE1; iniciado.</p>
-<p><img src="../Src/download-assets.png" alt="download-image"></p>
-<h2 id="utiliza&#xE7;&#xE3;o">Utiliza&#xE7;&#xE3;o</h2>
-<p>Para utilizar o Compilador Sloth basta ter <a href="https://www.java.com/pt_BR/download/" target="_blank">java</a> instalado e utilizado o comando em um terminal:</p>
-<pre><code>$ java -jar CompiladorSloth.jar input output
-</code></pre><p>Sendo que <code>CompiladorSloth.jar</code> &#xE9; o caminho relativo at&#xE9; o diret&#xF3;rio do arquivo <code>.jar</code> do compilador, servindo tamb&#xE9;m para <code>input</code> e <code>output</code>. Todos os par&#xE2;metros s&#xE3;o necess&#xE1;rios.</p>
+                                <h1 id="an&#xE1;lise-sint&#xE1;tica">An&#xE1;lise sint&#xE1;tica</h1>
+<p>A an&#xE1;lise sint&#xE1;tica foi feita atrav&#xE9;s da linguagem de programa&#xE7;&#xE3;o do JavaCC. Atrav&#xE9;s da classe <code>CompiladorSloth</code> criada pelo pr&#xF3;prio JavaCC ele vai descobrindo se a sequ&#xEA;ncia de tokens est&#xE1; correta. Os aut&#xF4;matos da an&#xE1;lise sint&#xE1;tica podem ser vistos na se&#xE7;&#xE3;o <a href="../Automatos/README.md">Aut&#xF4;matos</a>.</p>
+<p>Caracter&#xED;sticas do analisador sint&#xE1;tico:
+|     caracter&#xED;stica         |       tipo          |                                    descri&#xE7;&#xE3;o                                        |
+|:----------------------:    |:---------------:    |:-------------------------------------------------------------------------------:    |
+| estrat&#xE9;gia de an&#xE1;lise      | descendente         | leitura da base para as folha na &#xE1;rvore de aut&#xF4;matos                                |
+| s&#xED;mbolos terminais         | tokens              | tokens gerados pela an&#xE1;lise l&#xE9;xica                                                  |
+| simbolos n&#xE3;o terminais     | aut&#xF4;matos           | fun&#xE7;&#xF5;es do analisador sint&#xE1;tico                                                     |
+| simbolo inicial            | Programa()          | aut&#xF4;mato inicial que desencadeia a &#xE1;rvore                                           |
+| tipo de deriva&#xE7;&#xE3;o          | mais a esquerda     | os primeiros s&#xED;mbolos a serem derivados s&#xE3;o os da esquerda da express&#xE3;o regular     |</p>
+<p>Na linguagem do JavaCC os aut&#xF4;matos s&#xE3;o declarados da segunte maneira:</p>
+<pre><code>tipo nome(par&#xE2;metros)
+{vari&#xE1;veis locais}
+{
+    express&#xE3;oRegular{fun&#xE7;&#xF5;esOpcionais}
+}
+</code></pre><ul>
+<li>tipo: indentifica o retorno da fun&#xE7;&#xE3;o do aut&#xF4;mato, &#xE9; util quando um aut&#xF4;mato de nivel acima precisa saber qual caminho esse aut&#xF4;mato pegou.</li>
+<li>nome: representa o nome do aut&#xF4;mato.</li>
+<li>par&#xE2;metros: o aut&#xF4;mato pode receber par&#xE2;metros que s&#xE3;o em geral utilizado pelas <code>fun&#xE7;&#xF5;esOpcionais</code>.</li>
+<li>vari&#xE1;veis locais: igual os par&#xE2;metros s&#xE3;o utilizadas em geral pelas <code>fun&#xE7;&#xF5;esOpcionais</code>, tamb&#xE9;m &#xE9; utilizado para guardar os Token em uma lista. Infelizmente essa lista &#xE9; nescess&#xE1;ria, visto que o analisador l&#xE9;xico n&#xE3;o a possui, ele vai lendo e j&#xE1; descartando.</li>
+<li>express&#xE3;oRegular: &#xE9; a express&#xE3;o regular que representa o aut&#xF4;mato. Existe uma fun&#xE7;&#xE3;o chamada <code>LOOKAHEAD(valor)</code> que ajuda a contornar redund&#xE2;ncias.</li>
+<li>LOOKAHEAD(valor): essa fun&#xE7;&#xE3;o ajuda a trabalhar com redund&#xE2;ncias. Quando temos dois caminhos que um aut&#xF4;mato pode percorrer e ambos os caminhos come&#xE7;am com o mesmo token, temos uma redund&#xE2;ncia. O lookahead diz para o analisador l&#xE9;xico analisar tantos aut&#xF4;matos &#xE0; frente antes de chegar a uma conclus&#xE3;o de qu   al caminho o aut&#xF4;mato deve seguir. O numero de aut&#xF4;matos que devem ser analisados &#xE1; frente &#xE9; o <code>valor</code>.</li>
+<li>fun&#xE7;&#xF5;esOpicionais: servem para fazer alguma coisa quando algo acontecer. Alguns exemplos de usos, adicionar um token a uma lista sempre que aparecer um token, pedir para o analisador sem&#xE2;ntico verificar se uma vari&#xE1;vel j&#xE1; foi declarada.</li>
+</ul>
+<h2 id="redund&#xE2;ncias">Redund&#xE2;ncias</h2>
+<p>Redund&#xE2;ncias no JavaCC s&#xE3;o f&#xE1;ceis de serem tratadas mas aumentam o tempo de compila&#xE7;&#xE3;o. No final o que deve ser decidido &#xE9; a prefer&#xEA;ncia entre otimiza&#xE7;&#xE3;o e organiza&#xE7;&#xE3;o. Se a prefer&#xEA;ncia for otimiza&#xE7;&#xE3;o o compilador pode ficar mais r&#xE1;pido quando se trata de programas muito grandes, porem para programas pequenos essa otimiza&#xE7;&#xE3;o &#xE9; inpersepit&#xED;vel. Se a prefe&#xEA;ncia for organiza&#xE7;&#xE3;o, o c&#xF3;digo do compilador fica mais organizado e de mais f&#xE1;cil manuten&#xE7;ao. No final escolhemos tratar as redund&#xE2;ncias com <code>LOOKAHEAD</code> para manter o c&#xF3;digo organizado e de f&#xE1;cil manuten&#xE7;&#xE3;o. Caso a escolha tivesse sido a oposta, ter&#xED;amos que separar os aum&#xF4;matos redund&#xE2;ntes em outros aut&#xF4;matos ou tokens seguidos de aut&#xF4;matos, isso acaba sendo uma op&#xE7;&#xE3;o em aberta de upgrade para esse trabalho.</p>
 
                                 
                                 </section>
@@ -394,12 +413,12 @@
 
             
                 
-                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Instalação e utilização">
+                <a href="tokens.html" class="navigation navigation-prev " aria-label="Previous page: Tokens">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="build.html" class="navigation navigation-next " aria-label="Next page: Instalar pelo código-fonte">
+                <a href="automatos.html" class="navigation navigation-next " aria-label="Next page: Autômatos">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -410,7 +429,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Download jar","level":"1.2.1","depth":2,"next":{"title":"Instalar pelo código-fonte","level":"1.2.2","depth":2,"path":"Instalacao/build.md","ref":"Instalacao/build.md","articles":[]},"previous":{"title":"Instalação e utilização","level":"1.2","depth":1,"path":"Instalacao/README.md","ref":"Instalacao/README.md","articles":[{"title":"Download jar","level":"1.2.1","depth":2,"path":"Instalacao/download.md","ref":"Instalacao/download.md","articles":[]},{"title":"Instalar pelo código-fonte","level":"1.2.2","depth":2,"path":"Instalacao/build.md","ref":"Instalacao/build.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"WyKKe","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Compilador Sloth","gitbook":"*"},"file":{"path":"Instalacao/download.md","mtime":"2019-10-27T23:46:10.990Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-27T23:47:05.745Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Análise Sintática","level":"1.4.2","depth":2,"next":{"title":"Autômatos","level":"1.4.2.1","depth":3,"path":"Compilador/automatos.md","ref":"Compilador/automatos.md","articles":[]},"previous":{"title":"Tokens","level":"1.4.1.1","depth":3,"path":"Compilador/tokens.md","ref":"Compilador/tokens.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"WyKKe","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Compilador Sloth","gitbook":"*"},"file":{"path":"Compilador/sintatica.md","mtime":"2019-10-27T23:46:10.990Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-27T23:47:05.745Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
