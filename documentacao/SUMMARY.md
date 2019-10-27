@@ -12,6 +12,8 @@
     * [Análise Léxica](Compilador/lexico.md)
         * [Tokens](Compilador/tokens.md)
     * [Análise Sintática](Compilador/sintatica.md)
+    * [Análise Semântica](Compilador/semantica.md)
+    * [Geração de Código](Compilador/geradorCod.md)
 * [Autômatos](Automatos/README.md)
     * [Programa](Automatos/programa.md)
     * [Importação](Automatos/importacao.md)
