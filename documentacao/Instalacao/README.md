@@ -1,3 +1,2 @@
 # Instalação
-falar das maneiras que pode usar o compilador, compilando o codigo-fonte ou baixando o binario
-
+Para fazer a instação é possivel fazer o [download](./download.md) do compilador compactado em um `.jar` ou [compilar](./build.md) direto do código-fonte de diversas maneiras distintas dependendo da nescessidade. Neste tópico será tratado apenas o download e instalação das ferramentas e do Compilador Sloth.

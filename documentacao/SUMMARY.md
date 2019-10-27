@@ -1,10 +1,9 @@
 # Summary
 
 * [Introdução](README.md)
-* [Instalação](Instalacao/README.md)
-    * [Download](Instalacao/download.md)
+* [Instalação e utilização](Instalacao/README.md)
+    * [Download jar](Instalacao/download.md)
     * [Instalar pelo código-fonte](Instalacao/build.md)
-    * [Compilar a documentação](Instalacao/buildsite.md)
 * [A linguagem Sloth](Linguagem/README.md)
     * [Tokens](Linguagem/tokens.md)
     * [Função principal](Linguagem/funcp.md)
