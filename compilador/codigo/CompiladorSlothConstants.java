@@ -9,123 +9,123 @@ public interface CompiladorSlothConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int LETRA = 5;
+  int LETRA = 6;
   /** RegularExpression Id. */
-  int DIGITO = 6;
+  int DIGITO = 7;
   /** RegularExpression Id. */
-  int CARACTERE = 7;
+  int CARACTERE = 8;
   /** RegularExpression Id. */
-  int ASC = 8;
+  int ASC = 9;
   /** RegularExpression Id. */
-  int TIPOINT = 9;
+  int TIPOINT = 10;
   /** RegularExpression Id. */
-  int TIPODOUBLE = 10;
+  int TIPODOUBLE = 11;
   /** RegularExpression Id. */
-  int TIPOCHAR = 11;
+  int TIPOCHAR = 12;
   /** RegularExpression Id. */
-  int TIPOSTRING = 12;
+  int TIPOSTRING = 13;
   /** RegularExpression Id. */
-  int TIPOBOOLEAN = 13;
+  int TIPOBOOLEAN = 14;
   /** RegularExpression Id. */
-  int TIPOVOID = 14;
+  int TIPOVOID = 15;
   /** RegularExpression Id. */
-  int RETORNO = 15;
+  int RETORNO = 16;
   /** RegularExpression Id. */
-  int TRUE = 16;
+  int TRUE = 17;
   /** RegularExpression Id. */
-  int FALSE = 17;
+  int FALSE = 18;
   /** RegularExpression Id. */
-  int ENDL = 18;
+  int ENDL = 19;
   /** RegularExpression Id. */
-  int EOL = 19;
+  int EOL = 20;
   /** RegularExpression Id. */
-  int ABREVET = 20;
+  int ABREVET = 21;
   /** RegularExpression Id. */
-  int FECHAVET = 21;
+  int FECHAVET = 22;
   /** RegularExpression Id. */
-  int ADD = 22;
+  int ADD = 23;
   /** RegularExpression Id. */
-  int SUB = 23;
+  int SUB = 24;
   /** RegularExpression Id. */
-  int MULT = 24;
+  int MULT = 25;
   /** RegularExpression Id. */
-  int MOD = 25;
+  int MOD = 26;
   /** RegularExpression Id. */
-  int DIV = 26;
+  int DIV = 27;
   /** RegularExpression Id. */
-  int POW = 27;
+  int POW = 28;
   /** RegularExpression Id. */
-  int PORCE = 28;
+  int PORCE = 29;
   /** RegularExpression Id. */
-  int ABREPAR = 29;
+  int ABREPAR = 30;
   /** RegularExpression Id. */
-  int FECHAPAR = 30;
+  int FECHAPAR = 31;
   /** RegularExpression Id. */
-  int PONTO = 31;
+  int PONTO = 32;
   /** RegularExpression Id. */
-  int IGUAL = 32;
+  int IGUAL = 33;
   /** RegularExpression Id. */
-  int DIF = 33;
+  int DIF = 34;
   /** RegularExpression Id. */
-  int MAIOR = 34;
+  int MAIOR = 35;
   /** RegularExpression Id. */
-  int MENOR = 35;
+  int MENOR = 36;
   /** RegularExpression Id. */
-  int MAIGUAL = 36;
+  int MAIGUAL = 37;
   /** RegularExpression Id. */
-  int MEIGUAL = 37;
+  int MEIGUAL = 38;
   /** RegularExpression Id. */
-  int IGUALDADE = 38;
+  int IGUALDADE = 39;
   /** RegularExpression Id. */
-  int AND = 39;
+  int AND = 40;
   /** RegularExpression Id. */
-  int OR = 40;
+  int OR = 41;
   /** RegularExpression Id. */
-  int NOT = 41;
+  int NOT = 42;
   /** RegularExpression Id. */
-  int IF = 42;
+  int IF = 43;
   /** RegularExpression Id. */
-  int ELSE = 43;
+  int ELSE = 44;
   /** RegularExpression Id. */
-  int FOR = 44;
+  int FOR = 45;
   /** RegularExpression Id. */
-  int SEPFOR = 45;
+  int SEPFOR = 46;
   /** RegularExpression Id. */
-  int WHILE = 46;
+  int WHILE = 47;
   /** RegularExpression Id. */
-  int FOREACH = 47;
+  int FOREACH = 48;
   /** RegularExpression Id. */
-  int FIRST = 48;
+  int FIRST = 49;
   /** RegularExpression Id. */
-  int LAST = 49;
+  int LAST = 50;
   /** RegularExpression Id. */
-  int BEGIN = 50;
+  int BEGIN = 51;
   /** RegularExpression Id. */
-  int END = 51;
+  int END = 52;
   /** RegularExpression Id. */
-  int IMPORT = 52;
+  int IMPORT = 53;
   /** RegularExpression Id. */
-  int GET = 53;
+  int GET = 54;
   /** RegularExpression Id. */
-  int WRITE = 54;
+  int WRITE = 55;
   /** RegularExpression Id. */
-  int COMENT = 55;
+  int COMENT = 56;
   /** RegularExpression Id. */
-  int SEPFUN = 56;
+  int SEPFUN = 57;
   /** RegularExpression Id. */
-  int NOMEVAR = 57;
+  int NOMEVAR = 58;
   /** RegularExpression Id. */
-  int STRING = 58;
+  int STRING = 59;
   /** RegularExpression Id. */
-  int INTEIRO = 59;
+  int INTEIRO = 60;
   /** RegularExpression Id. */
-  int CARACTER = 60;
+  int CARACTER = 61;
   /** RegularExpression Id. */
-  int REAL = 61;
+  int REAL = 62;
   /** RegularExpression Id. */
-  int PORCENTAGEM = 62;
+  int PORCENTAGEM = 63;
   /** RegularExpression Id. */
-  int UNKNOWMTOKEN = 63;
+  int UNKNOWMTOKEN = 64;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -137,6 +137,7 @@ public interface CompiladorSlothConstants {
     "\"\\n\"",
     "\"\\r\"",
     "\"\\r\\n\"",
+    "\"\\t\"",
     "<LETRA>",
     "<DIGITO>",
     "<CARACTERE>",
