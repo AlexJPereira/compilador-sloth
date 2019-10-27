@@ -1,1 +1,0 @@
-# Nome de variável
