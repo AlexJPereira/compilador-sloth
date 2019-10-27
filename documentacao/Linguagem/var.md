@@ -24,6 +24,7 @@ double d[3], e = 3.0, f = 3*9/4+a;
 Para atribuir a uma variável basta utilizar o sinal de igual `=`, uma variável de um tipo específico só pode receber expressões que se comportem igual ao tipo da variável de acordo com a tabela a seguir:
 
 <a id="tabelaTipo"></a>
+
 | expressão\variável 	| int 	| double 	| char 	| string 	| boolean 	|
 |:------------------:	|:---:	|:------:	|:----:	|:------:	|:-------:	|
 |         int        	| sim 	|   sim  	|  sim 	|   não  	|   não   	|
