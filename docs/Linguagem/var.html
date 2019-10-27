@@ -107,7 +107,7 @@
                 <a href="../Instalacao/">
             
                     
-                    Instalação
+                    Instalação e utilização
             
                 </a>
             
@@ -121,7 +121,7 @@
                 <a href="../Instalacao/download.html">
             
                     
-                    Download
+                    Download jar
             
                 </a>
             
@@ -135,19 +135,6 @@
             
                     
                     Instalar pelo código-fonte
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.3" data-path="../Instalacao/buildsite.html">
-            
-                <a href="../Instalacao/buildsite.html">
-            
-                    
-                    Compilar a documentação
             
                 </a>
             
@@ -174,20 +161,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="tokens.html">
-            
-                <a href="tokens.html">
-            
-                    
-                    Tokens
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2" data-path="funcp.html">
+        <li class="chapter " data-level="1.3.1" data-path="funcp.html">
             
                 <a href="funcp.html">
             
@@ -200,7 +174,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3.3" data-path="var.html">
+        <li class="chapter active" data-level="1.3.2" data-path="var.html">
             
                 <a href="var.html">
             
@@ -213,7 +187,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.4" data-path="fluxo.html">
+        <li class="chapter " data-level="1.3.3" data-path="fluxo.html">
             
                 <a href="fluxo.html">
             
@@ -245,7 +219,20 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.4.1" data-path="../Compilador/javacc.html">
+        <li class="chapter " data-level="1.4.1" data-path="../Compilador/tokens.html">
+            
+                <a href="../Compilador/tokens.html">
+            
+                    
+                    Tokens
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../Compilador/javacc.html">
             
                 <a href="../Compilador/javacc.html">
             
@@ -258,7 +245,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.2" data-path="../Compilador/java.html">
+        <li class="chapter " data-level="1.4.3" data-path="../Compilador/java.html">
             
                 <a href="../Compilador/java.html">
             
@@ -705,6 +692,385 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="vari&#xE1;veis">Vari&#xE1;veis</h1>
+<p>As vari&#xE1;veis podem ser dos seguintes tipos:</p>
+<ul>
+<li>Inteiro (<code>int</code>)</li>
+<li>Real (<code>double</code>)</li>
+<li>Caractere (<code>caractere</code>)</li>
+<li>Frase (<code>string</code>)</li>
+<li>Booleana (<code>boolean</code>)</li>
+<li>Porcentagem (<code>double</code>)</li>
+</ul>
+<p>Elas tamb&#xE9;m podem ser vetores.</p>
+<p>As porcentagem s&#xE3;o numeros seguidos de <code>%</code> e representam um numero 100x menor. As porcentagens s&#xE3;o consideradas reais.</p>
+<h2 id="inicia&#xE7;&#xE3;o-de-vari&#xE1;veis">Inicia&#xE7;&#xE3;o de vari&#xE1;veis</h2>
+<p>Para declarar uma vari&#xE1;vel basta colocar seu tipo em seguida de seu nome, tamb&#xE9;m &#xE9; possivel inicializar uma vari&#xE1;vel, vale dizer que n&#xE3;o &#xE9; possivel utilizar uma vari&#xE1;vel que n&#xE3;o foi inicializada. N&#xE3;o &#xE9; possivel inicializar vetores na declara&#xE7;&#xE3;o.</p>
+<pre><code>int a=1, b, c;
+double d[3], e = 3.0, f = 3*9/4+a;
+</code></pre><h2 id="manipula&#xE7;&#xE3;o-de-vari&#xE1;veis">Manipula&#xE7;&#xE3;o de vari&#xE1;veis</h2>
+<p>Para atribuir a uma vari&#xE1;vel basta utilizar o sinal de igual <code>=</code>, uma vari&#xE1;vel de um tipo espec&#xED;fico s&#xF3; pode receber express&#xF5;es que se comportem igual ao tipo da vari&#xE1;vel de acordo com a tabela a seguir:</p>
+<p><a id="tabelaTipo"></a></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">express&#xE3;o\vari&#xE1;vel</th>
+<th style="text-align:center">int</th>
+<th style="text-align:center">double</th>
+<th style="text-align:center">char</th>
+<th style="text-align:center">string</th>
+<th style="text-align:center">boolean</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">int</td>
+<td style="text-align:center">sim</td>
+<td style="text-align:center">sim</td>
+<td style="text-align:center">sim</td>
+<td style="text-align:center">n&#xE3;o</td>
+<td style="text-align:center">n&#xE3;o</td>
+</tr>
+<tr>
+<td style="text-align:center">double</td>
+<td style="text-align:center">n&#xE3;o</td>
+<td style="text-align:center">sim</td>
+<td style="text-align:center">n&#xE3;o</td>
+<td style="text-align:center">n&#xE3;o</td>
+<td style="text-align:center">n&#xE3;o</td>
+</tr>
+<tr>
+<td style="text-align:center">char</td>
+<td style="text-align:center">sim</td>
+<td style="text-align:center">sim</td>
+<td style="text-align:center">sim</td>
+<td style="text-align:center">n&#xE3;o</td>
+<td style="text-align:center">n&#xE3;o</td>
+</tr>
+<tr>
+<td style="text-align:center">string</td>
+<td style="text-align:center">n&#xE3;o</td>
+<td style="text-align:center">n&#xE3;o</td>
+<td style="text-align:center">n&#xE3;o</td>
+<td style="text-align:center">sim</td>
+<td style="text-align:center">n&#xE3;o</td>
+</tr>
+<tr>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">n&#xE3;o</td>
+<td style="text-align:center">n&#xE3;o</td>
+<td style="text-align:center">n&#xE3;o</td>
+<td style="text-align:center">n&#xE3;o</td>
+<td style="text-align:center">sim</td>
+</tr>
+</tbody>
+</table>
+<p>Essa tabela indica se um valor pode receber outro, tamb&#xE9;m funciona para o <code>return</code> das fun&#xE7;&#xF5;es.</p>
+<h2 id="express&#xF5;es">Express&#xF5;es</h2>
+<p>Express&#xF5;es possuem opera&#xE7;&#xF5;es em prioridade. Da maior prioridade para a menor:</p>
+<ol>
+<li><p>not (<code>!</code>), a primeira prioridade e s&#xF3; podem ser feitas com tipos booleanos.</p>
+<pre><code>boolean a = !(true);
+</code></pre></li>
+<li><p>potencia (<code>^</code>), a segunda maior prioridade, essas contas devem ser as segundas a serem feitas. Potencias recebem dois numeros reais e retornam tamb&#xE9;m um numero real, portanto n&#xE3;o &#xE9; possivel colocar uma opera&#xE7;&#xE3;o de potencia&#xE7;&#xE3;o em um int de acordo com a tabela acima, porem &#xE9; possivel colocar um int em uma pot&#xEA;ncia.</p>
+<pre><code>double a = 1^2;
+</code></pre></li>
+<li><p>subtra&#xE7;&#xE3;o (<code>-</code>), multiplica&#xE7;&#xE3;o (<code>*</code>), divis&#xE3;o (<code>/</code>), resto (<code>//</code>). Repare que o resto n&#xE3;o &#xE9; <code>%</code>, o simbolo de porcentagem como visto antes &#xE9; uma porcentagem realmente, retornando um numero real 100x menor.</p>
+<pre><code>int a = 1-2/3*4//5;
+</code></pre></li>
+<li><p>adi&#xE7;&#xE3;o (<code>+</code>), essa vem depois das outras opera&#xE7;&#xF5;es porque strings somandas a qualquer coisa retornar&#xE3;o strings concatenadas.</p>
+<pre><code>string a = 1+&quot;oi&quot;;
+</code></pre></li>
+<li><p>opera&#xE7;&#xF5;es relacionais, igual (<code>==</code>), diferente (<code>=!</code>), maior (<code>&gt;</code>), menor (<code>&lt;</code>), menor ou igual (<code>=&lt;</code>), maior ou igual (<code>=&gt;</code>). Repare que em algumas opera&#xE7;&#xF5;es os simbolos s&#xE3;o ao contrario das principais linguagens, como por exemplo em c++ que possui o s&#xED;mbolo <code>&gt;=</code>. Cuidado ao utilizar atribui&#xE7;&#xE3;o com simbolo not. Por exemplo:
+```
+boolean a = 2&gt;3==false;</p>
+</li>
+</ol>
+<p>boolean b =!(true); # errado #
+boolean c = !(true); # certo #</p>
+<pre><code>
+6. opera&#xE7;&#xF5;es l&#xF3;gicas, And (`&amp;&amp;`), Or (`||`).
+</code></pre><p>boolean a = false || true;
+```</p>
+<h2 id="retorno-de-express&#xF5;es">Retorno de express&#xF5;es</h2>
+<p>As express&#xF5;es retornam de acordo com as tabelas a seguir. Caso caia em uma situa&#xE7;&#xE3;o de erro, a compila&#xE7;&#xE3;o falha.</p>
+<p>Primeiro ser&#xE3;o resolvidos o que est&#xE3;o dentro de parenteses recursivamente procurando pelo parenteses de menor n&#xED;vel.</p>
+<h3 id="not">Not</h3>
+<p>Not possuem um &#xFA;nico operadando, e este deve ser boolean, retornando um boolean. Qualquer outro retorna Erro.</p>
+<h3 id="pot&#xEA;ncia">Pot&#xEA;ncia</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">operando1\operando2</th>
+<th style="text-align:center">int</th>
+<th style="text-align:center">double</th>
+<th style="text-align:center">char</th>
+<th style="text-align:center">string</th>
+<th style="text-align:center">boolean</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">int</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+</tr>
+<tr>
+<td style="text-align:center">double</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+</tr>
+<tr>
+<td style="text-align:center">char</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+</tr>
+<tr>
+<td style="text-align:center">string</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+</tr>
+<tr>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+</tr>
+</tbody>
+</table>
+<h3 id="opera&#xE7;&#xF5;es-aritim&#xE9;ricas-sem-adi&#xE7;&#xE3;o">Opera&#xE7;&#xF5;es aritim&#xE9;ricas, sem adi&#xE7;&#xE3;o</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">operando1\operando2</th>
+<th style="text-align:center">int</th>
+<th style="text-align:center">double</th>
+<th style="text-align:center">char</th>
+<th style="text-align:center">string</th>
+<th style="text-align:center">boolean</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+</tr>
+<tr>
+<td style="text-align:center">double</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+</tr>
+<tr>
+<td style="text-align:center">char</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">char</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+</tr>
+<tr>
+<td style="text-align:center">string</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+</tr>
+<tr>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+</tr>
+</tbody>
+</table>
+<h3 id="adi&#xE7;&#xE3;o">Adi&#xE7;&#xE3;o</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">operando1\operando2</th>
+<th style="text-align:center">int</th>
+<th style="text-align:center">double</th>
+<th style="text-align:center">char</th>
+<th style="text-align:center">string</th>
+<th style="text-align:center">boolean</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">erro</td>
+</tr>
+<tr>
+<td style="text-align:center">double</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">erro</td>
+</tr>
+<tr>
+<td style="text-align:center">char</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">char</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">erro</td>
+</tr>
+<tr>
+<td style="text-align:center">string</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">string</td>
+</tr>
+<tr>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">erro</td>
+</tr>
+</tbody>
+</table>
+<h3 id="relacionais">Relacionais</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">operando1\operando2</th>
+<th style="text-align:center">int</th>
+<th style="text-align:center">double</th>
+<th style="text-align:center">char</th>
+<th style="text-align:center">string</th>
+<th style="text-align:center">boolean</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">int</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+</tr>
+<tr>
+<td style="text-align:center">double</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+</tr>
+<tr>
+<td style="text-align:center">char</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+</tr>
+<tr>
+<td style="text-align:center">string</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+</tr>
+<tr>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">boolean</td>
+</tr>
+</tbody>
+</table>
+<h3 id="l&#xF3;gicos">L&#xF3;gicos</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">operando1\operando2</th>
+<th style="text-align:center">int</th>
+<th style="text-align:center">double</th>
+<th style="text-align:center">char</th>
+<th style="text-align:center">string</th>
+<th style="text-align:center">boolean</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">int</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+</tr>
+<tr>
+<td style="text-align:center">double</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+</tr>
+<tr>
+<td style="text-align:center">char</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+</tr>
+<tr>
+<td style="text-align:center">string</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+</tr>
+<tr>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">erro</td>
+<td style="text-align:center">boolean</td>
+</tr>
+</tbody>
+</table>
 
                                 
                                 </section>
@@ -748,7 +1114,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Variáveis","level":"1.3.3","depth":2,"next":{"title":"Fluxo de Dados","level":"1.3.4","depth":2,"path":"Linguagem/fluxo.md","ref":"Linguagem/fluxo.md","articles":[]},"previous":{"title":"Função principal","level":"1.3.2","depth":2,"path":"Linguagem/funcp.md","ref":"Linguagem/funcp.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"WyKKe","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Compilador Sloth","gitbook":"*"},"file":{"path":"Linguagem/var.md","mtime":"2019-10-04T16:24:10.590Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-14T02:01:33.119Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Variáveis","level":"1.3.2","depth":2,"next":{"title":"Fluxo de Dados","level":"1.3.3","depth":2,"path":"Linguagem/fluxo.md","ref":"Linguagem/fluxo.md","articles":[]},"previous":{"title":"Função principal","level":"1.3.1","depth":2,"path":"Linguagem/funcp.md","ref":"Linguagem/funcp.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"WyKKe","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Compilador Sloth","gitbook":"*"},"file":{"path":"Linguagem/var.md","mtime":"2019-10-27T03:01:38.862Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-27T03:02:40.320Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

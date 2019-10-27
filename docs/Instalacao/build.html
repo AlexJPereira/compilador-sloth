@@ -57,7 +57,7 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="buildsite.html" />
+    <link rel="next" href="../Linguagem/" />
     
     
     <link rel="prev" href="download.html" />
@@ -107,7 +107,7 @@
                 <a href="./">
             
                     
-                    Instalação
+                    Instalação e utilização
             
                 </a>
             
@@ -121,7 +121,7 @@
                 <a href="download.html">
             
                     
-                    Download
+                    Download jar
             
                 </a>
             
@@ -135,19 +135,6 @@
             
                     
                     Instalar pelo código-fonte
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.3" data-path="buildsite.html">
-            
-                <a href="buildsite.html">
-            
-                    
-                    Compilar a documentação
             
                 </a>
             
@@ -174,20 +161,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="../Linguagem/tokens.html">
-            
-                <a href="../Linguagem/tokens.html">
-            
-                    
-                    Tokens
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2" data-path="../Linguagem/funcp.html">
+        <li class="chapter " data-level="1.3.1" data-path="../Linguagem/funcp.html">
             
                 <a href="../Linguagem/funcp.html">
             
@@ -200,7 +174,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3" data-path="../Linguagem/var.html">
+        <li class="chapter " data-level="1.3.2" data-path="../Linguagem/var.html">
             
                 <a href="../Linguagem/var.html">
             
@@ -213,7 +187,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.4" data-path="../Linguagem/fluxo.html">
+        <li class="chapter " data-level="1.3.3" data-path="../Linguagem/fluxo.html">
             
                 <a href="../Linguagem/fluxo.html">
             
@@ -245,7 +219,20 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.4.1" data-path="../Compilador/javacc.html">
+        <li class="chapter " data-level="1.4.1" data-path="../Compilador/tokens.html">
+            
+                <a href="../Compilador/tokens.html">
+            
+                    
+                    Tokens
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../Compilador/javacc.html">
             
                 <a href="../Compilador/javacc.html">
             
@@ -258,7 +245,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.2" data-path="../Compilador/java.html">
+        <li class="chapter " data-level="1.4.3" data-path="../Compilador/java.html">
             
                 <a href="../Compilador/java.html">
             
@@ -705,7 +692,85 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="instalar-pelo-c&#xF3;digo-fonte">Instalar pelo c&#xF3;digo-fonte</h1>
-<p>explicar como compilar o codigo fonte, falar dos requisitos</p>
+<p>Existem dois caminhos para compilar diretamente pelo c&#xF3;digo-fonte. O primeiro caminho &#xE9; compilar desde o arquivo <code>.jj</code>, o qual &#xE9; o arquivo lido pelo compilador JavaCC, essa compila&#xE7;&#xE3;o gerar&#xE1; v&#xE1;rias classes Java. Essas classes Java j&#xE1; est&#xE3;o compiladas nos arquivos-fonte, ent&#xE3;o caso n&#xE3;o tenha nescessidade de compilar o arquivo do JavaCC novamente a segunda maneira &#xE9; ignorar a compila&#xE7;&#xE3;o do arquivo do JavaCC e ir direto para a compila&#xE7;&#xE3;o das classes javas e confiar que os arquivos nos arquivos-fonte est&#xE3;o corretos.</p>
+<p>Para os diferentes tipos de instala&#xE7;&#xE3;o &#xE9; nescess&#xE1;rio ter um <a href="https://openjdk.java.net/" target="_blank">JDK</a> instalado.</p>
+<h2 id="compila&#xE7;&#xE3;o-desde-o-arquivo-do-javacc">Compila&#xE7;&#xE3;o desde o arquivo do JavaCC</h2>
+<p><a href="#posJCC">pular</a></p>
+<p>O Compilador Sloth foi produzida utilizando JavaCC, sua instala&#xE7;&#xE3;o &#xE9; necess&#xE1;ria para a cria&#xE7;&#xE3;o dos arquivos base.
+Os passos para a instala&#xE7;&#xE3;o da ferramenta em linux e em windows s&#xE3;o apresentados a seguir.</p>
+<h3 id="windows">Windows</h3>
+<p>O download pode ser feito acessando o site oficial da ferramenta:
+<a href="https://javacc.org/download" target="_blank">JavaCC</a></p>
+<p>&#xC9; recomendado utilizar a vers&#xE3;o 5.0, pois esta foi testada durante a realiza&#xE7;&#xE3;o do projeto e se apresenta est&#xE1;vel.
+Ap&#xF3;s o download da ferramenta &#xE9; necess&#xE1;rio realizar a extra&#xE7;&#xE3;o dos arquivos contidos na pasta zip. Recomenda-se armazenar a pasta do Javacc no meus documentos.
+Para que seja poss&#xED;vel a utiliza&#xE7;&#xE3;o do javacc atrav&#xE9;s de linha de comando no cmd do windows &#xE9; necess&#xE1;rio adicionar o local da pasta do JavaCC no path do sistema seguindo os seguintes passos:</p>
+<ol>
+<li>Abra o painel de controle</li>
+<li>Clique em &quot;Sistema e Seguran&#xE7;a&quot;</li>
+<li>Em seguida selecione a op&#xE7;&#xE3;o &quot;Sistema&quot;</li>
+<li>No campo a esquerda procure por &quot;Configura&#xE7;&#xF5;es avan&#xE7;adas do sistema&quot;</li>
+<li>Na aba &quot;Avan&#xE7;ado&quot;, clique em &quot;Variaveis de Ambiente&quot;</li>
+<li>No campo &quot;Variveis do sistema&quot;, procure pela vari&#xE1;vel PATH.</li>
+<li>Clique no bot&#xE3;o &quot;editar&quot;. (OBSERVA&#xC7;&#xC2;O: DE MANEIRA ALGUMA CLIQUE NO BOTAO EXCLUIR!!!)</li>
+<li>Copie ou digite o endere&#xE7;o da pasta \bin contida no diret&#xF3;rio do JAVACC, clique em aplicar/ok. </li>
+<li>Teste a execu&#xE7;&#xE3;o correta dos comandos abrindo o cmd e digitando a linha &quot;javacc&quot;</li>
+</ol>
+<p>Para a compila&#xE7;&#xE3;o dos arquivos gerados &#xE9; necessario tamb&#xE9;m a instala&#xE7;&#xE3;o do Java.
+Instalando o jdk em windows:
+Fa&#xE7;a o download do arquivo atrav&#xE9;s do <a href="https://www.oracle.com/technetwork/pt/java/javase/downloads/jdk-netbeans-jsp-3413153-ptb.html" target="_blank">site</a>, &#xE9; necess&#xE1;rio realizar o cadastro ou se identificar utilizando uma conta da Oracle.
+Tamb&#xE9;m &#xE9; necessario adcionar o caminho da pasta bin do jdk no path do sistema para que seja poss&#xED;vel compilar os arquivos atrav&#xE9;s do prompt de comando. </p>
+<h3 id="linux">Linux</h3>
+<p>Para fazer a instala&#xE7;&#xE3;o do javacc em linux basta utilizar as seguintes linhas de comando. </p>
+<ul>
+<li><p>Distribui&#xE7;&#xF5;es baseadas em Debian:</p>
+<pre><code>$ sudo apt-get install javacc
+</code></pre></li>
+<li><p>Distribui&#xE7;&#xF5;es baseadas em ArchLinux:</p>
+<pre><code>$ sudo yay -S javacc
+</code></pre></li>
+</ul>
+<p><a id="posJCC"></a></p>
+<h2 id="download-dos-arquivos-referentes-ao-compilador-sloth">Download dos arquivos referentes ao compilador Sloth</h2>
+<p>Existem v&#xE1;rias maneiras de se fazer o download do c&#xF3;digo-fonte do projeto.</p>
+<ol>
+<li>Baixando da pagina do <a href="https://github.com/wykke/CompiladorSloth" target="_blank">projeto</a> no Github. Basta apertar o grade bot&#xE3;o verde <code>Clone ou Download</code> e fazer download do arquivo Zip.</li>
+<li>Baixando atrav&#xE9;s de uma ferramenta git utilizando o comando:<pre><code>$ git clone https://github.com/wykke/CompiladorSloth
+</code></pre></li>
+<li>Baixando o c&#xF3;digo-fonte est&#xE1;vel de uma <a href="https://github.com/wykke/CompiladorSloth/releases" target="_blank">Realese</a>, basta selecionar <code>Source code (zip)</code>, nos assets. </li>
+</ol>
+<p><img src="../Src/download-assets.png" alt="download-image"></p>
+<h2 id="compilando-o-c&#xF3;digo-fonte">Compilando o c&#xF3;digo-fonte</h2>
+<h3 id="utilizando-nodejs-com-npm">Utilizando Node.JS com npm</h3>
+<p>Caso tenha <a href="https://nodejs.org/en/" target="_blank">node.js</a> e <a href="https://www.npmjs.com/" target="_blank">npm</a> instalados no computador, existem alguns comandos que podem fascilitar a compila&#xE7;&#xE3;o, porem precisam do JavaCC instalado.</p>
+<ul>
+<li>Para buildar o projeto desde o JavaCC e executar um arquivo testes:<pre><code>$ npm run buildTest
+</code></pre></li>
+<li>Para apenas rodar o arquivo de testes:<pre><code>$ npm run runTest
+</code></pre></li>
+<li>Para buildar um arquivo <code>.jar</code> na pasta <code>./compilador/bin/</code>:<pre><code>$ npm run buildJar
+</code></pre></li>
+</ul>
+<h3 id="sem-a-utiliza&#xE7;&#xE3;o-do-nodejs">Sem a utiliza&#xE7;&#xE3;o do Node.JS</h3>
+<p>Com um terminal aberto no caminho da pasta do projeto, se o seu objetivo &#xE9; compilar o arquivo JavaCC antes, basta utilizar o comando:</p>
+<pre><code>$ cd ./compilador/codigo
+$ javacc ../CompiladorSloth.jj
+</code></pre><p>O JavaCC gerar&#xE1; v&#xE1;rias classes Java na pasta <code>./compilador/codigo/</code>, as quais ja estavam l&#xE1; caso n&#xE3;o tenha modificado o arquivo <code>Compiladosloth.jj</code>.</p>
+<p>Para compilar os arquivos Java, caso ainda n&#xE3;o tenha utilizado, entre no diret&#xF3;rio dos c&#xF3;digos:</p>
+<pre><code>$ cd ./compilador/codigo
+</code></pre><p>Em seguida, para compilar os arquivos Java basta utilizar:</p>
+<pre><code>$ javac *.java
+</code></pre><p>A partir desse ponto ja &#xE9; possivel utilizar o Compilador Sloth, mas caso queira ter um arquivo <code>.jar</code> utilize:</p>
+<pre><code>$ jar -cfe ../bin/CompiladorSloth.jar CompiladorSloth *.class
+</code></pre><p>Ele criar&#xE1; o arquivo <code>.jar</code> na pasta <code>./compilador/bin/</code>.</p>
+<h2 id="utiliza&#xE7;&#xE3;o">Utiliza&#xE7;&#xE3;o</h2>
+<h3 id="caso-tenha-criado-o-arquivo-jar">Caso tenha criado o arquivo jar</h3>
+<p>Para utilizar o Compilador Sloth basta utilizar o comando em um terminal:</p>
+<pre><code>$ java -jar ./compilador/bin/CompiladorSloth.jar input output
+</code></pre><p>Sendo que <code>./compilador/bin/CompiladorSloth.jar</code> &#xE9; o caminho relativo at&#xE9; o diret&#xF3;rio do arquivo <code>.jar</code> do compilador, servindo tamb&#xE9;m para <code>input</code> e <code>output</code>. Todos os par&#xE2;metros s&#xE3;o necess&#xE1;rios.</p>
+<h3 id="caso-n&#xE3;o-tenha-criado-o-arquivo-jar">Caso n&#xE3;o tenha criado o arquivo Jar</h3>
+<p>Para utilizar o Compilador Sloth basta utilizar o comando em um terminal:</p>
+<pre><code>$ java ./compilador/codigo/CompiladorSloth.java
+</code></pre><p>Sendo que <code>./compilador/codigo/CompiladorSloth.jar</code> &#xE9; o caminho relativo at&#xE9; o diret&#xF3;rio do arquivo <code>.java</code>.</p>
 
                                 
                                 </section>
@@ -733,12 +798,12 @@
 
             
                 
-                <a href="download.html" class="navigation navigation-prev " aria-label="Previous page: Download">
+                <a href="download.html" class="navigation navigation-prev " aria-label="Previous page: Download jar">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="buildsite.html" class="navigation navigation-next " aria-label="Next page: Compilar a documentação">
+                <a href="../Linguagem/" class="navigation navigation-next " aria-label="Next page: A linguagem Sloth">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -749,7 +814,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Instalar pelo código-fonte","level":"1.2.2","depth":2,"next":{"title":"Compilar a documentação","level":"1.2.3","depth":2,"path":"Instalacao/buildsite.md","ref":"Instalacao/buildsite.md","articles":[]},"previous":{"title":"Download","level":"1.2.1","depth":2,"path":"Instalacao/download.md","ref":"Instalacao/download.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"WyKKe","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Compilador Sloth","gitbook":"*"},"file":{"path":"Instalacao/build.md","mtime":"2019-10-04T16:24:10.590Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-14T02:01:33.119Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Instalar pelo código-fonte","level":"1.2.2","depth":2,"next":{"title":"A linguagem Sloth","level":"1.3","depth":1,"path":"Linguagem/README.md","ref":"Linguagem/README.md","articles":[{"title":"Função principal","level":"1.3.1","depth":2,"path":"Linguagem/funcp.md","ref":"Linguagem/funcp.md","articles":[]},{"title":"Variáveis","level":"1.3.2","depth":2,"path":"Linguagem/var.md","ref":"Linguagem/var.md","articles":[]},{"title":"Fluxo de Dados","level":"1.3.3","depth":2,"path":"Linguagem/fluxo.md","ref":"Linguagem/fluxo.md","articles":[]}]},"previous":{"title":"Download jar","level":"1.2.1","depth":2,"path":"Instalacao/download.md","ref":"Instalacao/download.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"WyKKe","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Compilador Sloth","gitbook":"*"},"file":{"path":"Instalacao/build.md","mtime":"2019-10-27T01:19:28.273Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-27T03:02:40.320Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
