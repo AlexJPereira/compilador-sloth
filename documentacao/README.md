@@ -19,7 +19,7 @@ Sloth é uma linguagem de programação bem simples baseada na linguagem C, muda
 
 O objetivo da criação dessa linguagem foi aprender sobre compiladores e abrir portas para criação de linguagens mais complexas.
 
-Sloth possui as funções de I/O, atribuição, manipulação de variáveis e fluxo de dados.
+Sloth possui as funções de I/O, manipulação de variáveis e fluxo de dados.
 
 O compilador de sua linguagem traduz a linguagem Sloth para java.
 
@@ -28,9 +28,6 @@ Feito por alunos de engenharia de computação da Universidade Federal de Itajub
 
 <a href="https://github.com/wykke"><img src="https://avatars3.githubusercontent.com/u/38235118?s=460&v=4" alt="drawing" width="40" align="middle"/></a>
 Alex Junior Pereira
-
-<a href="https://github.com/CaikePiza"><img src="https://avatars3.githubusercontent.com/u/32080055?s=460&v=4" alt="drawing" width="40" align="middle"/></a>
-Caike de Souza Piza
 
 <a href="https://github.com/Ceu152"><img src="https://avatars0.githubusercontent.com/u/43916660?s=460&v=4" alt="drawing" width="40" align="middle"/></a>
 Leonardo Henrique de Melo 
