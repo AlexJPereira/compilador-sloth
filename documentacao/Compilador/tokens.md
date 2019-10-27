@@ -1,5 +1,5 @@
 # Tokens
-Nesse tópico será retratado os tokens da linguagem Sloth. Os tokens são simbolos terminais da liguagem, podendo ser considerados palavras reservadas.
+Nesse tópico será retratado os tokens da linguagem Sloth. Os tokens são simbolos terminais da liguagem, a maioria considerados palavras reservadas.
 
 <a id="indice"></a>
 ## Indice
@@ -21,19 +21,19 @@ Nesse tópico será retratado os tokens da linguagem Sloth. Os tokens são simbo
 ## 1. Caracteres 
 
 #### Digito
-- Descrição: 
+- Descrição:
 - Expressão regular: 
-- Token JavaCC: <</a>DIGITO>
+- Token JavaCC: <#DIGITO>
 
 #### Letra
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>LETRA>
+- Token JavaCC: <#LETRA>
 
 #### Caractere
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>CARACTERE>
+- Token JavaCC: <#CARACTERE>
 
 <a id="tipvar" href="#indice">top</a>
 ## 2. Tipos de variáveis
@@ -41,27 +41,27 @@ Nesse tópico será retratado os tokens da linguagem Sloth. Os tokens são simbo
 #### Inteiro
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>INT>
+- Token JavaCC: <INT>
 
 #### Real
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>DOUBLE>
+- Token JavaCC: <DOUBLE>
 
 #### Caractere
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>CHAR>
+- Token JavaCC: <CHAR>
 
 #### Frase
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>STRING>
+- Token JavaCC: <STRING>
 
 #### Lógico
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>BOOLEAN>
+- Token JavaCC: <BOOLEAN>
 
 <a id="bool" href="#indice">top</a>
 ### 2.1 Booleanos
@@ -69,12 +69,12 @@ Nesse tópico será retratado os tokens da linguagem Sloth. Os tokens são simbo
 #### Verdadeiro
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>TRUE>
+- Token JavaCC: <TRUE>
 
 #### Falso
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>FALSE>
+- Token JavaCC: <FALSE>
 
 <a id="num" href="#indice">top</a>
 ### 2.2 Números
@@ -82,12 +82,12 @@ Nesse tópico será retratado os tokens da linguagem Sloth. Os tokens são simbo
 #### Separador inteiro-decimal
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>PONTO>
+- Token JavaCC: <PONTO>
 
 #### Negativo
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>NEG>
+- Token JavaCC: <NEG>
 
 <a id="char" href="#indice">top</a>
 ### 2.3 Caracteres
@@ -95,12 +95,12 @@ Nesse tópico será retratado os tokens da linguagem Sloth. Os tokens são simbo
 #### Quebra de linha
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>ENDL>
+- Token JavaCC: <ENDL>
 
 #### Terminador de linha
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>EOL>
+- Token JavaCC: <EOL>
 
 <a id="vet" href="#indice">top</a>
 ### 2.4 Containers
@@ -108,12 +108,12 @@ Nesse tópico será retratado os tokens da linguagem Sloth. Os tokens são simbo
 #### Abertura de índice
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>ABREVET>
+- Token JavaCC: <ABREVET>
 
 #### Fechamento de índice
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>FECHAVET>
+- Token JavaCC: <FECHAVET>
 
 <a id="oparit" href="#indice">top</a>
 ## 3. Operadores Aritiméticos
@@ -121,47 +121,47 @@ Nesse tópico será retratado os tokens da linguagem Sloth. Os tokens são simbo
 #### Adição
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>ADD>
+- Token JavaCC: <ADD>
 
 #### Subtração
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>SUB>
+- Token JavaCC: <SUB>
 
 #### Multiplicação
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>MULT>
+- Token JavaCC: <MULT>
 
 #### Divisão
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>DIV>
+- Token JavaCC: <DIV>
 
 #### Resto da divisão
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>MOD>
+- Token JavaCC: <MOD>
 
 #### Potência
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>POW>
+- Token JavaCC: <POW>
 
 #### Porcentagem
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>PORCE>
+- Token JavaCC: <PORCE>
 
 #### Inicio do separador
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>ABREPAR>
+- Token JavaCC: <ABREPAR>
 
 #### Término do separador
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>FECHAPAR>
+- Token JavaCC: <FECHAPAR>
 
 <a id="oprel" href="#indice">top</a>
 ## 4. Operadores Relacionais
@@ -169,32 +169,32 @@ Nesse tópico será retratado os tokens da linguagem Sloth. Os tokens são simbo
 #### Igual
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>IGUAL>
+- Token JavaCC: <IGUAL>
 
 #### Diferente
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>DIF>
+- Token JavaCC: <DIF>
 
 #### Maior
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>MAIOR>
+- Token JavaCC: <MAIOR>
 
 #### Menor
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>MENOR>
+- Token JavaCC: <MENOR>
 
 #### Maior ou igual
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>MAIGUAL>
+- Token JavaCC: <MAIGUAL>
 
 #### Menor ou igual
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>MEIGUAL>
+- Token JavaCC: <MEIGUAL>
 
 <a id="oplog" href="#indice">top</a>
 ## 5. Operadores Lógicos
@@ -202,22 +202,17 @@ Nesse tópico será retratado os tokens da linguagem Sloth. Os tokens são simbo
 #### And
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>AND>
+- Token JavaCC: <AND>
 
 #### Or
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>OR>
+- Token JavaCC: <OR>
 
 #### Not
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>NOT>
-
-#### Xor
-- Descrição: 
-- Expressão regular: 
-- Token JavaCC: <</a>XOR>
+- Token JavaCC: <NOT>
 
 <a id="cond" href="#indice">top</a>
 ## 6. Condicionais
@@ -225,12 +220,12 @@ Nesse tópico será retratado os tokens da linguagem Sloth. Os tokens são simbo
 #### Condicional
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>IF>
+- Token JavaCC: <IF>
 
 #### Caso oposto
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>ELSE>
+- Token JavaCC: <ELSE>
 
 <a id="lac" href="#indice">top</a>
 ## 7. Laços
@@ -238,17 +233,17 @@ Nesse tópico será retratado os tokens da linguagem Sloth. Os tokens são simbo
 #### Enquanto for verdade
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>WHILE>
+- Token JavaCC: <WHILE>
 
 #### Para tanto
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>FOR>
+- Token JavaCC: <FOR>
 
 #### Para cada
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>FOREACH>
+- Token JavaCC: <FOREACH>
 
 <a id="bloc" href="#indice">top</a>
 ## 8. Blocos
@@ -256,22 +251,22 @@ Nesse tópico será retratado os tokens da linguagem Sloth. Os tokens são simbo
 #### Início do programa
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>FIRST>
+- Token JavaCC: <FIRST>
 
 #### Final do programa
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>LAST>
+- Token JavaCC: <LAST>
 
 #### Início do Bloco
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>BEGIN>
+- Token JavaCC: <BEGIN>
 
 #### Final do Bloco
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>END>
+- Token JavaCC: <END>
 
 <a id="ex" href="#indice">top</a>
 ## 9. Extras
@@ -279,19 +274,19 @@ Nesse tópico será retratado os tokens da linguagem Sloth. Os tokens são simbo
 #### Comentário
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>COMENT>
+- Token JavaCC: <COMENT>
 
 #### Importação
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>IMPORT>
+- Token JavaCC: <IMPORT>
 
 #### Leitura
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>GET>
+- Token JavaCC: <GET>
 
 #### Escrita
 - Descrição: 
 - Expressão regular: 
-- Token JavaCC: <</a>WRITE>
+- Token JavaCC: <WRITE>
