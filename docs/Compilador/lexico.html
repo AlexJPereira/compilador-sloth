@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Download jar · Compilador Sloth</title>
+        <title>Análise Léxica · Compilador Sloth</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,7 +57,7 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="build.html" />
+    <link rel="next" href="tokens.html" />
     
     
     <link rel="prev" href="./" />
@@ -102,9 +102,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="./">
+        <li class="chapter " data-level="1.2" data-path="../Instalacao/">
             
-                <a href="./">
+                <a href="../Instalacao/">
             
                     
                     Instalação e utilização
@@ -116,9 +116,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="1.2.1" data-path="download.html">
+        <li class="chapter " data-level="1.2.1" data-path="../Instalacao/download.html">
             
-                <a href="download.html">
+                <a href="../Instalacao/download.html">
             
                     
                     Download jar
@@ -129,9 +129,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.2" data-path="build.html">
+        <li class="chapter " data-level="1.2.2" data-path="../Instalacao/build.html">
             
-                <a href="build.html">
+                <a href="../Instalacao/build.html">
             
                     
                     Instalar pelo código-fonte
@@ -205,9 +205,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="../Compilador/">
+        <li class="chapter " data-level="1.4" data-path="./">
             
-                <a href="../Compilador/">
+                <a href="./">
             
                     
                     Criação do compilador
@@ -219,9 +219,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.4.1" data-path="../Compilador/lexico.html">
+        <li class="chapter active" data-level="1.4.1" data-path="lexico.html">
             
-                <a href="../Compilador/lexico.html">
+                <a href="lexico.html">
             
                     
                     Análise Léxica
@@ -233,9 +233,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.4.1.1" data-path="../Compilador/tokens.html">
+        <li class="chapter " data-level="1.4.1.1" data-path="tokens.html">
             
-                <a href="../Compilador/tokens.html">
+                <a href="tokens.html">
             
                     
                     Tokens
@@ -251,9 +251,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.2" data-path="../Compilador/sintatica.html">
+        <li class="chapter " data-level="1.4.2" data-path="sintatica.html">
             
-                <a href="../Compilador/sintatica.html">
+                <a href="sintatica.html">
             
                     
                     Análise Sintática
@@ -265,9 +265,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.4.2.1" data-path="../Compilador/automatos.html">
+        <li class="chapter " data-level="1.4.2.1" data-path="automatos.html">
             
-                <a href="../Compilador/automatos.html">
+                <a href="automatos.html">
             
                     
                     Autômatos
@@ -283,9 +283,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.3" data-path="../Compilador/semantica.html">
+        <li class="chapter " data-level="1.4.3" data-path="semantica.html">
             
-                <a href="../Compilador/semantica.html">
+                <a href="semantica.html">
             
                     
                     Análise Semântica
@@ -296,9 +296,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.4" data-path="../Compilador/geradorCod.html">
+        <li class="chapter " data-level="1.4.4" data-path="geradorCod.html">
             
-                <a href="../Compilador/geradorCod.html">
+                <a href="geradorCod.html">
             
                     
                     Geração de Código
@@ -344,7 +344,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Download jar</a>
+        <a href=".." >Análise Léxica</a>
     </h1>
 </div>
 
@@ -359,14 +359,19 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="download-jar">Download Jar</h1>
-<p>A instala&#xE7;&#xE3;o mais simples &#xE9; o download direto do arquivo <code>.jar</code> direto da <a href="https://github.com/wykke/CompiladorSloth/releases" target="_blank">realese</a>.</p>
-<p>Ao abrir o site do github, des&#xE7;a na p&#xE1;gina at&#xE9; encontrar a vers&#xE3;o que queira baixar o compilador sloth, sendo que a primeira vers&#xE3;o que aparece &#xE9; a mais recente. Em assets selecione CompiladorSloth.jar e o download ser&#xE1; iniciado.</p>
-<p><img src="../Src/download-assets.png" alt="download-image"></p>
-<h2 id="utiliza&#xE7;&#xE3;o">Utiliza&#xE7;&#xE3;o</h2>
-<p>Para utilizar o Compilador Sloth basta ter <a href="https://www.java.com/pt_BR/download/" target="_blank">java</a> instalado e utilizado o comando em um terminal:</p>
-<pre><code>$ java -jar CompiladorSloth.jar input output
-</code></pre><p>Sendo que <code>CompiladorSloth.jar</code> &#xE9; o caminho relativo at&#xE9; o diret&#xF3;rio do arquivo <code>.jar</code> do compilador, servindo tamb&#xE9;m para <code>input</code> e <code>output</code>. Todos os par&#xE2;metros s&#xE3;o necess&#xE1;rios.</p>
+                                <h1 id="an&#xE1;lise-l&#xE9;xica">An&#xE1;lise l&#xE9;xica</h1>
+<p>A an&#xE1;lise l&#xE9;xica foi feita atrav&#xE9;s da linguagem de programa&#xE7;&#xE3;o do JavaCC. Atrav&#xE9;s da classe <code>CompiladorSlothTokenManager</code> criada pelo pr&#xF3;prio JavaCC ele vai descobrindo qual &#xE9; o pr&#xF3;ximo token de uma cadeia de caracteres.</p>
+<p>Antes de declarar os tokens podem ser informados quais caracteres ser&#xE3;o ignorados pelo analisador sem&#xE2;ntico. Eesse caracteres n&#xE3;o s&#xE3;o ignorados pelos tokens. Esses caracteres s&#xE3;o declarados da seguinte maneira:</p>
+<pre><code>SKIP:
+{
+    caractere
+}
+</code></pre><p>Na linguagem do JavaCC os Tokens s&#xE3;o declarados da segunte maneira:</p>
+<pre><code>TOKEN:
+{
+    &lt;nome: expressaoRegular&gt;
+}
+</code></pre><p>Antes do nome &#xE9; possivel colocar um hash (<code>#</code>) para indicar que este token &#xE9; privado. Um token privado s&#xF3; pode ser utilizado por outros tokens. Os tokens privados utilizados s&#xE3;o tokens que representa o alfabeto da linguagem, tokens como <code>&lt;#LETRA&gt;</code> e <code>&lt;#DIGITO&gt;</code>.</p>
 
                                 
                                 </section>
@@ -394,12 +399,12 @@
 
             
                 
-                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Instalação e utilização">
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Criação do compilador">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="build.html" class="navigation navigation-next " aria-label="Next page: Instalar pelo código-fonte">
+                <a href="tokens.html" class="navigation navigation-next " aria-label="Next page: Tokens">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -410,7 +415,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Download jar","level":"1.2.1","depth":2,"next":{"title":"Instalar pelo código-fonte","level":"1.2.2","depth":2,"path":"Instalacao/build.md","ref":"Instalacao/build.md","articles":[]},"previous":{"title":"Instalação e utilização","level":"1.2","depth":1,"path":"Instalacao/README.md","ref":"Instalacao/README.md","articles":[{"title":"Download jar","level":"1.2.1","depth":2,"path":"Instalacao/download.md","ref":"Instalacao/download.md","articles":[]},{"title":"Instalar pelo código-fonte","level":"1.2.2","depth":2,"path":"Instalacao/build.md","ref":"Instalacao/build.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"WyKKe","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Compilador Sloth","gitbook":"*"},"file":{"path":"Instalacao/download.md","mtime":"2019-10-27T23:46:10.990Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-27T23:47:05.745Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Análise Léxica","level":"1.4.1","depth":2,"next":{"title":"Tokens","level":"1.4.1.1","depth":3,"path":"Compilador/tokens.md","ref":"Compilador/tokens.md","articles":[]},"previous":{"title":"Criação do compilador","level":"1.4","depth":1,"path":"Compilador/README.md","ref":"Compilador/README.md","articles":[{"title":"Análise Léxica","level":"1.4.1","depth":2,"path":"Compilador/lexico.md","ref":"Compilador/lexico.md","articles":[{"title":"Tokens","level":"1.4.1.1","depth":3,"path":"Compilador/tokens.md","ref":"Compilador/tokens.md","articles":[]}]},{"title":"Análise Sintática","level":"1.4.2","depth":2,"path":"Compilador/sintatica.md","ref":"Compilador/sintatica.md","articles":[{"title":"Autômatos","level":"1.4.2.1","depth":3,"path":"Compilador/automatos.md","ref":"Compilador/automatos.md","articles":[]}]},{"title":"Análise Semântica","level":"1.4.3","depth":2,"path":"Compilador/semantica.md","ref":"Compilador/semantica.md","articles":[]},{"title":"Geração de Código","level":"1.4.4","depth":2,"path":"Compilador/geradorCod.md","ref":"Compilador/geradorCod.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"WyKKe","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Compilador Sloth","gitbook":"*"},"file":{"path":"Compilador/lexico.md","mtime":"2019-10-27T23:46:10.990Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-27T23:47:05.745Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

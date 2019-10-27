@@ -53,7 +53,7 @@ PARSER_END(CompiladorSloth)
 
 SKIP:
 { 
-	" "|"\n"|"\r"|"\r\n" 
+	" "|"\n"|"\r"|"\r\n"|"\t"
 }
 
 

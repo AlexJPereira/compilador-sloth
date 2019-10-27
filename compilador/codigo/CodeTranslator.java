@@ -211,9 +211,9 @@ public class CodeTranslator implements CompiladorSlothConstants{
             Variable var = null;
             try{
                 var = cod.verifyVarList(code.get(1));
-                if(var.getIsFunc() && !varFunc.contains(t.image)){
+                if(var.getIsFunc() && !varFunc.contains(var.getId())){
                     sb.append("private static "+t.image+" ");
-                    varFunc.add(t.image);
+                    varFunc.add(var.getId());
                 }else{
                     sb.append(t.image+" ");
                 }

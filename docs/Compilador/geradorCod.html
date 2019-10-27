@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Criação do compilador · Compilador Sloth</title>
+        <title>Geração de Código · Compilador Sloth</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,8 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="lexico.html" />
     
-    
-    <link rel="prev" href="../Linguagem/fluxo.html" />
+    <link rel="prev" href="semantica.html" />
     
 
     </head>
@@ -205,7 +203,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.4" data-path="./">
+        <li class="chapter " data-level="1.4" data-path="./">
             
                 <a href="./">
             
@@ -296,7 +294,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.4" data-path="geradorCod.html">
+        <li class="chapter active" data-level="1.4.4" data-path="geradorCod.html">
             
                 <a href="geradorCod.html">
             
@@ -344,7 +342,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Criação do compilador</a>
+        <a href=".." >Geração de Código</a>
     </h1>
 </div>
 
@@ -359,18 +357,143 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="cria&#xE7;&#xE3;o-do-compilador">Cria&#xE7;&#xE3;o do compilador</h1>
-<p>O compilador foi feito em Java e criado com o aux&#xED;lio do compilador JavaCC, que criou a maior parte do c&#xF3;digo Java do programa.</p>
-<p>As etapas da compila&#xE7;&#xE3;o s&#xE3;o:</p>
-<ul>
-<li>An&#xE1;lise L&#xE9;xica</li>
-<li>An&#xE1;lise Sint&#xE1;tica</li>
-<li>An&#xE1;lise Sem&#xE2;ntica</li>
-<li>Gera&#xE7;&#xE3;o de c&#xF3;digo</li>
-</ul>
-<p>As etapas de an&#xE1;lise l&#xE9;xica, sint&#xE1;tica e sem&#xE2;ntica s&#xE3;o feitas simult&#xE2;neamente, essa &#xE9; uma caracter&#xED;stica do pr&#xF3;prio JavaCC.</p>
-<p>A fun&#xE7;&#xE3;o principal do compilador cria um analisador sem&#xE2;ntico est&#xE1;tico, que possibilita que todos os compiladores gerados recursivamente atrav&#xE9;s de importa&#xE7;&#xF5;es feitas pelo usu&#xE1;rio tenham o mesmo analisador sem&#xE2;ntico, assim adicionando o c&#xF3;digo do usu&#xE1;rio na mesma lista de tokens. Al&#xE9;m disso a fun&#xE7;&#xE3;o principal recebe dois par&#xE2;metros, um arquivo para compila&#xE7;&#xE3;o, e um nome de arquivo que ser&#xE1; gerado da compila&#xE7;&#xE3;o. Ap&#xF3;s criar os objetos nescess&#xE1;rios para a compila&#xE7;&#xE3;o, a fun&#xE7;&#xE3;o principal chama o analisador sint&#xE1;tico que por sua vez vai chamando o analisador l&#xE9;xico e sem&#xE2;ntico enquanto vai analisando o c&#xF3;gigo, depois a fun&#xE7;&#xE3;o principal chama o gerador de c&#xF3;digo alvo para traduzir o c&#xF3;digo do usu&#xE1;rio para Java (<code>.java</code>) e uma lista de tokens (<code>.txt</code>).</p>
+                                <h1 id="gera&#xE7;&#xE3;o-de-c&#xF3;digo">Gera&#xE7;&#xE3;o de C&#xF3;digo</h1>
+<p>A gera&#xE7;&#xE3;o de c&#xF3;digo foi feita atrav&#xE9;s da classe <code>CodeTranslator</code> criada pelos pr&#xF3;prios integrantes do grupo. Ela traduz a lista de tokens da classe <code>Codigo</code> para Java e para um arquivo de texto com os nomes dos tokens.</p>
+<p>Utilizando duas StringBuilder&apos;s, uma para cada c&#xF3;digo alvo, foi traduzido o c&#xF3;digo.</p>
+<h2 id="c&#xF3;digo-java">C&#xF3;digo Java</h2>
+<p>Diferentes tokens foram tratados de forma diferentes. Tokens que mudam a palavra do token foram criados m&#xE9;todos privados para cada um deles. Token que n&#xE3;o mudam a palavra, foi criado um m&#xE9;todo padr&#xE3;o para todos eles.</p>
+<h3 id="eof">EOF</h3>
+<p>O fim do arquivo compilado, finalizando a tradu&#xE7;&#xE3;o. Este n&#xE3;o &#xE9; colocado no c&#xF3;digo alvo.</p>
+<h3 id="abrevet">ABREVET</h3>
+<p>A declara&#xE7;&#xE3;o de um vetor deve ser traduzida para a cria&#xE7;&#xE3;o de um objeto novo.</p>
+<p>Sloth:</p>
+<pre><code>int a[3], b;
+</code></pre><p>Java:</p>
+<pre><code>int a[] = new int[3], b;
+</code></pre><h3 id="tipostring">TIPOSTRING</h3>
+<p>A letra <code>s</code> da palavra <code>string</code> na linguagem Sloth &#xE9; minuscula, enquanto na linguagem Java &#xE9; mai&#xFA;scula.</p>
+<p>Sloth:</p>
+<pre><code>string a = &quot;hello&quot;;
+</code></pre><p>Java:</p>
+<pre><code>String a = &quot;hello&quot;;
+</code></pre><h3 id="mod-dif-maigual-meigual-if-else-write">MOD, DIF, MAIGUAL, MEIGUAL, IF, ELSE, WRITE</h3>
+<p>Estes tokens s&#xE3;o difetentes em java.</p>
+<p>Sloth:</p>
+<pre><code>when(true) begin
+    boolean a = (2//3=&gt;3)=!(2=&lt;3);
+end otherwise begin
+    write(&quot;hello&quot;);
+end
+</code></pre><p>Java:</p>
+<pre><code>if(true){
+    boolean a = (2%3&gt;=3)!=(2&lt;=3);
+} else{
+    System.out.print(&quot;hello&quot;);
+}
+</code></pre><h3 id="pow">POW</h3>
+<p>A potencia&#xE7;&#xE3;o em java &#xE9; uma m&#xE9;todo da classe Math chamado Pow. Assim o c&#xF3;digo traduzido &#xE9; um pouco mais complexo.</p>
+<p>Sloth:</p>
+<pre><code>double a = 3+2^3;
+double b = (4*5)/(2*(3-1)/2)^(2+4);
+</code></pre><p>Java:</p>
+<pre><code>double a = 3+Math.Pow(2,3);
+double b = (4*5)/Math.Pow((2*(3-1)/2),(2+4));
+</code></pre><h3 id="for">FOR</h3>
+<p>O for do sloth foi baseado no matlab, ent&#xE3;o a sua sintaxe &#xE9; diferente.</p>
+<p>Sloth:</p>
+<pre><code>for(int i=0: 2+2 : 3*3)
+</code></pre><p>Java:</p>
+<pre><code>for(int i=0; i&lt;2+2; i=i+3*3)
+</code></pre><h3 id="foreach">FOREACH</h3>
+<p>O foreach do java &#xE9; o pr&#xF3;prio for, mas a sintaxe &#xE9; parecida. A diferen&#xE7;a &#xE9; a linguagem sloth n&#xE3;o precisa dizer o tipo da primeira vari&#xE1;vel, ele ja identifica.</p>
+<p>Sloth:</p>
+<pre><code>double b[2];
+foreach(a : b) begin
+    # codigo #
+end
+</code></pre><p>Java:</p>
+<pre><code>double b[] = new double[2];
+for(double a : b){
+    /* codigo */
+}
+</code></pre><h3 id="first-last-begin-end-eol">FIRST, LAST, BEGIN, END, EOL</h3>
+<p>Todos esses tokens devem ter uma quebra de linha depois de traduzir, al&#xE9;m disso inicio e final de blocos devem arrumar o numero de tabs que devem ter para deixar o programa est&#xE9;ticamente bonito.</p>
+<p>Sloth:</p>
+<pre><code>first when(true) begin int a; end last
+</code></pre><p>Java:</p>
+<pre><code>public static void main(String[] args){
+    if(true){
+        int a;
+    }
+}
+</code></pre><h3 id="coment">COMENT</h3>
+<p>Comentarios possuem s&#xED;mbolos diferentes para abertura e fechamento.</p>
+<p>Sloth:</p>
+<pre><code># comentario #
+</code></pre><p>Java:</p>
+<pre><code>/* comentario */
+</code></pre><h3 id="porcentagem">PORCENTAGEM</h3>
+<p>Porcentagem s&#xE3;o nada mais que numeros reais divididos por 100.</p>
+<p>Sloth:</p>
+<pre><code>double a = 125%;
+</code></pre><p>Java:</p>
+<pre><code>double a = 1.25;
+</code></pre><h3 id="get-e-write">GET e WRITE</h3>
+<p>A fun&#xE7;&#xE3;o get &#xE9; diferente para cada tipo de vari&#xE1;vel, al&#xE9;m disso ela deve importar a biblioteca de <code>Scanner</code>, apenas se encontrar a fun&#xE7;&#xE3;o get, e apenas uma unica vez.</p>
+<p>Sloth:</p>
+<pre><code>first
+    int a = get(int);
+    double b = get(double);
+    char c = get(char);
+    string d = get(string);
+    string e = get();
+    boolean f = get(boolean);
+last
+</code></pre><p>Java:</p>
+<pre><code>import java.util.Scanner;
+public class App{
+    private static Scanner get = new Scanner(System.in);
+    public static void main(String[] args){
+        int a = get.nextInt();
+        double b = get.nextDouble();
+        char c = get.next().charAt(0);
+        string d = get.nextLine();
+        string e = get.nextLine();
+        boolean f = get.nextBoolean();
+    }
+}
+</code></pre><h3 id="fun&#xE7;&#xF5;es">Fun&#xE7;&#xF5;es</h3>
+<p>Fun&#xE7;&#xF5;es s&#xE3;o declarados antes do main do Java, assim elas devem ser est&#xE1;ticas para poderem ser utilizadas dentro do main.</p>
+<p>Sloth:</p>
+<pre><code>void a() begin
+    # funcao #
+end
 
+first
+    # codigo #
+last
+</code></pre><p>Java:</p>
+<pre><code>public class App{
+    private static void a(){
+        /* funcao */
+    }
+    public static void main(String[] args){
+        /* codigo */
+    }
+}
+</code></pre><h3 id="retorno-e-tipovar">RETORNO e TIPOVAR</h3>
+<p>As palavras <code>return</code> e qualquer tipo de vari&#xE1;vel devem ser seguidas de espa&#xE7;o, se n&#xE3;o podem se juntar com algum nome de vari&#xE1;vel.</p>
+<p>Sloth:</p>
+<pre><code>int a() begin
+    return 2;
+    # em vez de return2 #
+end
+</code></pre><p>Java:</p>
+<pre><code>private static int a(){
+    return 2;
+    /* em vez de return2 */
+}
+</code></pre>
                                 
                                 </section>
                             
@@ -397,14 +520,10 @@
 
             
                 
-                <a href="../Linguagem/fluxo.html" class="navigation navigation-prev " aria-label="Previous page: Fluxo de Dados">
+                <a href="semantica.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Análise Semântica">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
-                
-                <a href="lexico.html" class="navigation navigation-next " aria-label="Next page: Análise Léxica">
-                    <i class="fa fa-angle-right"></i>
-                </a>
                 
             
         
@@ -413,7 +532,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Criação do compilador","level":"1.4","depth":1,"next":{"title":"Análise Léxica","level":"1.4.1","depth":2,"path":"Compilador/lexico.md","ref":"Compilador/lexico.md","articles":[{"title":"Tokens","level":"1.4.1.1","depth":3,"path":"Compilador/tokens.md","ref":"Compilador/tokens.md","articles":[]}]},"previous":{"title":"Fluxo de Dados","level":"1.3.3","depth":2,"path":"Linguagem/fluxo.md","ref":"Linguagem/fluxo.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"WyKKe","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Compilador Sloth","gitbook":"*"},"file":{"path":"Compilador/README.md","mtime":"2019-10-27T23:46:10.987Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-27T23:47:05.745Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Geração de Código","level":"1.4.4","depth":2,"previous":{"title":"Análise Semântica","level":"1.4.3","depth":2,"path":"Compilador/semantica.md","ref":"Compilador/semantica.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"WyKKe","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Compilador Sloth","gitbook":"*"},"file":{"path":"Compilador/geradorCod.md","mtime":"2019-10-27T23:46:10.990Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-27T23:47:05.745Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
