@@ -1,10 +1,14 @@
 # Autômatos
-Nesse tópico será retratado os autômatos da linguagem Sloth. Os autômatoss são simbolos não-terminais da liguagem.
+Nesse tópico será retratado os autômatos da linguagem Sloth. Os autômatoss são simbolos não-terminais da liguagem. **Clique no campo "Autômato" para exibir o autômato referente a cada expressão formal.**
 
 ### Programa
 Autômato raiz chamado primeiro pelo analisador sintático.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/Programa.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -19,7 +23,11 @@ Expressão formal:
 
 Autômato para criação de funções.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/Funcao.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -35,7 +43,12 @@ Bloco()
 ### FuncPar
 Autômato para criar parâmetros para as funções.
 
+
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/FuncPar.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -48,7 +61,11 @@ DeclaraVarFunc()
 ### DeclaraVarFunc
 Autômato para criar variáveis dos parâmetros das funções, vetores não podem ter valor nas chaves.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/DeclaraVarFunc.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -61,7 +78,11 @@ Expressão formal:
 ### Retorno
 Autômato para criar o retorno das funções.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/Retorno.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -73,7 +94,11 @@ Expressão formal:
 ### ChamaFuncao
 Autômato para chamar funções.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/ChamaFuncao.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -87,7 +112,11 @@ Expressão formal:
 ### ChamaFuncPar
 Autômato para chamar parâmetros para funções.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/ChamaFuncPar.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -99,7 +128,11 @@ Expressão formal:
 ### Importacao
 Autômato para criar importações.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/Importacao.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -111,7 +144,11 @@ Expressão formal:
 ### Execucao
 Autômato da classe principal.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/Execucao.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -124,7 +161,11 @@ Expressão formal:
 ### Linha
 Autômato que faz a maior parte funcional da linguagem.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/Linha.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -136,7 +177,11 @@ Expressão formal:
 ### Write
 Autômato para escrita no terminal.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/Write.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -150,7 +195,11 @@ Expressão formal:
 ### ManVar
 Autômato para criação e/ou atribuição de variável.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/ManVar.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -163,7 +212,12 @@ Expressão formal:
 ### ManVarSeq
 Autômato para declarar várias variáveis na mesma linha.
 
+
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/ManVarSeq.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -175,7 +229,11 @@ DeclaraVar()
 ### TipoVar
 Autômato para tipos de variáveis.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/TipoVar.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -190,7 +248,11 @@ Expressão formal:
 ### DeclaraVar
 Autômato para declarar variáveis.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/DeclaraVar.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -205,7 +267,12 @@ Expressão formal:
 ### NomeVar
 Autômato para nome de variáveis.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/NomeVar.png"/>
+</p>
+</details>
+
 
 Expressão formal:
 
@@ -219,7 +286,12 @@ Expressão formal:
 ### Atribuicao
 Autômato para atribuição.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/Atribuicao.png"/>
+</p>
+</details>
+
 
 Expressão formal:
 
@@ -231,7 +303,11 @@ Expressão formal:
 ### Read
 Autômato para leitura do terminal.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/Read.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -245,18 +321,31 @@ Expressão formal:
 ### Expressao
 Autômato para criação de expressões, podendo ter numero negativo no começo.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/Expressao.png"/>
+</p>
+</details>
 
 Expressão formal:
 
 ```
-[<SUB>]ExpressaoNoNeg()
+((<ABREPAR>)((Expressao())+(<FECHAPAR>))
+|(<NOT>)ExpressaoNoNeg()
+|ValorVal()
+|ChamaFuncao()
+|NomeVar()
+[Operador()Expressao()]
 ```
 
 ### ExpressaoNoNeg
 Autômato para criação de expressões, não podendo ter numero negativo no começo.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/ExpressaoNoNeg.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -272,7 +361,8 @@ Expressão formal:
 ### Operador
 Autômato para chamar operadores.
 
-<img src="./Automatos/Operador.png"/>
+
+
 
 Expressão formal:
 
@@ -283,7 +373,12 @@ OpArit()|OpRelac()
 ### OpAtir
 Autômato para chamar as operações aritméticas.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/OpAtir.png"/>
+</p>
+</details>
+
 
 Expressão formal:
 
@@ -299,7 +394,11 @@ Expressão formal:
 ### OpRelac
 Autômato para chamar as operações relacionais.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/OpRelac.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -317,7 +416,11 @@ Expressão formal:
 ### ValorVar
 Autômato para valores literais.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/ValorVar.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -333,7 +436,11 @@ Expressão formal:
 ### Booleano
 Autômato para tipos booleanos literais.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/Booleando.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -345,7 +452,11 @@ Expressão formal:
 ### FluxoDados
 Autômato para fluxo de dados.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/FluxoDados.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -360,7 +471,11 @@ While()
 ### While
 Autômato para o fluxo de dados while.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/While.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -375,7 +490,11 @@ Bloco()
 ### For
 Autômato para o fluxo de dados for.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/For.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -396,7 +515,11 @@ Bloco()
 ### Foreach
 Autômato para o fluxo de dados foreach.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/ForEach.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -413,7 +536,11 @@ Bloco()
 ### If
 Autômato para o fluxo de dados if.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/If.png"/>
+</p>
+</details>
 
 Expressão formal:
 
@@ -429,7 +556,11 @@ Bloco()
 ### Bloco
 Autômato para abertura de blocos.
 
+<details><summary>Autômato</summary>
+<p>
 <img src="./Automatos/Bloco.png"/>
+</p>
+</details>
 
 Expressão formal:
 
