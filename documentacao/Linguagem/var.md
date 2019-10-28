@@ -27,7 +27,7 @@ Para atribuir a uma variável basta utilizar o sinal de igual `=`, uma variável
 
 | expressão\variável 	| int 	| double 	| char 	| string 	| boolean 	|
 |:------------------:	|:---:	|:------:	|:----:	|:------:	|:-------:	|
-|         int        	| sim 	|   sim  	|  sim 	|   não  	|   não   	|
+|         int        	| sim 	|   sim  	|  não 	|   não  	|   não   	|
 |       double       	| não 	|   sim  	|  não 	|   não  	|   não   	|
 |        char        	| sim 	|   sim  	|  sim 	|   não  	|   não   	|
 |       string       	| não 	|   não  	|  não 	|   sim  	|   não   	|

@@ -107,7 +107,7 @@ public class ExpressionOp implements CompiladorSlothConstants{
 
     private boolean canExpReceive[][] = {
         //int   dou     char    str     bool
-        {true,  true,   true,   false,  false   },         //int       = 0
+        {true,  true,   false,   false,  false   },         //int       = 0
         {false, true,   false,  false,  false   },         //double    = 1
         {true,  true,   true,   false,  false   },         //char      = 2
         {false, false,  false,  true,   false   },         //string    = 3
