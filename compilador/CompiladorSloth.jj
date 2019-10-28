@@ -21,7 +21,7 @@ public class CompiladorSloth
             File f = new File(fname) ;
 			FileReader fr = new FileReader(f);
 			BufferedReader br = new BufferedReader(fr);
-			cod = new Codigo("/"+f.getCanonicalPath());
+			cod = new Codigo(f.getCanonicalPath());
 
             CompiladorSloth cs = new CompiladorSloth(fr);
             cs.Programa();
@@ -34,8 +34,10 @@ public class CompiladorSloth
         }
 		catch(ParseException e)
 		{
-			System.out.println("Compiler Error: An error occurred.");
-			System.out.println(e.getMessage());
+			if(e.getMessage()!=null){
+				System.out.println("Compiler Error: An error occurred.");
+				System.out.println(e.getMessage());
+			}
 		}
 		catch (IOException e) {
       		System.out.println("File Error: An error occurred.");
@@ -241,7 +243,7 @@ Token ChamaFuncao():
 void ChamaFuncPar(Token exp):
 {Token a, b; int paramType;} // (NomeVar()|ValorVar())[<SEPFUN>FuncPar()]
 {	
-	{paramType=cod.getNextParam(exp);cod.openExpressao(paramType+9);}
+	{paramType=cod.getNextParam(exp);cod.openExpressao(paramType+TIPOINT);}
 	(b=Expressao()){cod.closeExpressao(b);}
 	[(a=<SEPFUN>){cod.add(a);}
 	ChamaFuncPar(exp)]
@@ -256,17 +258,18 @@ void Importacao():
 		try{
 			String fname = cod.getFile().substring(0,cod.getFile().lastIndexOf('/')+1)+b.image.substring(1,b.image.length());
 			fname = fname.substring(0, fname.length()-1);
-			fname = fname.substring(1);
             File f = new File(fname) ;
 
-			cod.addFile(f.getCanonicalPath());
-            CompiladorSloth cs = new CompiladorSloth(new FileReader(f));
-            cs.Programa();
-			cod.removeFile();
+			if(cod.addFile(f.getCanonicalPath())){
+				CompiladorSloth cs = new CompiladorSloth(new FileReader(f));
+            	cs.Programa();
+				cod.removeFile();
+			}
         }
 		catch (IOException e) {
       		System.out.println("File Error: An error occurred.");
       		System.out.println(e.getMessage());
+			throw new ParseException();
     	}
 	}
 }
@@ -276,7 +279,7 @@ void Execucao():
 {
 	(a=<FIRST>){cod.add(a);
 	cod.verificaFirst(a);
-	cod.setScope(14);}
+	cod.setScope(TIPOVOID);}
 	(Linha()|(b=<COMENT>){cod.add(b);})*
 	(c=<LAST>){cod.add(c);}
 }
@@ -293,7 +296,7 @@ void Write():
 {
 	(a=<WRITE>){cod.add(a);}
 	(b=<ABREPAR>){cod.add(b);
-	cod.openExpressao(12);}
+	cod.openExpressao(TIPOSTRING);}
 	(d=Expressao()){cod.closeExpressao(d);}
 	(c=<FECHAPAR>){cod.add(c);}		
 }
@@ -302,7 +305,7 @@ void ManVar():
 {Token a,b;} //(TipoVar()NomeVar()[Atribuicao()])|(NomeVar()Atribuicao())|(ChamaFuncao())
 {
 	(a=TipoVar()ManVarSeq(a))
-	| ( LOOKAHEAD(3) ((b=NomeVar())Atribuicao(cod.getVarType(b)+9){cod.initializeVar(b);})
+	| ( LOOKAHEAD(3) ((b=NomeVar())Atribuicao(cod.getVarType(b)+TIPOINT){cod.initializeVar(b);})
 	| ChamaFuncao())
 
 }
@@ -334,7 +337,7 @@ Variable DeclaraVar(Token d):
 	}
 	[LOOKAHEAD(2) (((b=<ABREVET>){cod.add(b);
 	var.setIsVet(true);
-	cod.openExpressao(9);}
+	cod.openExpressao(TIPOINT);}
 	(e=Expressao()){cod.closeExpressao(e);})
 	(c=<FECHAVET>){cod.add(c);cod.initializeVar(a);}
 	|(Atribuicao(d.kind)){cod.initializeVar(a);})])
@@ -348,7 +351,7 @@ Token NomeVar():
 	cod.add(a);}
 	[((b=<ABREVET>){cod.add(b);
 	vet = true;
-	cod.openExpressao(9);}
+	cod.openExpressao(TIPOINT);}
 	(d=Expressao()){cod.closeExpressao(d);}
 	(c=<FECHAVET>){cod.add(c);})])
 	{var.checkVet(vet,a,cod.getFile());
@@ -377,20 +380,26 @@ Token Read():
 }
 
 Token Expressao():
-{Token a,b;} /*
-((<ABREPAR>(Expressao())+<FECHAPAR>)
-| <NOT>Expressao()
-| ValorVar()
-| ChamaFuncao()
-| NomeVar())
-[LOOKAHEAD(2) Operador()Expressao()]
-*/
+{Token a=null,b;}
+{
+	[(a=<SUB>)
+	{
+		cod.addToExp(TIPOINT);
+		cod.addOpToExp(a);
+		cod.checkNeg(a);
+		cod.add(a);
+	}]
+	(b=ExpressaoNoNeg())
+	{if(a==null)return b; else return a;}
+}
+
+Token ExpressaoNoNeg():
+{Token a,b;}
 {
 	(((a=<ABREPAR>){cod.add(a);cod.openParExp(a);}
 	(Expressao())+
 	(b=<FECHAPAR>){cod.add(b);cod.closeParExp(a);})
-	| (a=<NOT>){cod.add(a);cod.addOpToExp(a);}
-	Expressao()
+	| (a=<NOT>){cod.add(a);cod.addOpToExp(a);}ExpressaoNoNeg()
 	| (a=ValorVar()){cod.addToExp(a);}
 	| ((LOOKAHEAD(2)(a=ChamaFuncao())
 	| ((a=NomeVar()){cod.checkInitVar(a);})){cod.addToExp(a);}))
@@ -465,7 +474,7 @@ void While():
 {
 	(a=<WHILE>){cod.add(a);}
 	(b=<ABREPAR>){cod.add(b);
-	cod.openExpressao(13);}
+	cod.openExpressao(TIPOBOOLEAN);}
 	(d=Expressao()){cod.closeExpressao(d);}
 	(c=<FECHAPAR>){cod.add(c);}
 	Bloco()
@@ -486,10 +495,10 @@ void For():
 	(g=<NOMEVAR>){cod.add(g);cod.addDVarList(g.image,f.kind, g);}
 	Atribuicao(f.kind){cod.initializeVar(g);}
 
-	(d=<SEPFOR>){cod.add(d);cod.openExpressao(9);}
+	(d=<SEPFOR>){cod.add(d);cod.openExpressao(TIPOINT);}
 	(c=Expressao()){cod.closeExpressao(c);}
 
-	(d=<SEPFOR>){cod.add(d);cod.openExpressao(9);}
+	(d=<SEPFOR>){cod.add(d);cod.openExpressao(TIPOINT);}
 	(c=Expressao()){cod.closeExpressao(c);}
 	(e=<FECHAPAR>){cod.add(e);}
 	Bloco()
@@ -515,7 +524,7 @@ void If():
 {
 	(a=<IF>){cod.add(a);}
 	(b=<ABREPAR>){cod.add(b);
-	cod.openExpressao(13);}
+	cod.openExpressao(TIPOBOOLEAN);}
 	(e=Expressao()){cod.closeExpressao(e);}
 	(c = <FECHAPAR>){cod.add(c);}
 	Bloco()

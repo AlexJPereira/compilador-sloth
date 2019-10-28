@@ -152,10 +152,16 @@ Autômato para leitura do terminal.
 ```
 
 ### Expressao
-Autômato para criação de expressões.
+Autômato para criação de expressões, podendo ter numero negativo no começo.
+```
+[<SUB>]ExpressaoNoNeg()
+```
+
+### ExpressaoNoNeg
+Autômato para criação de expressões, não podendo ter numero negativo no começo.
 ```
 (((<ABREPAR>)(Expressao())+(<FECHAPAR>))
-| (<NOT>)Expressao()
+| (<NOT>)ExpressaoNoNeg()
 | ValorVar()
 | ChamaFuncao()
 | NomeVar())

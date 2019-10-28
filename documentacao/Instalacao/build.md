@@ -123,6 +123,6 @@ Sendo que `./compilador/bin/CompiladorSloth.jar` é o caminho relativo até o di
 Para utilizar o Compilador Sloth basta utilizar o comando em um terminal:
 
 ```
-$ java ./compilador/codigo/CompiladorSloth.java
+$ java ./compilador/codigo/CompiladorSloth.java input output
 ```
-Sendo que `./compilador/codigo/CompiladorSloth.jar` é o caminho relativo até o diretório do arquivo `.java`.
+Sendo que `./compilador/codigo/CompiladorSloth.jar` é o caminho relativo até o diretório do arquivo `.java` do compilador, servindo também para `input` e `output`. Todos os parâmetros são necessários.

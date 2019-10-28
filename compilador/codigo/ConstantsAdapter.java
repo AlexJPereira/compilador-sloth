@@ -45,7 +45,7 @@ public class ConstantsAdapter implements CompiladorSlothConstants{
         tokenImage[MENOR] = "<MENOR>";
         tokenImage[MAIGUAL] = "<MAIOROUIGUAL>";
         tokenImage[MEIGUAL] = "<MENOROUIGUAL>";
-        tokenImage[IGUALDADE] = "<IGUALDADE> \"=\"";
+        tokenImage[IGUALDADE] = "<IGUALDADE>";
         tokenImage[AND] = "<AND>";
         tokenImage[OR] = "<OR>";
         tokenImage[NOT] = "<NOT>";

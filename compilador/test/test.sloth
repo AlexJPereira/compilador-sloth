@@ -1,8 +1,19 @@
-import "test2.sloth"
+void a() begin
+    write("test = ");
+end
 
-void test2() begin
+int b(char c) begin
+    return c*2;
+end
+
+double c(int d) begin
+    for(int i=0:3:1) begin
+        d = d + i;
+    end
+    return d+b('b');
 end
 
 first
-    test2();
+    a();
+    write(c('f')+"\n");
 last
