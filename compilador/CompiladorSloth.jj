@@ -243,7 +243,7 @@ Token ChamaFuncao():
 void ChamaFuncPar(Token exp):
 {Token a, b; int paramType;} // (NomeVar()|ValorVar())[<SEPFUN>FuncPar()]
 {	
-	{paramType=cod.getNextParam(exp);cod.openExpressao(paramType+9);}
+	{paramType=cod.getNextParam(exp);cod.openExpressao(paramType+TIPOINT);}
 	(b=Expressao()){cod.closeExpressao(b);}
 	[(a=<SEPFUN>){cod.add(a);}
 	ChamaFuncPar(exp)]
@@ -296,7 +296,7 @@ void Write():
 {
 	(a=<WRITE>){cod.add(a);}
 	(b=<ABREPAR>){cod.add(b);
-	cod.openExpressao(12);}
+	cod.openExpressao(TIPOSTRING);}
 	(d=Expressao()){cod.closeExpressao(d);}
 	(c=<FECHAPAR>){cod.add(c);}		
 }
@@ -337,7 +337,7 @@ Variable DeclaraVar(Token d):
 	}
 	[LOOKAHEAD(2) (((b=<ABREVET>){cod.add(b);
 	var.setIsVet(true);
-	cod.openExpressao(9);}
+	cod.openExpressao(TIPOINT);}
 	(e=Expressao()){cod.closeExpressao(e);})
 	(c=<FECHAVET>){cod.add(c);cod.initializeVar(a);}
 	|(Atribuicao(d.kind)){cod.initializeVar(a);})])
@@ -351,7 +351,7 @@ Token NomeVar():
 	cod.add(a);}
 	[((b=<ABREVET>){cod.add(b);
 	vet = true;
-	cod.openExpressao(9);}
+	cod.openExpressao(TIPOINT);}
 	(d=Expressao()){cod.closeExpressao(d);}
 	(c=<FECHAVET>){cod.add(c);})])
 	{var.checkVet(vet,a,cod.getFile());
@@ -474,7 +474,7 @@ void While():
 {
 	(a=<WHILE>){cod.add(a);}
 	(b=<ABREPAR>){cod.add(b);
-	cod.openExpressao(13);}
+	cod.openExpressao(TIPOBOOLEAN);}
 	(d=Expressao()){cod.closeExpressao(d);}
 	(c=<FECHAPAR>){cod.add(c);}
 	Bloco()
@@ -495,10 +495,10 @@ void For():
 	(g=<NOMEVAR>){cod.add(g);cod.addDVarList(g.image,f.kind, g);}
 	Atribuicao(f.kind){cod.initializeVar(g);}
 
-	(d=<SEPFOR>){cod.add(d);cod.openExpressao(9);}
+	(d=<SEPFOR>){cod.add(d);cod.openExpressao(TIPOINT);}
 	(c=Expressao()){cod.closeExpressao(c);}
 
-	(d=<SEPFOR>){cod.add(d);cod.openExpressao(9);}
+	(d=<SEPFOR>){cod.add(d);cod.openExpressao(TIPOINT);}
 	(c=Expressao()){cod.closeExpressao(c);}
 	(e=<FECHAPAR>){cod.add(e);}
 	Bloco()
@@ -524,7 +524,7 @@ void If():
 {
 	(a=<IF>){cod.add(a);}
 	(b=<ABREPAR>){cod.add(b);
-	cod.openExpressao(13);}
+	cod.openExpressao(TIPOBOOLEAN);}
 	(e=Expressao()){cod.closeExpressao(e);}
 	(c = <FECHAPAR>){cod.add(c);}
 	Bloco()
