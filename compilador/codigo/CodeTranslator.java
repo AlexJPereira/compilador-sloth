@@ -351,7 +351,7 @@ public class CodeTranslator implements CompiladorSlothConstants{
                 sb.append("get.nextBoolean()");
                 break;
             case TIPOCHAR:
-                sb.append("get.next().charAt(0)");
+                sb.append("get.nextLine().charAt(0)");
                 break;
             case TIPODOUBLE:
                 sb.append("get.nextDouble()");

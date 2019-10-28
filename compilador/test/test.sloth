@@ -1,9 +1,19 @@
-first
-    int a = 3*2//3/4;
-    double b = 'c'+a*3^4;
+void a() begin
+    write("test = ");
+end
 
-    #lembrando que % e porcentagem mesmo#
-    boolean c = (2>b) && (4*5/2)^(3%+4)//(3%/2) =< 5^2;
-    write(c+"\n");
+int b(int c) begin
+    return c*2;
+end
+
+double c(char d) begin
+    for(int i=0:3:1) begin
+        d = d + i;
+    end
+    return d+b(d);
+end
+
+first
+    a();
+    write(c('f')+"\n");
 last
-    

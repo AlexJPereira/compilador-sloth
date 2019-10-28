@@ -158,7 +158,7 @@ public class App{
     public static void main(String[] args){
         int a = get.nextInt();
         double b = get.nextDouble();
-        char c = get.next().charAt(0);
+        char c = get.nextLine().charAt(0);
         string d = get.nextLine();
         string e = get.nextLine();
         boolean f = get.nextBoolean();

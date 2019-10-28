@@ -1,9 +1,14 @@
 public class test{
 	public static void main(String[] args){
-		int a = 3*2%3/4;
-		double b = 'c'+a*Math.pow(3,4);
-		/* lembrando que % e porcentagem mesmo */
-		boolean c = (2>b) && Math.pow((4*5/2),(0.03+4))%(0.03/2)<=Math.pow(5,2);
-		System.out.print(c+"\n");
+		int a[] = new int[2],b = 3,c[] = new int[2];
+		/* vetor nao pode ser inicializado */
+		c[0] = 1;
+		c[1] = 2;
+		int d = c[1];
+		a[0] = b+c[0];
+		a[1] = b*c[1];
+		for(int num : a){
+			System.out.print(num+" "+d+"\n");
+		}
 	}
 }

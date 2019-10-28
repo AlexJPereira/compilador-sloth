@@ -1,6 +1,11 @@
 import "importacao2.sloth" 
 
+void a1() begin
+    write("test = ");
+end
+
 first
     int a = a2(2);
+    a1();
     write(a+"\n");
 last
