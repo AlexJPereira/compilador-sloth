@@ -1,2 +1,4 @@
+import "test2.sloth"
+
 void test1() begin
 end

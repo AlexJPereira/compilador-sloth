@@ -1,9 +1,18 @@
 public class test{
-	private static void test1(){
+	private static void a(){
+		System.out.print("test = ");
 	}
-	private static void test2(){
+	private static int b(char c){
+		return c*2;
+	}
+	private static double c(int d){
+		for(int i = 0; i<3; i=i+1){
+			d = d+i;
+		}
+		return d+b('b');
 	}
 	public static void main(String[] args){
-		test2();
+		a();
+		System.out.print(c('f')+"\n");
 	}
 }

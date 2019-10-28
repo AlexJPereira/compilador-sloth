@@ -2,6 +2,7 @@
 A análise sintática foi feita através da linguagem de programação do JavaCC. Através da classe `CompiladorSloth` criada pelo próprio JavaCC ele vai descobrindo se a sequência de tokens está correta. Os autômatos da análise sintática podem ser vistos na seção [Autômatos](../Automatos/README.md).
 
 Características do analisador sintático:
+
 |     característica     	|       tipo      	|                                    descrição                                    	|
 |:----------------------:	|:---------------:	|:-------------------------------------------------------------------------------:	|
 | estratégia de análise  	| descendente     	| leitura da base para as folha na árvore de autômatos                            	|

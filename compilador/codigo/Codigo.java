@@ -6,6 +6,7 @@ public class Codigo implements CompiladorSlothConstants
 {
     private List<Token> tokenList = new ArrayList<Token>();
 	private List<Variable> dVariableList = new ArrayList<Variable>();
+	private List<String> importedFiles = new ArrayList<String>();
 	private Stack<Integer> expectedReturn = new Stack<Integer>();
 	private Stack<Integer> numLocalVar = new Stack<Integer>();
 	private Stack<Stack<List<Integer>>> expressions = new Stack<Stack<List<Integer>>>();
@@ -19,7 +20,7 @@ public class Codigo implements CompiladorSlothConstants
 	private boolean hasReturn = false;
 
 	public Codigo(String fname){
-		this.file.push(fname);
+		addFile(fname);
 	}
 
 	public void add(Token t){
@@ -156,6 +157,12 @@ public class Codigo implements CompiladorSlothConstants
 			new ErrorCreator(file.peek()).throwPE(a, "The variable "+a.image+" was not initialized.");
 	}
 
+	public void checkNeg(Token t){
+		if(tokenList.get(tokenList.size()-1).kind==SUB){
+			t.image = " "+t.image;
+		}
+	}
+
 	public void checkForeach(Token input,  Token container) throws ParseException{
 		Variable cont = verifyVarList(container);
 		if(!cont.getIsVet())
@@ -249,8 +256,13 @@ public class Codigo implements CompiladorSlothConstants
 		return expChecker;
 	}
 
-	public void addFile(String nome){
-		file.push(nome);
+	public boolean addFile(String nome){
+		if(!importedFiles.contains(nome)){
+			file.push(nome);
+			importedFiles.add(nome);
+			return true;
+		}
+		return false;
 	}
 
 	public void removeFile(){

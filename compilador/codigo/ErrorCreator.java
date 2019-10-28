@@ -45,10 +45,13 @@ public class ErrorCreator{
 	}
 
 	public void throwPE(Token t, String msg)throws ParseException{
+		String tab = "";
+		if(t.beginLine<10) tab = ";\t\t";
+		else tab = ";\t";
 		
 		throw new ParseException(
 			"File:\t\t"+file+
-			"\nLine "+t.beginLine+":\t\t"+removeTabs(getFileLine(t.beginLine))+
+			"\nLine "+t.beginLine+tab+removeTabs(getFileLine(t.beginLine))+
 			"\nColumn "+t.beginColumn+":\t"+addTabs(getFileLine(t.beginLine), t.beginColumn)+
 			"\n"+msg);
 	}

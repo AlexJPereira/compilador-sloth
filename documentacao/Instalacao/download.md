@@ -7,7 +7,7 @@ Ao abrir o site do github, desça na página até encontrar a versão que queira
 ![download-image](../Src/download-assets.png)
 
 ## Utilização
-Para utilizar o Compilador Sloth basta ter [java](https://www.java.com/pt_BR/download/) instalado e utilizado o comando em um terminal:
+Para utilizar o Compilador Sloth basta ter [java](https://www.java.com/pt_BR/download/) instalado e utilizar o comando em um terminal:
 
 ```
 $ java -jar CompiladorSloth.jar input output

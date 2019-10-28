@@ -208,12 +208,10 @@ public class CodeTranslator implements CompiladorSlothConstants{
         (t.kind >= TIPOINT && t.kind < RETORNO)
         || t.kind == ELSE)
         {
-            Variable var = null;
             try{
-                var = cod.verifyVarList(code.get(1));
-                if(var.getIsFunc() && !varFunc.contains(var.getId())){
+                if(code.get(2).kind==ABREPAR && !varFunc.contains(code.get(1).image)){
                     sb.append("private static "+t.image+" ");
-                    varFunc.add(var.getId());
+                    varFunc.add(code.get(1).image);
                 }else{
                     sb.append(t.image+" ");
                 }
@@ -353,7 +351,7 @@ public class CodeTranslator implements CompiladorSlothConstants{
                 sb.append("get.nextBoolean()");
                 break;
             case TIPOCHAR:
-                sb.append("get.next().charAt(0)");
+                sb.append("get.nextLine().charAt(0)");
                 break;
             case TIPODOUBLE:
                 sb.append("get.nextDouble()");
