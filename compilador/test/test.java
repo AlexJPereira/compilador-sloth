@@ -1,14 +1,18 @@
 public class test{
-	public static void main(String[] args){
-		int a[] = new int[2],b = 3,c[] = new int[2];
-		/* vetor nao pode ser inicializado */
-		c[0] = 1;
-		c[1] = 2;
-		int d = c[1];
-		a[0] = b+c[0];
-		a[1] = b*c[1];
-		for(int num : a){
-			System.out.print(num+" "+d+"\n");
+	private static void a(){
+		System.out.print("test = ");
+	}
+	private static int b(char c){
+		return c*2;
+	}
+	private static double c(int d){
+		for(int i = 0; i<3; i=i+1){
+			d = d+i;
 		}
+		return d+b('b');
+	}
+	public static void main(String[] args){
+		a();
+		System.out.print(c('f')+"\n");
 	}
 }
