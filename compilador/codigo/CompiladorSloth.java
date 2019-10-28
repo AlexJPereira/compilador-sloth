@@ -289,7 +289,7 @@ try{
     a = jj_consume_token(FIRST);
 cod.add(a);
         cod.verificaFirst(a);
-        cod.setScope(14);
+        cod.setScope(TIPOVOID);
     label_3:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -421,7 +421,7 @@ cod.add(c);
     case NOMEVAR:{
       if (jj_2_2(3)) {
         b = NomeVar();
-        Atribuicao(cod.getVarType(b)+9);
+        Atribuicao(cod.getVarType(b)+TIPOINT);
 cod.initializeVar(b);
       } else {
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {

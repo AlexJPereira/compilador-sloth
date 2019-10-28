@@ -1,5 +1,9 @@
+double c(char d) begin
+    for(int i=0:3:1) begin
+        d = d + i;
+    end
+    return d;
+end
+
 first
-    int a = -(-2--3/-3);
-    boolean b = !(true);
-    string c = ("test");
 last
