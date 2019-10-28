@@ -1,19 +1,9 @@
 void a() begin
-    write("test = ");
-end
-
-int b(int c) begin
-    return c*2;
-end
-
-double c(char d) begin
-    for(int i=0:3:1) begin
-        d = d + i;
-    end
-    return d+b(d);
+    
+    
+    
+write(1);
 end
 
 first
-    a();
-    write(c('f')+"\n");
 last
