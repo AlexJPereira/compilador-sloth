@@ -1,9 +1,9 @@
-double c(char d) begin
-    for(int i=0:3:1) begin
-        d = d + i;
-    end
-    return d;
-end
-
 first
+    int a = 3*2//3/4;
+    double b = 'c'+a*3^4;
+
+    #lembrando que % e porcentagem mesmo#
+    boolean c = (2>b) && (4*5/2)^(3%+4)//(3%/2) =< 5^2;
+    write(c+"\n");
 last
+    
