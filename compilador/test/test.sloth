@@ -1,9 +1,5 @@
-import "test.sloth"
-import "test2.sloth"
-
-void test2() begin
-end
-
 first
-    test1();
+    int a = -(-2--3/-3);
+    boolean b = !(true);
+    string c = ("test");
 last

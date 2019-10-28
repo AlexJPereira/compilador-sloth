@@ -380,20 +380,26 @@ Token Read():
 }
 
 Token Expressao():
-{Token a,b;} /*
-((<ABREPAR>(Expressao())+<FECHAPAR>)
-| <NOT>Expressao()
-| ValorVar()
-| ChamaFuncao()
-| NomeVar())
-[LOOKAHEAD(2) Operador()Expressao()]
-*/
+{Token a=null,b;}
+{
+	[(a=<SUB>)
+	{
+		cod.addToExp(TIPOINT);
+		cod.addOpToExp(a);
+		cod.checkNeg(a);
+		cod.add(a);
+	}]
+	(b=ExpressaoNoNeg())
+	{if(a==null)return b; else return a;}
+}
+
+Token ExpressaoNoNeg():
+{Token a,b;}
 {
 	(((a=<ABREPAR>){cod.add(a);cod.openParExp(a);}
 	(Expressao())+
 	(b=<FECHAPAR>){cod.add(b);cod.closeParExp(a);})
-	| (a=<NOT>){cod.add(a);cod.addOpToExp(a);}
-	Expressao()
+	| (a=<NOT>){cod.add(a);cod.addOpToExp(a);}ExpressaoNoNeg()
 	| (a=ValorVar()){cod.addToExp(a);}
 	| ((LOOKAHEAD(2)(a=ChamaFuncao())
 	| ((a=NomeVar()){cod.checkInitVar(a);})){cod.addToExp(a);}))
