@@ -61,7 +61,6 @@ string a = 1+"oi";
 5. operações relacionais, igual (`==`), diferente (`=!`), maior (`>`), menor (`<`), menor ou igual (`=<`), maior ou igual (`=>`). Repare que em algumas operações os simbolos são ao contrario das principais linguagens, como por exemplo em c++ que possui o símbolo `>=`. Cuidado ao utilizar atribuição com simbolo not. Por exemplo:
 ```
 boolean a = 2>3==false;
-
 boolean b =!(true); # errado #
 boolean c = !(true); # certo #
 ```
@@ -70,6 +69,7 @@ boolean c = !(true); # certo #
 ```
 boolean a = false || true;
 ```
+
 ## Retorno de expressões
 As expressões retornam de acordo com as tabelas a seguir. Caso caia em uma situação de erro, a compilação falha.
 
