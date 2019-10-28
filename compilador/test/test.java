@@ -4,6 +4,6 @@ public class test{
 	private static void test2(){
 	}
 	public static void main(String[] args){
-		test2();
+		test1();
 	}
 }

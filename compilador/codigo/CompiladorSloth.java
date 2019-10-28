@@ -17,7 +17,7 @@ public class CompiladorSloth implements CompiladorSlothConstants {
             File f = new File(fname) ;
                         FileReader fr = new FileReader(f);
                         BufferedReader br = new BufferedReader(fr);
-                        cod = new Codigo("/"+f.getCanonicalPath());
+                        cod = new Codigo(f.getCanonicalPath());
 
             CompiladorSloth cs = new CompiladorSloth(fr);
             cs.Programa();
@@ -30,8 +30,10 @@ public class CompiladorSloth implements CompiladorSlothConstants {
         }
                 catch(ParseException e)
                 {
-                        System.out.println("Compiler Error: An error occurred.");
-                        System.out.println(e.getMessage());
+                        if(e.getMessage()!=null){
+                                System.out.println("Compiler Error: An error occurred.");
+                                System.out.println(e.getMessage());
+                        }
                 }
                 catch (IOException e) {
                 System.out.println("File Error: An error occurred.");
@@ -266,17 +268,18 @@ cod.add(a);
 try{
                         String fname = cod.getFile().substring(0,cod.getFile().lastIndexOf('/')+1)+b.image.substring(1,b.image.length());
                         fname = fname.substring(0, fname.length()-1);
-                        fname = fname.substring(1);
             File f = new File(fname) ;
 
-                        cod.addFile(f.getCanonicalPath());
-            CompiladorSloth cs = new CompiladorSloth(new FileReader(f));
-            cs.Programa();
-                        cod.removeFile();
+                        if(cod.addFile(f.getCanonicalPath())){
+                                CompiladorSloth cs = new CompiladorSloth(new FileReader(f));
+                cs.Programa();
+                                cod.removeFile();
+                        }
         }
                 catch (IOException e) {
                 System.out.println("File Error: An error occurred.");
                 System.out.println(e.getMessage());
+                        {if (true) throw new ParseException();}
         }
 }
 
@@ -1135,16 +1138,16 @@ cod.add(c);
     return false;
   }
 
+  private boolean jj_3R_52()
+ {
+    if (jj_3R_55()) return true;
+    return false;
+  }
+
   private boolean jj_3R_16()
  {
     if (jj_scan_token(IMPORT)) return true;
     if (jj_scan_token(STRING)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_52()
- {
-    if (jj_3R_55()) return true;
     return false;
   }
 
@@ -1257,15 +1260,15 @@ cod.add(c);
     return false;
   }
 
-  private boolean jj_3R_8()
- {
-    if (jj_3R_17()) return true;
-    return false;
-  }
-
   private boolean jj_3R_42()
  {
     if (jj_scan_token(OR)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_8()
+ {
+    if (jj_3R_17()) return true;
     return false;
   }
 
@@ -1278,13 +1281,6 @@ cod.add(c);
   private boolean jj_3R_41()
  {
     if (jj_scan_token(AND)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_13()
- {
-    if (jj_scan_token(NOMEVAR)) return true;
-    if (jj_scan_token(ABREPAR)) return true;
     return false;
   }
 
@@ -1314,6 +1310,13 @@ cod.add(c);
     }
     }
     }
+    return false;
+  }
+
+  private boolean jj_3R_13()
+ {
+    if (jj_scan_token(NOMEVAR)) return true;
+    if (jj_scan_token(ABREPAR)) return true;
     return false;
   }
 

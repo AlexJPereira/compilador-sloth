@@ -1,8 +1,9 @@
+import "test.sloth"
 import "test2.sloth"
 
 void test2() begin
 end
 
 first
-    test2();
+    test1();
 last

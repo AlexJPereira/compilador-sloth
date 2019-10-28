@@ -21,7 +21,7 @@ public class CompiladorSloth
             File f = new File(fname) ;
 			FileReader fr = new FileReader(f);
 			BufferedReader br = new BufferedReader(fr);
-			cod = new Codigo("/"+f.getCanonicalPath());
+			cod = new Codigo(f.getCanonicalPath());
 
             CompiladorSloth cs = new CompiladorSloth(fr);
             cs.Programa();
@@ -34,8 +34,10 @@ public class CompiladorSloth
         }
 		catch(ParseException e)
 		{
-			System.out.println("Compiler Error: An error occurred.");
-			System.out.println(e.getMessage());
+			if(e.getMessage()!=null){
+				System.out.println("Compiler Error: An error occurred.");
+				System.out.println(e.getMessage());
+			}
 		}
 		catch (IOException e) {
       		System.out.println("File Error: An error occurred.");
@@ -256,17 +258,18 @@ void Importacao():
 		try{
 			String fname = cod.getFile().substring(0,cod.getFile().lastIndexOf('/')+1)+b.image.substring(1,b.image.length());
 			fname = fname.substring(0, fname.length()-1);
-			fname = fname.substring(1);
             File f = new File(fname) ;
 
-			cod.addFile(f.getCanonicalPath());
-            CompiladorSloth cs = new CompiladorSloth(new FileReader(f));
-            cs.Programa();
-			cod.removeFile();
+			if(cod.addFile(f.getCanonicalPath())){
+				CompiladorSloth cs = new CompiladorSloth(new FileReader(f));
+            	cs.Programa();
+				cod.removeFile();
+			}
         }
 		catch (IOException e) {
       		System.out.println("File Error: An error occurred.");
       		System.out.println(e.getMessage());
+			throw new ParseException();
     	}
 	}
 }
