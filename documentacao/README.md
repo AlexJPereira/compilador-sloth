@@ -7,6 +7,8 @@
     <strong><del>(Lento)</del> Flexível igual Java</strong>
 </p>
 
+[Repositório no Github](https://github.com/wykke/CompiladorSloth)
+
 ![license](https://img.shields.io/github/license/wykke/TrabalhoECOM06)
 ![issues](https://img.shields.io/github/issues/wykke/TrabalhoECOM06)
 

@@ -448,17 +448,15 @@ double d[3], e = 3.0, f = 3*9/4+a;
 <li><p>adi&#xE7;&#xE3;o (<code>+</code>), essa vem depois das outras opera&#xE7;&#xF5;es porque strings somandas a qualquer coisa retornar&#xE3;o strings concatenadas.</p>
 <pre><code>string a = 1+&quot;oi&quot;;
 </code></pre></li>
-<li><p>opera&#xE7;&#xF5;es relacionais, igual (<code>==</code>), diferente (<code>=!</code>), maior (<code>&gt;</code>), menor (<code>&lt;</code>), menor ou igual (<code>=&lt;</code>), maior ou igual (<code>=&gt;</code>). Repare que em algumas opera&#xE7;&#xF5;es os simbolos s&#xE3;o ao contrario das principais linguagens, como por exemplo em c++ que possui o s&#xED;mbolo <code>&gt;=</code>. Cuidado ao utilizar atribui&#xE7;&#xE3;o com simbolo not. Por exemplo:
-```
-boolean a = 2&gt;3==false;</p>
-</li>
+<li><p>opera&#xE7;&#xF5;es relacionais, igual (<code>==</code>), diferente (<code>=!</code>), maior (<code>&gt;</code>), menor (<code>&lt;</code>), menor ou igual (<code>=&lt;</code>), maior ou igual (<code>=&gt;</code>). Repare que em algumas opera&#xE7;&#xF5;es os simbolos s&#xE3;o ao contrario das principais linguagens, como por exemplo em c++ que possui o s&#xED;mbolo <code>&gt;=</code>. Cuidado ao utilizar atribui&#xE7;&#xE3;o com simbolo not. Por exemplo:</p>
+<pre><code>boolean a = 2&gt;3==false;
+boolean b =!(true); # errado #
+boolean c = !(true); # certo #
+</code></pre></li>
+<li><p>opera&#xE7;&#xF5;es l&#xF3;gicas, And (<code>&amp;&amp;</code>), Or (<code>||</code>).</p>
+<pre><code>boolean a = false || true;
+</code></pre></li>
 </ol>
-<p>boolean b =!(true); # errado #
-boolean c = !(true); # certo #</p>
-<pre><code>
-6. opera&#xE7;&#xF5;es l&#xF3;gicas, And (`&amp;&amp;`), Or (`||`).
-</code></pre><p>boolean a = false || true;
-```</p>
 <h2 id="retorno-de-express&#xF5;es">Retorno de express&#xF5;es</h2>
 <p>As express&#xF5;es retornam de acordo com as tabelas a seguir. Caso caia em uma situa&#xE7;&#xE3;o de erro, a compila&#xE7;&#xE3;o falha.</p>
 <p>Primeiro ser&#xE3;o resolvidos o que est&#xE3;o dentro de parenteses recursivamente procurando pelo parenteses de menor n&#xED;vel.</p>
@@ -782,7 +780,7 @@ boolean c = !(true); # certo #</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Variáveis","level":"1.3.2","depth":2,"next":{"title":"Fluxo de Dados","level":"1.3.3","depth":2,"path":"Linguagem/fluxo.md","ref":"Linguagem/fluxo.md","articles":[]},"previous":{"title":"Função principal","level":"1.3.1","depth":2,"path":"Linguagem/funcp.md","ref":"Linguagem/funcp.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"WyKKe","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Compilador Sloth","gitbook":"*"},"file":{"path":"Linguagem/var.md","mtime":"2019-10-28T03:28:13.215Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-28T04:06:40.182Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Variáveis","level":"1.3.2","depth":2,"next":{"title":"Fluxo de Dados","level":"1.3.3","depth":2,"path":"Linguagem/fluxo.md","ref":"Linguagem/fluxo.md","articles":[]},"previous":{"title":"Função principal","level":"1.3.1","depth":2,"path":"Linguagem/funcp.md","ref":"Linguagem/funcp.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"WyKKe","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Compilador Sloth","gitbook":"*"},"file":{"path":"Linguagem/var.md","mtime":"2019-10-28T04:20:17.797Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-28T04:28:05.257Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
