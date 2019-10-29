@@ -360,15 +360,29 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="aut&#xF4;matos">Aut&#xF4;matos</h1>
-<p>Nesse t&#xF3;pico ser&#xE1; retratado os aut&#xF4;matos da linguagem Sloth. Os aut&#xF4;matoss s&#xE3;o simbolos n&#xE3;o-terminais da liguagem.</p>
+<p>Nesse t&#xF3;pico ser&#xE1; retratado os aut&#xF4;matos da linguagem Sloth. Os aut&#xF4;matoss s&#xE3;o simbolos n&#xE3;o-terminais da liguagem. <strong>Clique no campo &quot;Aut&#xF4;mato&quot; para exibir o aut&#xF4;mato referente a cada express&#xE3;o formal.</strong></p>
 <h3 id="programa">Programa</h3>
 <p>Aut&#xF4;mato raiz chamado primeiro pelo analisador sint&#xE1;tico.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/Programa.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(Importacao()|&lt;COMENT&gt;|Funcao())*
 [Execucao()]
 (&lt;COMENT&gt;)*
 &lt;EOF&gt;
 </code></pre><h3 id="funcao">Funcao</h3>
 <p>Aut&#xF4;mato para cria&#xE7;&#xE3;o de fun&#xE7;&#xF5;es.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/Funcao.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(&lt;TIPOVOID&gt;|TipoVar())
 &lt;NOMEVAR&gt;
 &lt;ABREPAR&gt;
@@ -377,57 +391,141 @@
 Bloco()
 </code></pre><h3 id="funcpar">FuncPar</h3>
 <p>Aut&#xF4;mato para criar par&#xE2;metros para as fun&#xE7;&#xF5;es.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/FuncPar.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>TipoVar()
 DeclaraVarFunc()
 [(&lt;SEPFUN&gt;)FuncPar()]
 </code></pre><h3 id="declaravarfunc">DeclaraVarFunc</h3>
 <p>Aut&#xF4;mato para criar vari&#xE1;veis dos par&#xE2;metros das fun&#xE7;&#xF5;es, vetores n&#xE3;o podem ter valor nas chaves.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/DeclaraVarFunc.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(&lt;NOMEVAR&gt;)
 [(&lt;ABREVET&gt;)(&lt;FECHAVET&gt;)]
 </code></pre><h3 id="retorno">Retorno</h3>
 <p>Aut&#xF4;mato para criar o retorno das fun&#xE7;&#xF5;es.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/Retorno.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(&lt;RETORNO&gt;)
 [Expressao()]
 </code></pre><h3 id="chamafuncao">ChamaFuncao</h3>
 <p>Aut&#xF4;mato para chamar fun&#xE7;&#xF5;es.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/ChamaFuncao.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(&lt;NOMEVAR&gt;)
 (&lt;ABREPAR&gt;)
 [ChamaFuncPar()]
 (&lt;FECHAPAR&gt;)
 </code></pre><h3 id="chamafuncpar">ChamaFuncPar</h3>
 <p>Aut&#xF4;mato para chamar par&#xE2;metros para fun&#xE7;&#xF5;es.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/ChamaFuncPar.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(Expressao())
 [(&lt;SEPFUN&gt;)ChamaFuncPar()]
 </code></pre><h3 id="importacao">Importacao</h3>
 <p>Aut&#xF4;mato para criar importa&#xE7;&#xF5;es.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/Importacao.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(&lt;IMPORT&gt;)
 (&lt;STRING&gt;)
 </code></pre><h3 id="execucao">Execucao</h3>
 <p>Aut&#xF4;mato da classe principal.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/Execucao.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(&lt;FIRST&gt;)
 (Linha()|(&lt;COMENT&gt;))*
 (&lt;LAST&gt;)
 </code></pre><h3 id="linha">Linha</h3>
 <p>Aut&#xF4;mato que faz a maior parte funcional da linguagem.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/Linha.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>((Write()|ManVar()|Retorno())(&lt;EOL&gt;))
 | FluxoDados()
 </code></pre><h3 id="write">Write</h3>
 <p>Aut&#xF4;mato para escrita no terminal.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/Write.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(&lt;WRITE&gt;)
 (&lt;ABREPAR&gt;)
 (Expressao())
 (&lt;FECHAPAR&gt;)
 </code></pre><h3 id="manvar">ManVar</h3>
 <p>Aut&#xF4;mato para cria&#xE7;&#xE3;o e/ou atribui&#xE7;&#xE3;o de vari&#xE1;vel.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/ManVar.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(TipoVar()ManVarSeq())
 | (NomeVar()Atribuica())
 | ChamaFuncao()
 </code></pre><h3 id="manvarseq">ManVarSeq</h3>
 <p>Aut&#xF4;mato para declarar v&#xE1;rias vari&#xE1;veis na mesma linha.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/ManVarSeq.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>DeclaraVar()
 [(&lt;SEPFUN&gt;)ManVarSeq(b)]
 </code></pre><h3 id="tipovar">TipoVar</h3>
 <p>Aut&#xF4;mato para tipos de vari&#xE1;veis.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/TipoVar.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>&lt;TIPOBOOLEAN&gt;
 | &lt;TIPOCHAR&gt;
 | &lt;TIPODOUBLE&gt;
@@ -435,6 +533,13 @@ DeclaraVarFunc()
 | &lt;TIPOSTRING&gt;
 </code></pre><h3 id="declaravar">DeclaraVar</h3>
 <p>Aut&#xF4;mato para declarar vari&#xE1;veis.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/DeclaraVar.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(&lt;NOMEVAR&gt;)
 [((&lt;ABREVET&gt;)
 (Expressao())
@@ -442,25 +547,67 @@ DeclaraVarFunc()
 | (Atribuicao())]
 </code></pre><h3 id="nomevar">NomeVar</h3>
 <p>Aut&#xF4;mato para nome de vari&#xE1;veis.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/NomeVar.png">
+</p>
+</details>
+
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(&lt;NOMEVAR&gt;)
 [(&lt;ABREVET&gt;)
 (Expressao())
 (&lt;FECHAVET&gt;)]
 </code></pre><h3 id="atribuicao">Atribuicao</h3>
 <p>Aut&#xF4;mato para atribui&#xE7;&#xE3;o.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/Atribuicao.png">
+</p>
+</details>
+
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(&lt;IGUALDADE&gt;)
 (Read()|Expressao())
 </code></pre><h3 id="read">Read</h3>
 <p>Aut&#xF4;mato para leitura do terminal.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/Read.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(&lt;GET&gt;) 
 (&lt;ABREPAR&gt;) 
 [TipoVar()]
 (&lt;FECHAPAR&gt;)
 </code></pre><h3 id="expressao">Expressao</h3>
 <p>Aut&#xF4;mato para cria&#xE7;&#xE3;o de express&#xF5;es, podendo ter numero negativo no come&#xE7;o.</p>
-<pre><code>[&lt;SUB&gt;]ExpressaoNoNeg()
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/Expressao.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
+<pre><code>((&lt;ABREPAR&gt;)((Expressao())+(&lt;FECHAPAR&gt;))
+|(&lt;NOT&gt;)ExpressaoNoNeg()
+|ValorVal()
+|ChamaFuncao()
+|NomeVar()
+[Operador()Expressao()]
 </code></pre><h3 id="expressaononeg">ExpressaoNoNeg</h3>
 <p>Aut&#xF4;mato para cria&#xE7;&#xE3;o de express&#xF5;es, n&#xE3;o podendo ter numero negativo no come&#xE7;o.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/ExpressaoNoNeg.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(((&lt;ABREPAR&gt;)(Expressao())+(&lt;FECHAPAR&gt;))
 | (&lt;NOT&gt;)ExpressaoNoNeg()
 | ValorVar()
@@ -469,9 +616,18 @@ DeclaraVarFunc()
 [Operador()Expressao()]
 </code></pre><h3 id="operador">Operador</h3>
 <p>Aut&#xF4;mato para chamar operadores.</p>
+<p>Express&#xE3;o formal:</p>
 <pre><code>OpArit()|OpRelac()
 </code></pre><h3 id="opatir">OpAtir</h3>
 <p>Aut&#xF4;mato para chamar as opera&#xE7;&#xF5;es aritm&#xE9;ticas.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/OpAtir.png">
+</p>
+</details>
+
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(&lt;ADD&gt;)
 | (&lt;SUB&gt;)
 | (&lt;MOD&gt;)
@@ -480,6 +636,13 @@ DeclaraVarFunc()
 | (&lt;MULT&gt;)
 </code></pre><h3 id="oprelac">OpRelac</h3>
 <p>Aut&#xF4;mato para chamar as opera&#xE7;&#xF5;es relacionais.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/OpRelac.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(&lt;AND&gt;)
 | (&lt;OR&gt;)
 | (&lt;IGUAL&gt;)
@@ -490,6 +653,13 @@ DeclaraVarFunc()
 | (&lt;MENOR&gt;)
 </code></pre><h3 id="valorvar">ValorVar</h3>
 <p>Aut&#xF4;mato para valores literais.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/ValorVar.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(&lt;INTEIRO&gt;)
 | (&lt;REAL&gt;)
 | (&lt;CARACTER&gt;)
@@ -498,16 +668,37 @@ DeclaraVarFunc()
 | (&lt;STRING&gt;)
 </code></pre><h3 id="booleano">Booleano</h3>
 <p>Aut&#xF4;mato para tipos booleanos literais.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/Booleando.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(&lt;TRUE&gt;)
 | (&lt;FALSE&gt;)
 </code></pre><h3 id="fluxodados">FluxoDados</h3>
 <p>Aut&#xF4;mato para fluxo de dados.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/FluxoDados.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>While()
 | For()
 | Foreach()
 | If()
 </code></pre><h3 id="while">While</h3>
 <p>Aut&#xF4;mato para o fluxo de dados while.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/While.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(&lt;WHILE&gt;)
 (&lt;ABREPAR&gt;)
 Expressao()
@@ -515,6 +706,13 @@ Expressao()
 Bloco()
 </code></pre><h3 id="for">For</h3>
 <p>Aut&#xF4;mato para o fluxo de dados for.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/For.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(&lt;FOR&gt;)
 (&lt;ABREPAR&gt;)
 (&lt;TIPOINT&gt;)
@@ -528,6 +726,13 @@ Expressao()
 Bloco()
 </code></pre><h3 id="foreach">Foreach</h3>
 <p>Aut&#xF4;mato para o fluxo de dados foreach.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/ForEach.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(&lt;FOREACH&gt;)
 (&lt;ABREPAR&gt;)
 (&lt;NOMEVAR&gt;)
@@ -537,6 +742,13 @@ Bloco()
 Bloco()
 </code></pre><h3 id="if">If</h3>
 <p>Aut&#xF4;mato para o fluxo de dados if.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/If.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(&lt;IF&gt;)
 (&lt;ABREPAR&gt;)
 Expressao()
@@ -545,6 +757,13 @@ Bloco()
 [(&lt;ELSE&gt;)Bloco()]
 </code></pre><h3 id="bloco">Bloco</h3>
 <p>Aut&#xF4;mato para abertura de blocos.</p>
+<details><summary>Aut&#xF4;mato</summary>
+<p>
+<img src="Automatos/Bloco.png">
+</p>
+</details>
+
+<p>Express&#xE3;o formal:</p>
 <pre><code>(&lt;BEGIN&gt;)
 (Linha()|(&lt;COMENT&gt;))*
 (&lt;END&gt;)
@@ -591,7 +810,7 @@ Bloco()
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Autômatos","level":"1.4.2.1","depth":3,"next":{"title":"Análise Semântica","level":"1.4.3","depth":2,"path":"Compilador/semantica.md","ref":"Compilador/semantica.md","articles":[]},"previous":{"title":"Análise Sintática","level":"1.4.2","depth":2,"path":"Compilador/sintatica.md","ref":"Compilador/sintatica.md","articles":[{"title":"Autômatos","level":"1.4.2.1","depth":3,"path":"Compilador/automatos.md","ref":"Compilador/automatos.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"WyKKe","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Compilador Sloth","gitbook":"*"},"file":{"path":"Compilador/automatos.md","mtime":"2019-10-28T03:01:03.132Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-28T04:28:05.257Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Autômatos","level":"1.4.2.1","depth":3,"next":{"title":"Análise Semântica","level":"1.4.3","depth":2,"path":"Compilador/semantica.md","ref":"Compilador/semantica.md","articles":[]},"previous":{"title":"Análise Sintática","level":"1.4.2","depth":2,"path":"Compilador/sintatica.md","ref":"Compilador/sintatica.md","articles":[{"title":"Autômatos","level":"1.4.2.1","depth":3,"path":"Compilador/automatos.md","ref":"Compilador/automatos.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"WyKKe","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Compilador Sloth","gitbook":"*"},"file":{"path":"Compilador/automatos.md","mtime":"2019-10-29T15:39:40.086Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-29T16:03:47.207Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
