@@ -7,8 +7,8 @@
     <strong><del>(Lento)</del> Flexível igual Java</strong>
 </p>
 
-![license](https://img.shields.io/github/license/wykke/TrabalhoECOM06)
-![issues](https://img.shields.io/github/issues/wykke/TrabalhoECOM06)
+![license](https://img.shields.io/github/license/AlexJPereira/TrabalhoECOM06)
+![issues](https://img.shields.io/github/issues/AlexJPereira/TrabalhoECOM06)
 
 <img src="./documentacao/Src/sloth.png" alt="drawing" width="200" align="right"/>
 
@@ -26,7 +26,7 @@ O compilador de sua linguagem traduz a linguagem Sloth para java.
 ## Participantes
 Feito por alunos de engenharia de computação da Universidade Federal de Itajubá para disciplina de Compiladores.
 
-<a href="https://github.com/wykke"><img src="https://avatars3.githubusercontent.com/u/38235118?s=460&v=4" alt="drawing" width="40" align="middle"/></a>
+<a href="https://github.com/AlexJPereira"><img src="https://avatars.githubusercontent.com/u/38235118?v=4" alt="drawing" width="40" align="middle"/></a>
 Alex Junior Pereira
 
 <a href="https://github.com/Ceu152"><img src="https://avatars0.githubusercontent.com/u/43916660?s=460&v=4" alt="drawing" width="40" align="middle"/></a>
