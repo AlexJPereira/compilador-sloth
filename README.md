@@ -7,8 +7,8 @@
     <strong><del>(Lento)</del> Flexível igual Java</strong>
 </p>
 
-![license](https://img.shields.io/github/license/AlexJPereira/TrabalhoECOM06)
-![issues](https://img.shields.io/github/issues/AlexJPereira/TrabalhoECOM06)
+![license](https://img.shields.io/github/license/AlexJPereira/compilador-sloth)
+![issues](https://img.shields.io/github/issues/AlexJPereira/compilador-sloth)
 
 <img src="./documentacao/Src/sloth.png" alt="drawing" width="200" align="right"/>
 
